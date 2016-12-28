@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+ <display-name>EasyIntegral</display-name>
+	<context-param>
+  		<param-name>webAppRoot</param-name>
+  		<param-value>WechatIntegralService.root</param-value>
+  	</context-param>
+  	<!-- log4j初始化Servlet -->
+  	<servlet>
+  		<servlet-name>log4j</servlet-name>
+  		<servlet-class>com.lanxi.WechatIntegralService.servlet.Log4jInitServlet</servlet-class>
+  		<!-- 配置文件相对项目路径的位置 -->
+  		<init-param>
+  			<param-name>location</param-name>
+  			<param-value>/WEB-INF/classes/properties/log4j.properties</param-value>
+  		</init-param>
+  		<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	<servlet>
+  		<servlet-name>dispatcher</servlet-name>
+  		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  		<init-param>
+  			<param-name>ContextConfigLocation</param-name>
+  			<param-value>classpath:xml/spring-mvc.xml</param-value>
+  		</init-param>
+  		<load-on-startup>2</load-on-startup>
+  	</servlet>
+  	<servlet-mapping>
+  		<servlet-name>dispatcher</servlet-name>
+  		<url-pattern>/</url-pattern>
+  	</servlet-mapping>
+</web-app>
