@@ -5,9 +5,14 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-事件消息类-自定义菜单事件-点击下拉消息事件
+ * 建议使用menuevnet包中的clickmenuevent
+ * @author 1
+ *
+ */
 public class ClickEvent extends WechatEventMessage {
-	private String eventKey;
+	private String eventKey;	/**事件key值*/
 	public ClickEvent() {
 		setEvent(EVENT_CLICK);
 	}

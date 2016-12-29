@@ -9,13 +9,22 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-自动消息类-自动回复图文消息类
+ * @author 1
+ *
+ */
 public class NewsAutoMessage extends WechatAutoMessage {
+	/**
+	 * 自动回复图文消息类-内部类-文章
+	 * @author 1
+	 *
+	 */
 	public class Item{
-		private String title;
-		private String description;
-		private String picUrl;
-		private String url;
+		private String title;		/**文章标题*/
+		private String description;	/**文章描述*/
+		private String picUrl;		/**文章图片*/
+		private String url;			/**文章链接*/
 		public String getTitle() {
 			return title;
 		}

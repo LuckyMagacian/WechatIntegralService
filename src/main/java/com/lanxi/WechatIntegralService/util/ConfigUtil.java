@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 
+@SuppressWarnings("unused")
 public class ConfigUtil {
 	private static Properties properties;
 	private static String path = "";

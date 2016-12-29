@@ -5,10 +5,14 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-事件消息类-扫码消息类
+ * @author 1
+ *
+ */
 public class ScanEvent extends WechatEventMessage {
-	private String eventKey;
-	private String ticket;
+	private String eventKey;	/**事件KEY值，qrscene_为前缀，后面为二维码的参数值*/
+	private String ticket;		/**二维码的ticket，可用来换取二维码图片*/
 	public ScanEvent() {
 		setEvent(EVENT_SCAN);
 	}

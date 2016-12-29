@@ -5,14 +5,23 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-微信事件类-微信菜单事件类-点击菜单上报地理位置
+ * @author 1
+ *
+ */
 public class LocationSelectMenuEvent extends WechatMenuEvent {
+	/**
+	 * 微信消息类-微信事件类-微信菜单事件类-点击菜单下拉消息类-内部类-位置信息
+	 * @author 1
+	 *
+	 */
 	public class SendLocationInfo{
-		private String locationX;
-		private String locationY;
-		private String scale;
-		private String label;
-		private String poiname;
+		private String locationX;	/**经度*/
+		private String locationY;	/**纬度*/
+		private String scale;		/**精度,缩放比例*/
+		private String label;		/**地理位置字符串信息标签*/
+		private String poiname;		/**朋友圈名称*/
 		public String getLocationX() {
 			return locationX;
 		}

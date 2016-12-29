@@ -5,7 +5,11 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-事件消息类-自定义菜单事件消息类-点击链接按钮
+ * @author 1
+ *
+ */
 public class ViewEvent extends WechatEventMessage {
 	private String eventKey;
 	public ViewEvent() {

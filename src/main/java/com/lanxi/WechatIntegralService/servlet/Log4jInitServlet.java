@@ -42,7 +42,7 @@ public class Log4jInitServlet extends HttpServlet{
 		//判断文件是否存在
 		if(confFile.exists()||confFile.isDirectory()){
 			//获取初始化参数 中webapproot
-			String webroot=context.getInitParameter("webAppRoot");
+//			String webroot=context.getInitParameter("webAppRoot");
 			//替换webapproot为项目路径
 			System.setProperty("webAppRoot",webappPath);
 			System.out.println("init log4j by file "+logConf);
@@ -60,6 +60,7 @@ public class Log4jInitServlet extends HttpServlet{
 		super.init(config);
 	}	
 	
+	@SuppressWarnings("unused")
 	public static void Log4jInit(){
 		try{
 		// TODO 异常类开启测试模式

@@ -6,9 +6,13 @@ import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.wechat.entity.menuevent.ScanPushMenuEvent.ScanCodeInfo;
-
+/**
+ * 微信消息类-微信事件类-微信菜单事件类-点击菜单扫描二维码扫描等待
+ * @author 1
+ *
+ */
 public class ScanWaitMenuEvent extends WechatMenuEvent {
-	private ScanCodeInfo codeInfo;
+	private ScanCodeInfo codeInfo;/**二维码信息*/
 	public ScanWaitMenuEvent() {
 		setMsgType(MENU_EVENT_SCANCODE_WAITMSG);
 		codeInfo=new ScanCodeInfo();

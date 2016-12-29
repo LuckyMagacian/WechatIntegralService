@@ -1,15 +1,29 @@
 package com.lanxi.wechat.entity.seconds;
 
 import java.io.InputStream;
-
+/**
+ * 微信二维码类
+ * @author 1
+ *
+ */
 public class Seconds {
+	/**临时二维码最大有效期*/
 	public static final String SECONDS_MAX_EXPIRESECONDS="604800";
+	/**临时二维码默认有效期*/
+	public static final String SECONDS_DEFAULT_EXPIRESECONDS="30";
+	/**二维码类型-临时二维码*/
+	public static final String SECONDS_ACTION_NAME_QRTYPE_TEMP="QR_SCENE";
+	/**二维码类型-永久二维码*/
+	public static final String SECONDS_ACTION_NAME_QRTYPE_FOREVER="QR_LIMIT_SCENE";
+	/**二维码类型-永久字符串二维码*/
+	public static final String SECONDS_ACTION_NAME_QRTYPE_FOREVER_STR="QR_LIMIT_STR_SCENE";
+
 	//------------------------------req---------------------------------
-	private String expireSeconds;
-	private String actionName;
-	private String actionInfo;
-	private String sceneId;
-	private String sceneStr;
+	private String expireSeconds;	/**临时二维码请求有效期*/
+	private String actionName;		/**二维码类型*/
+	private String actionInfo;		/**二维码详细信息*/
+	private String sceneId;			/**二维码场景编号1-100000*/
+	private String sceneStr;		/**场景值id,1-64位,限永久二维码*/
 	//-------------------------------res--------------------------------
 	private String ticket;
 	private String url;

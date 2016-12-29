@@ -4,7 +4,11 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类
+ * @author 1
+ *
+ */
 public abstract class WechatMessage extends BaseMessage{
 	/**微信消息类型-文本消息*/
 	public static final String MESSAGE_TYPE_TEXT		="text";
@@ -23,7 +27,7 @@ public abstract class WechatMessage extends BaseMessage{
 	/**微信消息类型-事件消息*/
 	public static final String MESSAGE_TYPE_EVENT		="event";
 
-	private String msgId;
+	private String msgId;	/**消息编号*/
 	
 	public String getMsgId() {
 		return msgId;

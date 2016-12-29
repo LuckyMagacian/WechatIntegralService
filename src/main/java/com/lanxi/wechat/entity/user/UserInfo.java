@@ -1,19 +1,30 @@
 package com.lanxi.wechat.entity.user;
 
 import com.alibaba.fastjson.JSONObject;
-
+/**
+ * 用户详细信息
+ * @author 1
+ *
+ */
 public class UserInfo extends BaseUserInfo {
-	private String nickName;
-	private String sex;
-	private String language;
-	private String city;
-	private String province;
-	private String country;
-	private String headImgUrl;
-	private String subscribeTime;
-	private String unionid;
-	private String remark;
-	private String groupid;
+	/**用户信息-性别-未知*/
+	public static final String USER_INOF_SEX_UNKNOWN="0";
+	/**用户信息-性别-男*/
+	public static final String USER_INOF_SEX_MAN	="1";
+	/**用户信息-性别-女*/
+	public static final String USER_INOF_SEX_WOMAN	="2";
+	
+	private String nickName;	/**用户昵称*/
+	private String sex;			/**用户性别*/
+	private String language;	/**用户语言*/	
+	private String city;		/**用户城市*/
+	private String province;	/**用户省份*/
+	private String country;		/**国籍*/
+	private String headImgUrl;	/**头像url*/
+	private String subscribeTime;/**关注时间*/
+	private String unionid;		/**通用id*/
+	private String remark;		/**备注*/
+	private String groupid;		/**分组信息*/
 	public String getNickName() {
 		return nickName;
 	}
@@ -98,4 +109,9 @@ public class UserInfo extends BaseUserInfo {
 		setRemark(jobj.getString("remark"));
 		setGroupid(jobj.getString("groupid"));
 	}
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
+	}
+	
 }

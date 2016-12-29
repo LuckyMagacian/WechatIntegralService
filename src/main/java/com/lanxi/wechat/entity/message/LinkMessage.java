@@ -5,11 +5,15 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-链接消息
+ * @author 1
+ *
+ */
 public class LinkMessage extends WechatMessage {
-	private String title;
-	private String description;
-	private String url;
+	private String title;		/**链接标题*/
+	private String description;	/**链接描述*/
+	private String url;			/**url链接*/
 	public LinkMessage() {
 		setMsgType(MESSAGE_TYPE_LINK);
 	}

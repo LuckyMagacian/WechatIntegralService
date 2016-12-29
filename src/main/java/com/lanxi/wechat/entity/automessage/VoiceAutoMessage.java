@@ -5,10 +5,19 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-自动消息类-自动回复语音消息类
+ * @author 1
+ *
+ */
 public class VoiceAutoMessage extends WechatAutoMessage {
+	/**
+	 * 自动回复语音消息类-内部类-语音
+	 * @author 1
+	 *
+	 */
 	public class Voice{
-		private String mediaId;
+		private String mediaId;		/**语音素材编号*/
 		public String getMediaId() {
 			return mediaId;
 		}

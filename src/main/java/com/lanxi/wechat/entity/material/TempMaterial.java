@@ -6,13 +6,17 @@ import java.net.URL;
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
-
+/**
+ * 微信素材类-临时素材
+ * @author 1
+ *
+ */
 public class TempMaterial extends WechatMaterial{
-	private String accessToken;
-	private String type;
-	private WechatMedia media;
+	private String accessToken;		/**授权凭证*/
+	private String type;			/**素材类型*/
+	private WechatMedia media;		/**素材文件*/
 
-	private String createdAt;
+	private String createdAt;		/**上传时间*/
 	public TempMaterial() {
 		media=new WechatMedia();
 	}
@@ -40,6 +44,10 @@ public class TempMaterial extends WechatMaterial{
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
 	}
+	/**
+	 * 上传临时素材
+	 * @return
+	 */
 	public String upload(){
 		try{
 			String rs=null;

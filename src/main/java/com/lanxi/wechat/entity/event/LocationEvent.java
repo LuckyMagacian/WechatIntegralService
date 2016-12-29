@@ -5,11 +5,15 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-事件消息类-上报地理位置消息类
+ * @author 1
+ *
+ */
 public class LocationEvent extends WechatEventMessage {
-	private String latitude;
-	private String longitude;
-	private String precision;
+	private String latitude;		/**经度*/
+	private String longitude;		/**纬度*/
+	private String precision;		/**位置精度*/
 	public LocationEvent() {
 		setEvent(EVENT_LOCATION);
 	}

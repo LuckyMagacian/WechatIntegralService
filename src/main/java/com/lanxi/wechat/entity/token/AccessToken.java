@@ -84,6 +84,9 @@ public class AccessToken {
 				+ accessToken + ", expiresIn=" + expiresIn + ", generatorTime=" + generatorTime + ", overTime="
 				+ overTime + "]";
 	}	
+	/**
+	 * 获取token-带自动刷新
+	 */
 	public void generatorToken(){
 		if(timer!=null)
 			timer.stop();
@@ -110,6 +113,9 @@ public class AccessToken {
 		timer.start();
 	}
 	
+	/**
+	 * 保存token到资源目录下的properties文件夹中
+	 */
 	public void saveToken(){
 		try{
 			File file=FileUtil.getFileOppositeClassPath("/properties/token.properties");
@@ -129,6 +135,10 @@ public class AccessToken {
 			throw new AppException("保存token异常",e);
 		}
 	}
+	/**
+	 * 从资源文件夹中加载token
+	 * @return
+	 */
 	public static AccessToken loadToken(){
 		try{
 			File file=FileUtil.getFileOppositeClassPath("/properties/token.properties");

@@ -1,12 +1,26 @@
 package com.lanxi.wechat.entity.token;
 
+import javax.swing.Timer;
+
+import com.alibaba.fastjson.JSONObject;
+/**
+ * 微信授权凭证-网页授权凭证
+ * @author 1
+ *
+ */
 public class WebAccessToken {
-	private String accessToken;
-	private String expiresIn;
-	private String refreshToken;
-	private String openId;
-	private String scope;
-	private String unionid;
+	private String accessToken;		/**网页凭证*/
+	private String expiresIn;		/**有效期*/
+	private WebRefreshToken refreshToken;/**刷新凭证*/
+	private String openId;			/**对应用户id*/
+	private String scope;			/**权限范围*/
+	private String unionid;			/**用户通用id*/
+	private String generatorTime;	/**生成时间*/
+	private String overTime;		/**过期时间*/
+	private Timer  timer;			/**定时器*/
+	public WebAccessToken(){
+		refreshToken=new WebRefreshToken();
+	}
 	public String getAccessToken() {
 		return accessToken;
 	}
@@ -19,10 +33,10 @@ public class WebAccessToken {
 	public void setExpiresIn(String expiresIn) {
 		this.expiresIn = expiresIn;
 	}
-	public String getRefreshToken() {
+	public WebRefreshToken getRefreshToken() {
 		return refreshToken;
 	}
-	public void setRefreshToken(String refreshToken) {
+	public void setRefreshToken(WebRefreshToken refreshToken) {
 		this.refreshToken = refreshToken;
 	}
 	public String getOpenId() {
@@ -43,5 +57,46 @@ public class WebAccessToken {
 	public void setUnionid(String unionid) {
 		this.unionid = unionid;
 	}
-	
+	public String getGeneratorTime() {
+		return generatorTime;
+	}
+	public void setGeneratorTime(String generatorTime) {
+		this.generatorTime = generatorTime;
+	}
+	public String getOverTime() {
+		return overTime;
+	}
+	public void setOverTime(String overTime) {
+		this.overTime = overTime;
+	}
+	public Timer getTimer() {
+		return timer;
+	}
+	public void setTimer(Timer timer) {
+		this.timer = timer;
+	}
+	public String refresh(){
+		String rs=getRefreshToken().freshWebAccessToken();
+		JSONObject jobj=JSONObject.parseObject(rs);
+		if(jobj.getString("errcode")!=null)
+			return null;
+		setAccessToken(jobj.getString("access_token"));
+		setExpiresIn(jobj.getString("expires_in"));
+		setOpenId(jobj.getString("openid"));
+		getRefreshToken().setRefreshToken(jobj.getString("refresh_token"));
+		setScope(jobj.getString("scope"));
+		return getAccessToken();
+	}
+	public WebAccessToken refreshMetadata(){
+		String rs=getRefreshToken().freshWebAccessToken();
+		JSONObject jobj=JSONObject.parseObject(rs);
+		if(jobj.getString("errcode")!=null)
+			return null;
+		setAccessToken(jobj.getString("access_token"));
+		setExpiresIn(jobj.getString("expires_in"));
+		setOpenId(jobj.getString("openid"));
+		getRefreshToken().setRefreshToken(jobj.getString("refresh_token"));
+		setScope(jobj.getString("scope"));
+		return this;
+	}
 }

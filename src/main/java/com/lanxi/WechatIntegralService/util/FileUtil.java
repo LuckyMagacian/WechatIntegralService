@@ -174,14 +174,15 @@ public class FileUtil {
 	 * @param file
 	 * @return
 	 */
+	@SuppressWarnings("resource")
 	public static byte[] getFileContentByte(File file){
 		try{
 			FileInputStream fin=new FileInputStream(file);
-			Integer temp=null;
-		    if(file.length()>Integer.MAX_VALUE)
+			if(file.length()>Integer.MAX_VALUE)
 		    	throw new AppException("文件太大无法读取");
 			byte[] bytes=new byte[(int)file.length()];
 			fin.read(bytes);
+			fin.close();
 			return bytes;
 		}catch (Exception e) {
 			new AppException("获取文件内容以byte形式异常", e);

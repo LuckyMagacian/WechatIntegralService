@@ -1,5 +1,9 @@
 package com.lanxi.wechat.manageer;
-
+/**
+ * 微信消息管理类
+ * @author 1
+ *
+ */
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 

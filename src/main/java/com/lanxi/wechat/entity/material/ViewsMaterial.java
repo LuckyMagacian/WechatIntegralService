@@ -1,15 +1,28 @@
 package com.lanxi.wechat.entity.material;
 
 import java.util.List;
-
+/**
+ * 微信素材类-永久素材-图文素材
+ * @author 1
+ *
+ */
 public class ViewsMaterial extends ForeverMaterial {
+	/**
+	 * 微信素材类-永久素材-图文素材内部类-文章
+	 * @author 1
+	 *
+	 */
 	public static class Article{
-		private String title;
-		private String thumbMediaId;
-		private String author;
-		private String showCoverPic;
-		private String content;
-		private String contentSourceUrl;
+		/**文章封面-显示*/
+		public static final String ARTICLE_SHOWCOVERPIC_ON ="1";
+		/**文章封面-不显示*/
+		public static final String ARTICLE_SHOWCOVERPIC_OFF="0";
+		private String title;			/**文章标题*/
+		private String thumbMediaId;	/**文章缩略图*/
+		private String author;			/**文章作者*/
+		private String showCoverPic;	/**文章是否显示封面*/
+		private String content;			/**文章内容*/
+		private String contentSourceUrl;/**文章原文链接*/
 		public String getTitle() {
 			return title;
 		}

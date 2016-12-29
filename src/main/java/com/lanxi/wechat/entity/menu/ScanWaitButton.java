@@ -1,7 +1,11 @@
 package com.lanxi.wechat.entity.menu;
-
+/**
+ * 微信菜单类-按键类-扫描二维码按键-显示正在扫描
+ * @author 1
+ *
+ */
 public class ScanWaitButton extends BaseButton{
-	private String key;
+	private String key;/**键值*/
 	public ScanWaitButton() {
 		setType(BUTTON_TYPE_SCANCODE_WAITMSG);
 	}

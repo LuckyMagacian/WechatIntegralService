@@ -5,9 +5,13 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-文本消息
+ * @author 1
+ *
+ */
 public class TextMessage extends WechatMessage {
-	private String content;
+	private String content;/**文本内容*/
 	public TextMessage() {
 		setMsgType(MESSAGE_TYPE_TEXT);
 	}

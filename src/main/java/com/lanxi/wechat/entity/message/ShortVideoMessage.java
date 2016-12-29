@@ -5,10 +5,14 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-小视频消息
+ * @author 1
+ *
+ */
 public class ShortVideoMessage extends WechatMessage {
-	private String mediaId;
-	private String thumbMediaId;
+	private String mediaId;		/**媒体素材编号*/
+	private String thumbMediaId;/**媒体素材缩略图*/
 	public ShortVideoMessage() {
 		setMsgType(MESSAGE_TYPE_SHORT_VIDEO);
 	}

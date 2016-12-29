@@ -8,10 +8,19 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-微信事件类-微信菜单事件类-点击菜单拍照发送
+ * @author 1
+ *
+ */
 public class SystemCameraMenuEvent extends WechatMenuEvent {
+	/**
+	 * 微信消息类-微信事件类-微信菜单事件类-点击菜单拍照发送类-内部类-图片
+	 * @author 1
+	 *
+	 */
 	public static class Item{
-		private String picMd5Sum;
+		private String picMd5Sum;/**图片md5摘要*/
 		public String getPicMd5Sum() {
 			return picMd5Sum;
 		}
@@ -31,6 +40,11 @@ public class SystemCameraMenuEvent extends WechatMenuEvent {
 			setPicMd5Sum(element.elementText("PicMd5Sum"));
 		}
 	}
+	/**
+	 * 微信消息类-微信事件类-微信菜单事件类-点击菜单拍照发送类-图片列表
+	 * @author 1
+	 *
+	 */
 	public static class PicList{
 		private List<Item> picList;
 		
@@ -59,6 +73,11 @@ public class SystemCameraMenuEvent extends WechatMenuEvent {
 			}
 		}
 	}
+	/**
+	 * 微信消息类-微信事件类-微信菜单事件类-点击菜单拍照发送类-内部类-发送图片信息
+	 * @author 1
+	 *
+	 */
 	public static class SendPicsInfo{
 		private String  count;
 		private PicList picList;

@@ -1,7 +1,11 @@
 package com.lanxi.wechat.entity.menu;
-
+/**
+ * 微信菜单类-按键类-上报地理位置按键
+ * @author 1
+ *
+ */
 public class LocationSelectButton extends BaseButton {
-	private String key;
+	private String key;	/**按键key值*/
 	public LocationSelectButton() {
 		setType(BUTTON_TYPE_LOCATION_SELECT);
 	}

@@ -5,12 +5,16 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-位置消息
+ * @author 1
+ *
+ */
 public class LocationMessage extends WechatMessage{
-	private String locationX;
-	private String locationY;
-	private String scale;
-	private String label;
+	private String locationX;/**经度*/
+	private String locationY;/**纬度*/
+	private String scale;	 /**精度,缩放比例*/	
+	private String label;	 /**位置字符串信息*/
 	
 	public String getLocationX() {
 		return locationX;

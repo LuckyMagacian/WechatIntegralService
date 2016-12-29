@@ -1,7 +1,11 @@
 package com.lanxi.wechat.entity.menu;
 
 import com.alibaba.fastjson.JSONObject;
-
+/**
+ * 微信菜单类-按键类-原始按键
+ * @author 1
+ *
+ */
 public abstract class BaseButton implements WechatButton {
 	/**菜单按键类型-点击推*/
 	public static final String BUTTON_TYPE_CLICK="click";
@@ -24,8 +28,8 @@ public abstract class BaseButton implements WechatButton {
 	/**菜单按键类型-跳转图文消息URL*/
 	public static final String BUTTON_TYPE_VIEW_LIMITED="view_limited";
 
-	private String type;
-	private String name;
+	private String type;		/**按键类型*/
+	private String name;		/**按键名称*/
 	public String getType() {
 		return type;
 	}
@@ -42,6 +46,10 @@ public abstract class BaseButton implements WechatButton {
 	public String toString() {
 		return "MenuInfo [type=" + type + ", name=" + name + "]";
 	}
+	/**
+	 * 将按键内容转为json字符串
+	 * @return
+	 */
 	public  String toJson(){
 		return JSONObject.toJSONString(this);
 	}

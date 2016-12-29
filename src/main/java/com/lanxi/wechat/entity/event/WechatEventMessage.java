@@ -6,7 +6,11 @@ import org.dom4j.dom.DOMElement;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.wechat.entity.message.BaseMessage;
 import com.lanxi.wechat.entity.message.WechatMessage;
-
+/**
+ * 微信消息类-事件消息类
+ * @author 1
+ *
+ */
 public abstract class WechatEventMessage extends BaseMessage{
 	/**事件消息类型-用户关注*/
 	public static final String EVENT_SUBSCRIBE="subscribe";
@@ -38,7 +42,7 @@ public abstract class WechatEventMessage extends BaseMessage{
 	/**菜单事件消息类型-弹出地理位置选择器*/
 	public static final String MENU_EVENT_LOCATION_SELECT="location_select";
 
-	private String event;
+	private String event;	/**事件类型*/
 	public WechatEventMessage() {
 		setMsgType(WechatMessage.MESSAGE_TYPE_EVENT);
 	}

@@ -5,12 +5,21 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-自动消息类-自动回复视频消息类
+ * @author 1
+ *
+ */
 public class VideoAutoMessage extends WechatAutoMessage {
+	/**
+	 * 自动回复视频消息类-内部类-视频
+	 * @author 1
+	 *
+	 */
 	public class Video{
-		private String mediaId;
-		private String title;
-		private String description;
+		private String mediaId;		/**素材编号*/
+		private String title;		/**视频标题*/
+		private String description;	/**视频描述*/
 		public String getMediaId() {
 			return mediaId;
 		}

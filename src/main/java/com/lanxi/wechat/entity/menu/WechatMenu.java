@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
-
+/**
+ * 微信菜单类
+ * @author 1
+ *
+ */
 public class WechatMenu {
 	private List<WechatButton> button;	
 	

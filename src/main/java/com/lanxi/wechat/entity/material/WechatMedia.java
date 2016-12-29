@@ -10,15 +10,19 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信媒体类
+ * @author 1
+ *
+ */
 public class WechatMedia {
-	public static final String BOUNDARY="----------"+System.currentTimeMillis();;
-	private File file;
-	private String connection;
-	private String charset;
-	private String contentType;
-	private String contentDisposition;
-	private String contentLenght;
+	public static final String BOUNDARY="----------"+System.currentTimeMillis();/**表单分隔符*/
+	private File file;					/**媒体文件*/
+	private String connection;			/**上传后返回的获取链接*/
+	private String charset;				/**字符集*/
+	private String contentType;			/**内容形式*/
+	private String contentDisposition;	/**内容描述*/
+	private String contentLenght;		/**内容长度*/
 	public String getConnection() {
 		return connection;
 	}
@@ -66,7 +70,10 @@ public class WechatMedia {
 	public void setFile(File file) {
 		this.file = file;
 	}
-	
+	/**
+	 * 配置链接
+	 * @param conn
+	 */
 	public void initConnection(HttpURLConnection conn){
 		try {
 			conn.setRequestMethod("POST");
@@ -83,7 +90,10 @@ public class WechatMedia {
 			throw new AppException("设置链接异常",e);
 		}
 	}
-	
+	/**
+	 * 发送表单头部消息
+	 * @param conn
+	 */
 	public  void postHead(HttpURLConnection conn){
 		try{
 			initConnection(conn);
@@ -100,7 +110,10 @@ public class WechatMedia {
 			throw new AppException("发送头部消息异常",e);
 		}
 	}
-	
+	/**
+	 * 发送媒体文件
+	 * @param conn
+	 */
 	public void postFile(HttpURLConnection conn){
 		try {
 			if(file==null){
@@ -116,7 +129,10 @@ public class WechatMedia {
 			throw new AppException("发送文件异常",e);
 		}
 	}
-	
+	/**
+	 * 发送尾部消息
+	 * @param conn
+	 */
 	public void postTail(HttpURLConnection conn){
 		try{
 			StringBuffer foot=new StringBuffer();
@@ -129,7 +145,11 @@ public class WechatMedia {
 			throw new AppException("发送消息尾异常",e);
 		}
 	}
-	
+	/**
+	 * 读取响应消息
+	 * @param conn
+	 * @return
+	 */
 	public String readResponse(HttpURLConnection conn){
 		try{
 			StringBuffer buffer=new StringBuffer();
@@ -142,13 +162,22 @@ public class WechatMedia {
 			throw new AppException("读取响应消息异常",e);
 		}
 	}
-	
+	/**
+	 * 上次媒体文件
+	 * @param conn
+	 * @return
+	 */
 	public String uploadMedia(HttpURLConnection conn){
 		postHead(conn);
 		postFile(conn);
 		postTail(conn);
 		return readResponse(conn);
 	}
+	/**
+	 * 下载媒体文件
+	 * @param conn
+	 * @return
+	 */
 	public WechatMedia downloadMedia(HttpURLConnection conn){
 		try{
 			setConnection(conn.getHeaderField("Connection"));
@@ -160,8 +189,7 @@ public class WechatMedia {
 			file=new File(fileName);
 			FileOutputStream fout=new FileOutputStream(file);
 			byte[] buffer=new byte[1024];
-			int temp=-1;
-			while((temp=in.read(buffer))!=-1)
+			while(in.read(buffer)!=-1)
 				fout.write(buffer);
 			in.close();
 			fout.close();

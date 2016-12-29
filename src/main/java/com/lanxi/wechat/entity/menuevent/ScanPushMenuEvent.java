@@ -5,11 +5,20 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-微信事件类-微信菜单事件类-点击菜单扫描二维码
+ * @author 1
+ *
+ */
 public class ScanPushMenuEvent extends WechatMenuEvent {
+	/**
+	 * 微信消息类-微信事件类-微信菜单事件类-点击菜单扫描二维码类-内部类-二维码信息
+	 * @author 1
+	 *
+	 */
 	public static class ScanCodeInfo{
-		private String scanType;
-		private String scanResult;
+		private String scanType;		/**扫描类型-一般为qrcode*/
+		private String scanResult;		/**扫描结果-二维码对应的字符串信息*/
 		
 		public String getScanType() {
 			return scanType;

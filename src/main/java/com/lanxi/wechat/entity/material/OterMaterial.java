@@ -1,11 +1,15 @@
 package com.lanxi.wechat.entity.material;
 
 import java.net.HttpURLConnection;
-
+/**
+ * 微信素材类-永久素材-其他素材
+ * @author 1
+ *
+ */
 public class OterMaterial extends ForeverMaterial {
-	private String type;
-	private String accessToken;
-	private WechatMedia media;
+	private String type;		/**素材类型*/
+	private String accessToken;	/**授权凭证*/
+	private WechatMedia media;	/**媒体文件*/
 	public String getType() {
 		return type;
 	}

@@ -6,7 +6,11 @@ import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.wechat.entity.menuevent.SystemCameraMenuEvent.SendPicsInfo;
-
+/**
+ * 微信消息类-微信事件类-微信菜单事件类-点击菜单调用微信拍照
+ * @author 1
+ *
+ */
 public class WechatCameraMenuEvent extends WechatMenuEvent {
 	private SystemCameraMenuEvent.SendPicsInfo sendPicsInfo;
 	public WechatCameraMenuEvent() {

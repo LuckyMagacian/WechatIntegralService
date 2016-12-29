@@ -5,10 +5,14 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-图片消息
+ * @author 1
+ *
+ */
 public class ImageMessage extends WechatMessage {
-	private String mediaId;
-	private String picUrl;
+	private String mediaId;	/**图片素材编号*/
+	private String picUrl;	/**图片链接*/
 	public ImageMessage() {
 		setMsgType(MESSAGE_TYPE_IMAGE);
 	}

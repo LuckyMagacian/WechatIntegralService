@@ -5,14 +5,23 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-自动消息类-自动回复音乐消息类
+ * @author 1
+ *
+ */
 public class MusicAutoMessage extends WechatAutoMessage {
+	/**
+	 * 自动回复音乐消息类-内部类-音乐
+	 * @author 1
+	 *
+	 */
 	public class Music{
-		private String title;
-		private String description;
-		private String musicUrl;	//=>MusicURL
-		private String hqMusicUrl;	//=>HQMusicUrl
-		private String thumbMediaId;
+		private String title;		/**音乐标题*/
+		private String description; /**音乐描述*/
+		private String musicUrl;	/**音乐链接*/		//=>MusicURL	
+		private String hqMusicUrl;	/**高清链接*/			//=>HQMusicUrl
+		private String thumbMediaId;/**缩略图素材编号*/
 		public String getTitle() {
 			return title;
 		}

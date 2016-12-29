@@ -1,10 +1,13 @@
 package com.lanxi.WechatIntegralService.test;
 
+import java.util.Arrays;
+
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.dom.DOMElement;
 import org.junit.Test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lanxi.wechat.entity.automessage.VoiceAutoMessage;
 import com.lanxi.wechat.entity.message.BaseMessage;
 import com.lanxi.wechat.entity.message.TextMessage;
@@ -53,5 +56,10 @@ public class TestOther {
 		TextMessage message=new TextMessage();
 		message.fromString(text.toElement().asXML());
 		System.out.println(message.toElement().asXML());
+	}
+	@Test
+	public void testJsonParse(){
+		String str="{\"privilege\":[ \"PRIVILEGE1\",\"PRIVILEGE2\"     ]}";
+		System.out.println(Arrays.asList(JSONObject.parseObject(str).getJSONArray("privilege").toArray()));
 	}
 }

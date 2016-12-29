@@ -1,13 +1,17 @@
 package com.lanxi.wechat.entity.menu;
-
+/**
+ * 微信菜单类-按键类-子菜单按键
+ * @author 1
+ *
+ */
 import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSONObject;
 
 public class SubButton implements WechatButton{
-	private String name;
-	private List<BaseButton> subButton;
+	private String name;				/**子菜单名称*/
+	private List<BaseButton> subButton;	/**子菜单按键*/
 	public SubButton() {
 		subButton=new ArrayList<>();
 	}

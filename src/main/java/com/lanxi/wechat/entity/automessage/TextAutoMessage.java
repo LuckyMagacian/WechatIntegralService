@@ -5,9 +5,13 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
-
+/**
+ * 微信消息类-自动消息类-自动回复文本消息类
+ * @author 1
+ *
+ */
 public class TextAutoMessage extends WechatAutoMessage {
-	private String content;
+	private String content;	/**文本内容*/
 
 	public TextAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_TEXT);

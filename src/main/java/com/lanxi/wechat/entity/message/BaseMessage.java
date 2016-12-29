@@ -9,7 +9,11 @@ import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.BeanUtil;
-
+/**
+ * 微信消息类
+ * @author 1
+ *
+ */
 public abstract class BaseMessage {
 	/**微信消息类型-文本消息*/
 	public static final String MESSAGE_TYPE_TEXT		="text";

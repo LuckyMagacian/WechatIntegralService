@@ -1,14 +1,18 @@
 package com.lanxi.wechat.entity.user;
 
 import com.alibaba.fastjson.JSONObject;
-
+/**
+ * 用户信息类-基本信息
+ * @author 1
+ *
+ */
 public class BaseUserInfo {
 	/**用户关注状态-关注*/
 	public static final String USER_SUBSCRIBE_STATUS_SUB="1";
 	/**用户关注状态-未关注*/
 	public static final String USER_SUBSCRIBE_STATUS_UNSUB="0";
-	private String openId;
-	private String subscribe;
+	private String openId;		/**用户微信号-对公众号唯一*/
+	private String subscribe;	/**用户关注状态*/
 	public String getOpenId() {
 		return openId;
 	}
@@ -26,4 +30,9 @@ public class BaseUserInfo {
 		setOpenId(jobj.getString("openid"));
 		setSubscribe(jobj.getString("subscribe"));
 	}
+	@Override
+	public String toString() {
+		return JSONObject.toJSONString(this);
+	}
+	
 }	

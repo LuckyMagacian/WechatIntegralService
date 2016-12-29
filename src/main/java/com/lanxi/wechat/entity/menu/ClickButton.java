@@ -1,7 +1,11 @@
 package com.lanxi.wechat.entity.menu;
-
+/**
+ * 微信菜单类-按键类-点击下拉消息按键
+ * @author 1
+ *
+ */
 public class ClickButton extends BaseButton {
-	private String key;
+	private String key;	/**按键key值*/
 	
 	public ClickButton() {
 		setType(BUTTON_TYPE_CLICK);
