@@ -8,19 +8,23 @@ import org.dom4j.dom.DOMElement;
  *
  */
 public class HistoryReqBody implements Body {
-	/**业务流水号*/
-	private String businessId;
 	/**请求时间，格式yyyymmddhhmmss*/
 	private String reqDate;
-	/**发起机构号*/
-	private String orgId;
-	/**备用字段*/
-	private String reserve;
-	public String getBusinessId() {
-		return businessId;
+	/**帐号类型 0-账户号 1-卡号*/
+	private String idType;		
+	/**号码*/
+	private String idNo;		
+	public String getIdType() {
+		return idType;
 	}
-	public void setBusinessId(String businessId) {
-		this.businessId = businessId;
+	public void setIdType(String idType) {
+		this.idType = idType;
+	}
+	public String getIdNo() {
+		return idNo;
+	}
+	public void setIdNo(String idNo) {
+		this.idNo = idNo;
 	}
 	public String getReqDate() {
 		return reqDate;
@@ -28,34 +32,25 @@ public class HistoryReqBody implements Body {
 	public void setReqDate(String reqDate) {
 		this.reqDate = reqDate;
 	}
-	public String getOrgId() {
-		return orgId;
-	}
-	public void setOrgId(String orgId) {
-		this.orgId = orgId;
-	}
-	public String getReserve() {
-		return reserve;
-	}
-	public void setReserve(String reserve) {
-		this.reserve = reserve;
+	@Override
+	public String toString() {
+		return "Body [idType=" + idType + ", idNo=" + idNo +"]";
 	}
 	@Override
-	public Element toElement() {
+	public Element toElement(){
 		DOMElement element=new DOMElement(NAME);
-		element.addElement("businessId").setText(businessId);
+		element.addElement("idType").setText(idType);
+		element.addElement("idNo").setText(idNo);
 		element.addElement("reqDate").setText(reqDate);
-		element.addElement("orgId").setText(orgId);
-		element.addElement("reserve").setText(reserve);
 		return element;
 	}
-	@Override
-	public Body fromElement(Element element) {
-		setBusinessId(element.elementText("businessId"));
-		setReqDate(element.elementText("reqDate"));
-		setOrgId(element.elementText("orgId"));
-		setReserve(element.elementText("reserve"));
+	public Body fromElement(Element element){
+		if(element.getName().trim().equals(NAME)){
+			setIdType(element.elementText("idType"));
+			setIdNo(element.elementText("idNo"));
+			setReqDate(element.elementText("reqDate"));
+		}
 		return this;
 	}
-	
+
 }

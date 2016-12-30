@@ -3,6 +3,8 @@ package com.lanxi.integral.report;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
+import com.lanxi.WechatIntegralService.util.AppException;
+
 public class Original {
 	/**xml节点名称*/
 	public static final String NAME="original";
@@ -11,7 +13,18 @@ public class Original {
 	private ReqHead head;
 	/**报文信息*/
 	private Body body;
-	
+	public Original(){
+		
+	}
+	public Original(Class<?extends ReqHead> headClass,Class<? extends Body> bodyClass){
+		try {
+			head=headClass.newInstance();
+			body=bodyClass.newInstance();
+		} catch (Exception e) {
+			throw new AppException("实例化报文异常",e);
+		}
+		
+	}
 	public ReqHead getHead() {
 		return head;
 	}
@@ -34,14 +47,11 @@ public class Original {
 		element.add(body.toElement());
 		return element;
 	}
-	public static Original fromElement(Element element){
-		Original original=null;
-		if(element.getName().trim().equals(NAME)){
-			original=new Original();
-			original=new Original();
-			original.setHead(ResHead.fromElement(element.element(ReqHead.NAME)));
-//			original.setBody(new Body));
-		}
-		return original;
-	}
+//	public  Original fromElement(Element element){
+//		if(element.getName().trim().equals(NAME)){
+//			setHead(ResHead.fromElement(element.element(ReqHead.NAME)));
+////			original.setBody(new Body));
+//		}
+//		return original;
+//	}
 }

@@ -37,30 +37,30 @@ public class JFBaoWen {
 		document.setXMLEncoding(ConfigUtil.get("charset"));
 		return document;
 	}
-	/**
-	 * 用xml文档设置报文对象
-	 * @param document
-	 * @return
-	 */
-	public static JFBaoWen fromDocument(Document document){
-		JFBaoWen baoWen=null;
-		if(document.getRootElement().getName().trim().equals(JFPoints.NAME)){
-			baoWen=new JFBaoWen();
-			baoWen.setPoints(JFPoints.fromElement(document.getRootElement()));
-		}
-		return baoWen;
-	}
-	/**
-	 * 用xml字符串构造报文对象
-	 * @param docStr
-	 * @return
-	 */
-	public static JFBaoWen fromDocStr(String docStr){
-		try {
-			return fromDocument(DocumentHelper.parseText(docStr));
-		} catch (DocumentException e) {
-			throw new AppException("字符串转报文异常",e);
-		}
-	}
+//	/**
+//	 * 用xml文档设置报文对象
+//	 * @param document
+//	 * @return
+//	 */
+//	public static JFBaoWen fromDocument(Document document){
+//		JFBaoWen baoWen=null;
+//		if(document.getRootElement().getName().trim().equals(JFPoints.NAME)){
+//			baoWen=new JFBaoWen();
+//			baoWen.setPoints(JFPoints.fromElement(document.getRootElement()));
+//		}
+//		return baoWen;
+//	}
+//	/**
+//	 * 用xml字符串构造报文对象
+//	 * @param docStr
+//	 * @return
+//	 */
+//	public static JFBaoWen fromDocStr(String docStr){
+//		try {
+//			return fromDocument(DocumentHelper.parseText(docStr));
+//		} catch (DocumentException e) {
+//			throw new AppException("字符串转报文异常",e);
+//		}
+//	}
 }
 

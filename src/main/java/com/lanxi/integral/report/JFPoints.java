@@ -61,13 +61,13 @@ public class JFPoints {
 		element.addElement("sign").setText(sign);
 		return element;
 	}
-	public static JFPoints fromElement(Element element){
-		JFPoints points=null;
-		if(element!=null&&element.getName().trim().equals(NAME)){
-			points=new JFPoints();
-			points.setOriginal(Original.fromElement(element.element(Original.NAME)));
-			points.setSign(element.elementText("sign"));
-		}
-		return points;
-	}
+//	public static JFPoints fromElement(Element element){
+//		JFPoints points=null;
+//		if(element!=null&&element.getName().trim().equals(NAME)){
+//			points=new JFPoints();
+//			points.setOriginal(Original.fromElement(element.element(Original.NAME)));
+//			points.setSign(element.elementText("sign"));
+//		}
+//		return points;
+//	}
 }

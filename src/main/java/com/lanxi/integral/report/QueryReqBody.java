@@ -8,12 +8,6 @@ import org.dom4j.dom.DOMElement;
  *
  */
 public class QueryReqBody implements Body{
-	/**账户类型-帐号*/
-	public static final String CUST_ID_TYPE_ACCOUNT="0";
-	/**账户类型-卡号*/
-	public static final String CUST_ID_TYPE_CART="1";
-	/**xml节点名称*/
-	public static final String NAME="body";
 	/**帐号类型 0-账户号 1-卡号*/
 	private String idType;		
 	/**号码*/
