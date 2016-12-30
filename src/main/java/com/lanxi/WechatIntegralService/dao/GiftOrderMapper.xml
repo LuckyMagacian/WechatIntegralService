@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lanxi.WechatIntegralService.dao.GiftOrderDao">
+<insert id="addGiftOrder" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder">
+insert into wechat_integral_service_gift_order 
+(order_id,open_id,gift_id,gift_count,work_time,status,res_code,more_info,res_msg,remark,beiy)
+values
+(#{orderId},#{openId},#{giftId},#{giftCount},#{workTime},#{status},#{resCode},#{moreInfo},#{resMsg},#{remark},#{beiy})
+</insert>
+<insert id="addGiftOrderDefault" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder">
+insert into wechat_integral_service_gift_order 
+(order_id,open_id,gift_id,gift_count,work_time,status,res_code,more_info,res_msg,remark,beiy)
+values
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+<delete id="deleteGiftOrder" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder">
+delete from wechat_integral_service_gift_order
+<where>
+<if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
+<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
+<if test="giftId != null and giftId!=''"> and gift_id = #{giftId}  </if>  
+<if test="giftCount != null and giftCount!=''"> and gift_count = #{giftCount}  </if>  
+<if test="workTime != null and workTime!=''"> and work_time = #{workTime}  </if>  
+<if test="status != null and status!=''"> and status = #{status}  </if>  
+<if test="resCode != null and resCode!=''"> and res_code = #{resCode}  </if>  
+<if test="moreInfo != null and moreInfo!=''"> and more_info = #{moreInfo}  </if>  
+<if test="resMsg != null and resMsg!=''"> and res_msg = #{resMsg}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</delete>
+<update id="updateGiftOrder" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder">
+update wechat_integral_service_gift_order
+<set> 
+<if test="orderId != null and orderId!=''">order_id = #{orderId},</if>  
+<if test="openId != null and openId!=''">open_id = #{openId},</if>  
+<if test="giftId != null and giftId!=''">gift_id = #{giftId},</if>  
+<if test="giftCount != null and giftCount!=''">gift_count = #{giftCount},</if>  
+<if test="workTime != null and workTime!=''">work_time = #{workTime},</if>  
+<if test="status != null and status!=''">status = #{status},</if>  
+<if test="resCode != null and resCode!=''">res_code = #{resCode},</if>  
+<if test="moreInfo != null and moreInfo!=''">more_info = #{moreInfo},</if>  
+<if test="resMsg != null and resMsg!=''">res_msg = #{resMsg},</if>  
+<if test="remark != null and remark!=''">remark = #{remark},</if>  
+<if test="beiy != null and beiy!=''">beiy = #{beiy},</if>  
+</set>
+<where>
+<if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
+<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
+<if test="giftId != null and giftId!=''"> and gift_id = #{giftId}  </if>  
+<if test="giftCount != null and giftCount!=''"> and gift_count = #{giftCount}  </if>  
+<if test="workTime != null and workTime!=''"> and work_time = #{workTime}  </if>  
+<if test="status != null and status!=''"> and status = #{status}  </if>  
+<if test="resCode != null and resCode!=''"> and res_code = #{resCode}  </if>  
+<if test="moreInfo != null and moreInfo!=''"> and more_info = #{moreInfo}  </if>  
+<if test="resMsg != null and resMsg!=''"> and res_msg = #{resMsg}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</update>
+<select id="selectGiftOrder" resultMap="giftOrderMap" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder" resultType="com.lanxi.WechatIntegralService.entity.GiftOrder">
+select
+order_id,open_id,gift_id,gift_count,work_time,status,res_code,more_info,res_msg,remark,beiy
+from wechat_integral_service_gift_order
+<where> 
+<if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
+<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
+<if test="giftId != null and giftId!=''"> and gift_id = #{giftId}  </if>  
+<if test="giftCount != null and giftCount!=''"> and gift_count = #{giftCount}  </if>  
+<if test="workTime != null and workTime!=''"> and work_time = #{workTime}  </if>  
+<if test="status != null and status!=''"> and status = #{status}  </if>  
+<if test="resCode != null and resCode!=''"> and res_code = #{resCode}  </if>  
+<if test="moreInfo != null and moreInfo!=''"> and more_info = #{moreInfo}  </if>  
+<if test="resMsg != null and resMsg!=''"> and res_msg = #{resMsg}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</select>
+<resultMap id="giftOrderMap" type="com.lanxi.WechatIntegralService.entity.GiftOrder">
+<result property="orderId" 			column="order_id"></result>
+<result property="openId" 			column="open_id"></result>
+<result property="giftId" 			column="gift_id"></result>
+<result property="giftCount" 			column="gift_count"></result>
+<result property="workTime" 			column="work_time"></result>
+<result property="status" 			column="status"></result>
+<result property="resCode" 			column="res_code"></result>
+<result property="moreInfo" 			column="more_info"></result>
+<result property="resMsg" 			column="res_msg"></result>
+<result property="remark" 			column="remark"></result>
+<result property="beiy" 			column="beiy"></result>
+</resultMap>
+</mapper>

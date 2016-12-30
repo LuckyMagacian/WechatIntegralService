@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lanxi.WechatIntegralService.dao.IntegralTransferDao">
+<insert id="addIntegralTransfer" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+insert into wechat_integral_service_integral_transfer 
+(serial_id,plateform_serial_id,giver_open_id,receiver_id_card,receiver_phone,integral,transfer_time,result,remark,beiy)
+values
+(#{serialId},#{plateformSerialId},#{giverOpenId},#{receiverIdCard},#{receiverPhone},#{integral},#{transferTime},#{result},#{remark},#{beiy})
+</insert>
+<insert id="addIntegralTransferDefault" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+insert into wechat_integral_service_integral_transfer 
+(serial_id,plateform_serial_id,giver_open_id,receiver_id_card,receiver_phone,integral,transfer_time,result,remark,beiy)
+values
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+<delete id="deleteIntegralTransfer" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+delete from wechat_integral_service_integral_transfer
+<where>
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
+<if test="giverOpenId != null and giverOpenId!=''"> and giver_open_id = #{giverOpenId}  </if>  
+<if test="receiverIdCard != null and receiverIdCard!=''"> and receiver_id_card = #{receiverIdCard}  </if>  
+<if test="receiverPhone != null and receiverPhone!=''"> and receiver_phone = #{receiverPhone}  </if>  
+<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
+<if test="transferTime != null and transferTime!=''"> and transfer_time = #{transferTime}  </if>  
+<if test="result != null and result!=''"> and result = #{result}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</delete>
+<update id="updateIntegralTransfer" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+update wechat_integral_service_integral_transfer
+<set> 
+<if test="serialId != null and serialId!=''">serial_id = #{serialId},</if>  
+<if test="plateformSerialId != null and plateformSerialId!=''">plateform_serial_id = #{plateformSerialId},</if>  
+<if test="giverOpenId != null and giverOpenId!=''">giver_open_id = #{giverOpenId},</if>  
+<if test="receiverIdCard != null and receiverIdCard!=''">receiver_id_card = #{receiverIdCard},</if>  
+<if test="receiverPhone != null and receiverPhone!=''">receiver_phone = #{receiverPhone},</if>  
+<if test="integral != null and integral!=''">integral = #{integral},</if>  
+<if test="transferTime != null and transferTime!=''">transfer_time = #{transferTime},</if>  
+<if test="result != null and result!=''">result = #{result},</if>  
+<if test="remark != null and remark!=''">remark = #{remark},</if>  
+<if test="beiy != null and beiy!=''">beiy = #{beiy},</if>  
+</set>
+<where>
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
+<if test="giverOpenId != null and giverOpenId!=''"> and giver_open_id = #{giverOpenId}  </if>  
+<if test="receiverIdCard != null and receiverIdCard!=''"> and receiver_id_card = #{receiverIdCard}  </if>  
+<if test="receiverPhone != null and receiverPhone!=''"> and receiver_phone = #{receiverPhone}  </if>  
+<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
+<if test="transferTime != null and transferTime!=''"> and transfer_time = #{transferTime}  </if>  
+<if test="result != null and result!=''"> and result = #{result}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</update>
+<select id="selectIntegralTransfer" resultMap="integralTransferMap" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer" resultType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+select
+serial_id,plateform_serial_id,giver_open_id,receiver_id_card,receiver_phone,integral,transfer_time,result,remark,beiy
+from wechat_integral_service_integral_transfer
+<where> 
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
+<if test="giverOpenId != null and giverOpenId!=''"> and giver_open_id = #{giverOpenId}  </if>  
+<if test="receiverIdCard != null and receiverIdCard!=''"> and receiver_id_card = #{receiverIdCard}  </if>  
+<if test="receiverPhone != null and receiverPhone!=''"> and receiver_phone = #{receiverPhone}  </if>  
+<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
+<if test="transferTime != null and transferTime!=''"> and transfer_time = #{transferTime}  </if>  
+<if test="result != null and result!=''"> and result = #{result}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</select>
+<resultMap id="integralTransferMap" type="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
+<result property="serialId" 			column="serial_id"></result>
+<result property="plateformSerialId" 			column="plateform_serial_id"></result>
+<result property="giverOpenId" 			column="giver_open_id"></result>
+<result property="receiverIdCard" 			column="receiver_id_card"></result>
+<result property="receiverPhone" 			column="receiver_phone"></result>
+<result property="integral" 			column="integral"></result>
+<result property="transferTime" 			column="transfer_time"></result>
+<result property="result" 			column="result"></result>
+<result property="remark" 			column="remark"></result>
+<result property="beiy" 			column="beiy"></result>
+</resultMap>
+</mapper>

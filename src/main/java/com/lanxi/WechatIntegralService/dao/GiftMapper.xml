@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lanxi.WechatIntegralService.dao.GiftDao">
+<insert id="addGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
+insert into wechat_integral_service_gift 
+(id,merchant_id,name,game_id,prize_level,integral_value,price,count)
+values
+(#{id},#{merchantId},#{name},#{gameId},#{prizeLevel},#{integralValue},#{price},#{count})
+</insert>
+<insert id="addGiftDefault" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
+insert into wechat_integral_service_gift 
+(id,merchant_id,name,game_id,prize_level,integral_value,price,count)
+values
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+<delete id="deleteGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
+delete from wechat_integral_service_gift
+<where>
+<if test="id != null and id!=''"> and id = #{id}  </if>  
+<if test="merchantId != null and merchantId!=''"> and merchant_id = #{merchantId}  </if>  
+<if test="name != null and name!=''"> and name = #{name}  </if>  
+<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
+<if test="prizeLevel != null and prizeLevel!=''"> and prize_level = #{prizeLevel}  </if>  
+<if test="integralValue != null and integralValue!=''"> and integral_value = #{integralValue}  </if>  
+<if test="price != null and price!=''"> and price = #{price}  </if>  
+<if test="count != null and count!=''"> and count = #{count}  </if>  
+</where>
+</delete>
+<update id="updateGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
+update wechat_integral_service_gift
+<set> 
+<if test="id != null and id!=''">id = #{id},</if>  
+<if test="merchantId != null and merchantId!=''">merchant_id = #{merchantId},</if>  
+<if test="name != null and name!=''">name = #{name},</if>  
+<if test="gameId != null and gameId!=''">game_id = #{gameId},</if>  
+<if test="prizeLevel != null and prizeLevel!=''">prize_level = #{prizeLevel},</if>  
+<if test="integralValue != null and integralValue!=''">integral_value = #{integralValue},</if>  
+<if test="price != null and price!=''">price = #{price},</if>  
+<if test="count != null and count!=''">count = #{count},</if>  
+</set>
+<where>
+<if test="id != null and id!=''"> and id = #{id}  </if>  
+<if test="merchantId != null and merchantId!=''"> and merchant_id = #{merchantId}  </if>  
+<if test="name != null and name!=''"> and name = #{name}  </if>  
+<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
+<if test="prizeLevel != null and prizeLevel!=''"> and prize_level = #{prizeLevel}  </if>  
+<if test="integralValue != null and integralValue!=''"> and integral_value = #{integralValue}  </if>  
+<if test="price != null and price!=''"> and price = #{price}  </if>  
+<if test="count != null and count!=''"> and count = #{count}  </if>  
+</where>
+</update>
+<select id="selectGift" resultMap="giftMap" parameterType="com.lanxi.WechatIntegralService.entity.Gift" resultType="com.lanxi.WechatIntegralService.entity.Gift">
+select
+id,merchant_id,name,game_id,prize_level,integral_value,price,count
+from wechat_integral_service_gift
+<where> 
+<if test="id != null and id!=''"> and id = #{id}  </if>  
+<if test="merchantId != null and merchantId!=''"> and merchant_id = #{merchantId}  </if>  
+<if test="name != null and name!=''"> and name = #{name}  </if>  
+<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
+<if test="prizeLevel != null and prizeLevel!=''"> and prize_level = #{prizeLevel}  </if>  
+<if test="integralValue != null and integralValue!=''"> and integral_value = #{integralValue}  </if>  
+<if test="price != null and price!=''"> and price = #{price}  </if>  
+<if test="count != null and count!=''"> and count = #{count}  </if>  
+</where>
+</select>
+<resultMap id="giftMap" type="com.lanxi.WechatIntegralService.entity.Gift">
+<result property="id" 			column="id"></result>
+<result property="merchantId" 			column="merchant_id"></result>
+<result property="name" 			column="name"></result>
+<result property="gameId" 			column="game_id"></result>
+<result property="prizeLevel" 			column="prize_level"></result>
+<result property="integralValue" 			column="integral_value"></result>
+<result property="price" 			column="price"></result>
+<result property="count" 			column="count"></result>
+</resultMap>
+</mapper>

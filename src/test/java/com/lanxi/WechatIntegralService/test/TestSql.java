@@ -19,6 +19,7 @@ public class TestSql {
 	public void test(){
 		Class[] classes=new Class[]{AccountBinding.class,Game.class,Gift.class,GiftOrder.class,IntegralGame.class,IntegralRedPacket.class,IntegralTransfer.class,RedPacketReceive.class};
 		for(Class<?> each:classes)
-			SqlUtil.createAll(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));
+			SqlUtil.createMapperFile(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));
+			//SqlUtil.createAll(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));
 	}
 }
