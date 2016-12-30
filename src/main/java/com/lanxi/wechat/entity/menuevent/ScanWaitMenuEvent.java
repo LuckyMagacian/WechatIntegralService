@@ -12,7 +12,8 @@ import com.lanxi.wechat.entity.menuevent.ScanPushMenuEvent.ScanCodeInfo;
  *
  */
 public class ScanWaitMenuEvent extends WechatMenuEvent {
-	private ScanCodeInfo codeInfo;/**二维码信息*/
+	/**二维码信息*/
+	private ScanCodeInfo codeInfo;
 	public ScanWaitMenuEvent() {
 		setMsgType(MENU_EVENT_SCANCODE_WAITMSG);
 		codeInfo=new ScanCodeInfo();

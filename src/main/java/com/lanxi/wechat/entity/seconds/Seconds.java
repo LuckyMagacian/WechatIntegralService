@@ -19,13 +19,20 @@ public class Seconds {
 	public static final String SECONDS_ACTION_NAME_QRTYPE_FOREVER_STR="QR_LIMIT_STR_SCENE";
 
 	//------------------------------req---------------------------------
-	private String expireSeconds;	/**临时二维码请求有效期*/
-	private String actionName;		/**二维码类型*/
-	private String actionInfo;		/**二维码详细信息*/
-	private String sceneId;			/**二维码场景编号1-100000*/
-	private String sceneStr;		/**场景值id,1-64位,限永久二维码*/
+	/**临时二维码请求有效期*/
+	private String expireSeconds;	
+	/**二维码类型*/
+	private String actionName;		
+	/**二维码详细信息*/
+	private String actionInfo;		
+	/**二维码场景编号1-100000*/
+	private String sceneId;			
+	/**场景值id,1-64位,限永久二维码*/
+	private String sceneStr;		
 	//-------------------------------res--------------------------------
+	/**二维码获取凭证-用于兑换二维码图片*/
 	private String ticket;
+	/**二维码链接*/
 	private String url;
 	public String getExpireSeconds() {
 		return expireSeconds;

@@ -42,7 +42,8 @@ public abstract class WechatEventMessage extends BaseMessage{
 	/**菜单事件消息类型-弹出地理位置选择器*/
 	public static final String MENU_EVENT_LOCATION_SELECT="location_select";
 
-	private String event;	/**事件类型*/
+	/**事件类型*/
+	private String event;	
 	public WechatEventMessage() {
 		setMsgType(WechatMessage.MESSAGE_TYPE_EVENT);
 	}

@@ -17,8 +17,10 @@ public class ScanPushMenuEvent extends WechatMenuEvent {
 	 *
 	 */
 	public static class ScanCodeInfo{
-		private String scanType;		/**扫描类型-一般为qrcode*/
-		private String scanResult;		/**扫描结果-二维码对应的字符串信息*/
+		/**扫描类型-一般为qrcode*/
+		private String scanType;		
+		/**扫描结果-二维码对应的字符串信息*/
+		private String scanResult;		
 		
 		public String getScanType() {
 			return scanType;

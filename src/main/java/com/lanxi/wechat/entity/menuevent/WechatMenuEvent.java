@@ -7,6 +7,7 @@ import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.wechat.entity.event.WechatEventMessage;
 
 public abstract class WechatMenuEvent extends WechatEventMessage {
+	/**事件键值*/
 	private String eventKey;
 	public String getEventKey() {
 		return eventKey;

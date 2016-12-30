@@ -12,14 +12,20 @@ public class WebAccessTokenRequst {
 	/**网页授权-详细信息*/
 	public static final String WEB_ACCESS_TOOKEN_SCOPE_DETAIL	="snsapi_userinfo";
 	
-	private String appid;				/**开发者应该编号*/
-	private String redirectUri;			/**回调链接*/
-	private String responseType="code"; /**响应类型*/
-	private String scope;				/**权限范围*/
-	private String state;				/**标记字符*/
+	/**开发者应该编号*/
+	private String appid;				
+	/**回调链接*/
+	private String redirectUri;			
+	/**响应类型*/
+	private String responseType="code"; 
+	/**权限范围*/
+	private String scope;				
+	/**标记字符*/
+	private String state;				
 	private String wechatRedirect="#wechat_redirect";
-	
+	/**网页凭证兑换码*/
 	private String code;		//用户同意授权后将作为跳转url的参数返回
+	/**授权类型*/
 	private String grantType;
 	
 	public WebAccessTokenRequst() {

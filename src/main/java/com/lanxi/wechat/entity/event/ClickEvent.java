@@ -12,7 +12,8 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class ClickEvent extends WechatEventMessage {
-	private String eventKey;	/**事件key值*/
+	/**事件key值*/
+	private String eventKey;	
 	public ClickEvent() {
 		setEvent(EVENT_CLICK);
 	}

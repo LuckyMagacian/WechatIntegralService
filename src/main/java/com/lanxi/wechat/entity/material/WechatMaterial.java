@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.material;
  *
  */
 public class WechatMaterial {
-	private String mediaId;/**素材编号*/
+	/**素材编号*/
+	private String mediaId;
 	public String getMediaId() {
 		return mediaId;
 	}

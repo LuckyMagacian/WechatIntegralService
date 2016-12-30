@@ -28,8 +28,10 @@ public abstract class BaseButton implements WechatButton {
 	/**菜单按键类型-跳转图文消息URL*/
 	public static final String BUTTON_TYPE_VIEW_LIMITED="view_limited";
 
-	private String type;		/**按键类型*/
-	private String name;		/**按键名称*/
+	/**按键类型*/
+	private String type;		
+	/**按键名称*/
+	private String name;		
 	public String getType() {
 		return type;
 	}

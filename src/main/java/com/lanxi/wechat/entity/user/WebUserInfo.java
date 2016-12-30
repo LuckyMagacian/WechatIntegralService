@@ -10,15 +10,24 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 public class WebUserInfo {
-	private String nickName;		/**昵称*/
-	private String sex;				/**性别*/
-	private String language;		/**语言*/	
-	private String city;			/**城市*/
-	private String province;		/**省份*/
-	private String country;			/**国家*/
-	private String headImgUrl;		/**头像url*/
-	private List<String> privilege;	/**特权信息*/
-	private String unionid;			/**通用id*/
+	/**昵称*/
+	private String nickName;		
+	/**性别*/
+	private String sex;				
+	/**语言*/	
+	private String language;		
+	/**城市*/
+	private String city;			
+	/**省份*/
+	private String province;		
+	/**国家*/
+	private String country;			
+	/**头像url*/
+	private String headImgUrl;		
+	/**特权信息*/
+	private List<String> privilege;	
+	/**通用id*/
+	private String unionid;			
 	public String getNickName() {
 		return nickName;
 	}

@@ -12,7 +12,8 @@ import com.lanxi.wechat.entity.menuevent.SystemCameraMenuEvent.SendPicsInfo;
  *
  */
 public class SystemCameraAndPhotosMenuEvent extends WechatMenuEvent {
-	private SendPicsInfo sendPicsInfo;/**图片信息*/
+	/**图片信息*/
+	private SendPicsInfo sendPicsInfo;
 	public SystemCameraAndPhotosMenuEvent() {
 		setMsgType(MENU_EVENT_PIC_PHOTO_OR_ALBUM);
 		sendPicsInfo=new SendPicsInfo();

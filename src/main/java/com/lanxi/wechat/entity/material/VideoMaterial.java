@@ -5,8 +5,10 @@ package com.lanxi.wechat.entity.material;
  *
  */
 public class VideoMaterial extends OterMaterial {
-	private String title;			/**视频标题*/
-	private String introduction;	/**视频介绍*/
+	/**视频标题*/
+	private String title;			
+	/**视频介绍*/
+	private String introduction;	
 	public String getTitle() {
 		return title;
 	}

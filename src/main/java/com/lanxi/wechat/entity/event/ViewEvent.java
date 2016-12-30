@@ -11,6 +11,7 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class ViewEvent extends WechatEventMessage {
+	/**事件键值*/
 	private String eventKey;
 	public ViewEvent() {
 		setEvent(EVENT_VIEW);

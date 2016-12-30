@@ -12,11 +12,15 @@ import com.lanxi.WechatIntegralService.util.ConfigUtil;
  *
  */
 public class TempMaterial extends WechatMaterial{
-	private String accessToken;		/**授权凭证*/
-	private String type;			/**素材类型*/
-	private WechatMedia media;		/**素材文件*/
+	/**授权凭证*/
+	private String accessToken;		
+	/**素材类型*/
+	private String type;			
+	/**素材文件*/
+	private WechatMedia media;		
 
-	private String createdAt;		/**上传时间*/
+	/**上传时间*/
+	private String createdAt;		
 	public TempMaterial() {
 		media=new WechatMedia();
 	}

@@ -11,7 +11,8 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class TextAutoMessage extends WechatAutoMessage {
-	private String content;	/**文本内容*/
+	/**文本内容*/
+	private String content;	
 
 	public TextAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_TEXT);

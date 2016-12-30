@@ -17,7 +17,8 @@ public class VoiceAutoMessage extends WechatAutoMessage {
 	 *
 	 */
 	public class Voice{
-		private String mediaId;		/**语音素材编号*/
+		/**语音素材编号*/
+		private String mediaId;		
 		public String getMediaId() {
 			return mediaId;
 		}
@@ -34,6 +35,7 @@ public class VoiceAutoMessage extends WechatAutoMessage {
 			setMediaId(ele.elementText("MediaId"));
 		}
 	}
+	/**语音消息*/
 	private Voice voice;
 	public VoiceAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_VOICE);

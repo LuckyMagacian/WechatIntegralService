@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class ClickButton extends BaseButton {
-	private String key;	/**按键key值*/
+	/**按键key值*/
+	private String key;	
 	
 	public ClickButton() {
 		setType(BUTTON_TYPE_CLICK);

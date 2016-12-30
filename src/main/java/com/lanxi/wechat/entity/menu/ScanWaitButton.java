@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class ScanWaitButton extends BaseButton{
-	private String key;/**键值*/
+	/**键值*/
+	private String key;
 	public ScanWaitButton() {
 		setType(BUTTON_TYPE_SCANCODE_WAITMSG);
 	}

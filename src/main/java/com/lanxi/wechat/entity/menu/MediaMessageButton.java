@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class MediaMessageButton extends BaseButton {
-	private String mediaId;	/**媒体素材编号*/
+	/**媒体素材编号*/
+	private String mediaId;	
 	public MediaMessageButton() {
 		setType(BUTTON_TYPE_MEDIA_ID);
 	}

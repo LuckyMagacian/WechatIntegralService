@@ -14,17 +14,28 @@ public class UserInfo extends BaseUserInfo {
 	/**用户信息-性别-女*/
 	public static final String USER_INOF_SEX_WOMAN	="2";
 	
-	private String nickName;	/**用户昵称*/
-	private String sex;			/**用户性别*/
-	private String language;	/**用户语言*/	
-	private String city;		/**用户城市*/
-	private String province;	/**用户省份*/
-	private String country;		/**国籍*/
-	private String headImgUrl;	/**头像url*/
-	private String subscribeTime;/**关注时间*/
-	private String unionid;		/**通用id*/
-	private String remark;		/**备注*/
-	private String groupid;		/**分组信息*/
+	/**用户昵称*/
+	private String nickName;	
+	/**用户性别*/
+	private String sex;			
+	/**用户语言*/	
+	private String language;	
+	/**用户城市*/
+	private String city;		
+	/**用户省份*/
+	private String province;	
+	/**国籍*/
+	private String country;		
+	/**头像url*/
+	private String headImgUrl;	
+	/**关注时间*/
+	private String subscribeTime;
+	/**通用id*/
+	private String unionid;		
+	/**备注*/
+	private String remark;		
+	/**分组信息*/
+	private String groupid;		
 	public String getNickName() {
 		return nickName;
 	}

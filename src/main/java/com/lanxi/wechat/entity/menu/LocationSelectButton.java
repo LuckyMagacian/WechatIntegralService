@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class LocationSelectButton extends BaseButton {
-	private String key;	/**按键key值*/
+	/**按键key值*/
+	private String key;	
 	public LocationSelectButton() {
 		setType(BUTTON_TYPE_LOCATION_SELECT);
 	}

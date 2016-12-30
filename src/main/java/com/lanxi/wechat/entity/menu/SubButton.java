@@ -10,8 +10,10 @@ import java.util.List;
 import com.alibaba.fastjson.JSONObject;
 
 public class SubButton implements WechatButton{
-	private String name;				/**子菜单名称*/
-	private List<BaseButton> subButton;	/**子菜单按键*/
+	/**子菜单名称*/
+	private String name;				
+	/**子菜单按键*/
+	private List<BaseButton> subButton;	
 	public SubButton() {
 		subButton=new ArrayList<>();
 	}

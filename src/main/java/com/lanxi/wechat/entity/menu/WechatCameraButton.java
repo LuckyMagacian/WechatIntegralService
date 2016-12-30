@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class WechatCameraButton extends BaseButton {
-	private String key;/**键值*/
+	/**键值*/
+	private String key;
 	public WechatCameraButton() {
 		setType(BUTTON_TYPE_PIC_WEIXIN);
 	}

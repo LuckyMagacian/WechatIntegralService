@@ -6,6 +6,7 @@ import org.junit.Test;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.wechat.entity.menu.ClickButton;
+import com.lanxi.wechat.entity.menu.LocationSelectButton;
 import com.lanxi.wechat.entity.menu.SubButton;
 import com.lanxi.wechat.entity.menu.ViewButton;
 import com.lanxi.wechat.entity.menu.WechatMenu;
@@ -42,19 +43,17 @@ public class TestMenu {
 	}
 	@Test
 	public void testCreateMenu(){
-		ClickButton clickButton=new ClickButton();
-		clickButton.setName("老司机开车了");
-		clickButton.setKey("laosiji");
+		LocationSelectButton locationButton=new LocationSelectButton();
+		locationButton.setName("提莫队长前来报道");
+		locationButton.setKey("timo");
 		ViewButton viewButton=new ViewButton();
 		viewButton.setName("网页授权a");		
-		viewButton.setUrl(new WebAccessTokenRequst().generatorCodeUrl());
-		MenuManager.addButton(clickButton);
+		viewButton.setUrl(TokenManager.generatorWebTokenCodeUrl(null,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
+		MenuManager.addButton(locationButton);
 		MenuManager.addButton(viewButton);
 		ViewButton viewButton1=new ViewButton();
 		viewButton1.setName("授权b");		
-		WebAccessTokenRequst req=new WebAccessTokenRequst();
-		req.setScope(WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE);
-		viewButton1.setUrl(req.generatorCodeUrl());
+		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl(null,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE));
 		MenuManager.addButton(viewButton1);
 		System.out.println(viewButton.toJson());
 		System.out.println(viewButton1.toJson());

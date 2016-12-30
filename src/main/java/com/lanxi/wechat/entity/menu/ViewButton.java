@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class ViewButton extends BaseButton {
-	private String url;/**连接url*/
+	/**链接url*/
+	private String url;
 	
 	public ViewButton() {
 		setType(BUTTON_TYPE_VIEW);

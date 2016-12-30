@@ -15,11 +15,14 @@ import com.lanxi.wechat.entity.token.WebAccessTokenRequst;
  *
  */
 public class TokenManager {
-	private static AccessToken accessToken;						/**开发授权凭证*/
+	/**开发授权凭证*/
+	private static AccessToken accessToken;						
 
-	private static WebAccessTokenRequst webAccessTokenRequst;	/**网页授权请求*/
+	/**网页授权请求*/
+	private static WebAccessTokenRequst webAccessTokenRequst;	
 	
-	private static Map<String, WebAccessToken> webAccessTokens;	/**网页凭证列表*/
+	/**网页凭证列表*/
+	private static Map<String, WebAccessToken> webAccessTokens;	
 	
 	static{
 		webAccessTokenRequst=new WebAccessTokenRequst();
@@ -43,10 +46,12 @@ public class TokenManager {
 	 * @return
 	 */
 	public static String generatorWebTokenCodeUrl(String redirectUrl,String codeScope){
-		redirectUrl=redirectUrl.startsWith("http")?redirectUrl:"http://"+redirectUrl;
+		if(redirectUrl!=null){	
+			redirectUrl=redirectUrl.startsWith("http")?redirectUrl:"http://"+redirectUrl;
+			webAccessTokenRequst.setRedirectUri(redirectUrl);
+		}
 		if(codeScope==null||!(codeScope.trim().equals(WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE)||codeScope.trim().equals(WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL)))
-			codeScope=WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE;
-		webAccessTokenRequst.setRedirectUri(redirectUrl);
+			codeScope=WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE;	
 		webAccessTokenRequst.setScope(codeScope);
 		return webAccessTokenRequst.generatorCodeUrl();
 	}

@@ -8,12 +8,18 @@ import com.lanxi.WechatIntegralService.util.HttpUtil;
  *
  */
 public class WebRefreshToken {
-	private String appid;			/**开发者应用编号*/
+	/**开发者应用编号*/
+	private String appid;		
+	/**授权类型*/
 	private String grantType="refresh_token";
-	private String refreshToken;	/**刷新凭证-字符串*/
-	private String expiresIn;		/**有效时间*/
-	private String generatorTime;	/**生成时间*/
-	private String overTime;		/**过期时间*/
+	/**刷新凭证-字符串*/
+	private String refreshToken;	
+	/**有效时间*/
+	private String expiresIn;		
+	/**生成时间*/
+	private String generatorTime;	
+	/**过期时间*/
+	private String overTime;		
 	public WebRefreshToken(){
 		setAppid(ConfigUtil.get("appID"));
 	}

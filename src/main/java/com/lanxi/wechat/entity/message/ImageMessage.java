@@ -11,8 +11,10 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class ImageMessage extends WechatMessage {
-	private String mediaId;	/**图片素材编号*/
-	private String picUrl;	/**图片链接*/
+	/**图片素材编号*/
+	private String mediaId;	
+	/**图片链接*/
+	private String picUrl;	
 	public ImageMessage() {
 		setMsgType(MESSAGE_TYPE_IMAGE);
 	}

@@ -17,9 +17,12 @@ public class VideoAutoMessage extends WechatAutoMessage {
 	 *
 	 */
 	public class Video{
-		private String mediaId;		/**素材编号*/
-		private String title;		/**视频标题*/
-		private String description;	/**视频描述*/
+		/**素材编号*/
+		private String mediaId;		
+		/**视频标题*/
+		private String title;		
+		/**视频描述*/
+		private String description;	
 		public String getMediaId() {
 			return mediaId;
 		}
@@ -51,6 +54,7 @@ public class VideoAutoMessage extends WechatAutoMessage {
 			setMediaId(ele.elementText("MediaId"));
 		}
 	}
+	/**视频消息*/
 	private Video video;
 	public VideoAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_VIDEO);

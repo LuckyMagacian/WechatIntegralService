@@ -11,8 +11,10 @@ public class BaseUserInfo {
 	public static final String USER_SUBSCRIBE_STATUS_SUB="1";
 	/**用户关注状态-未关注*/
 	public static final String USER_SUBSCRIBE_STATUS_UNSUB="0";
-	private String openId;		/**用户微信号-对公众号唯一*/
-	private String subscribe;	/**用户关注状态*/
+	/**用户微信号-对公众号唯一*/
+	private String openId;		
+	/**用户关注状态*/
+	private String subscribe;	
 	public String getOpenId() {
 		return openId;
 	}

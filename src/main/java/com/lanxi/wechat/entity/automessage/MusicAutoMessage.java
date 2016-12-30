@@ -17,11 +17,16 @@ public class MusicAutoMessage extends WechatAutoMessage {
 	 *
 	 */
 	public class Music{
-		private String title;		/**音乐标题*/
-		private String description; /**音乐描述*/
-		private String musicUrl;	/**音乐链接*/		//=>MusicURL	
-		private String hqMusicUrl;	/**高清链接*/			//=>HQMusicUrl
-		private String thumbMediaId;/**缩略图素材编号*/
+		/**音乐标题*/
+		private String title;		
+		/**音乐描述*/
+		private String description; 
+		/**音乐链接*/		//=>MusicURL	
+		private String musicUrl;	
+		/**高清链接*/			//=>HQMusicUrl
+		private String hqMusicUrl;	
+		/**缩略图素材编号*/
+		private String thumbMediaId;
 		public String getTitle() {
 			return title;
 		}
@@ -69,6 +74,7 @@ public class MusicAutoMessage extends WechatAutoMessage {
 			setThumbMediaId(ele.elementText("ThumbMediaId"));
 		}
 	}
+	/**音乐消息*/
 	private Music music;
 	public MusicAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_MUSIC);

@@ -11,10 +11,14 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class LocationMessage extends WechatMessage{
-	private String locationX;/**经度*/
-	private String locationY;/**纬度*/
-	private String scale;	 /**精度,缩放比例*/	
-	private String label;	 /**位置字符串信息*/
+	/**经度*/
+	private String locationX;
+	/**纬度*/
+	private String locationY;
+	/**精度,缩放比例*/	
+	private String scale;	 
+	/**位置字符串信息*/
+	private String label;	 
 	
 	public String getLocationX() {
 		return locationX;

@@ -21,10 +21,14 @@ public class NewsAutoMessage extends WechatAutoMessage {
 	 *
 	 */
 	public class Item{
-		private String title;		/**文章标题*/
-		private String description;	/**文章描述*/
-		private String picUrl;		/**文章图片*/
-		private String url;			/**文章链接*/
+		/**文章标题*/
+		private String title;		
+		/**文章描述*/
+		private String description;	
+		/**文章图片*/
+		private String picUrl;		
+		/**文章链接*/
+		private String url;			
 		public String getTitle() {
 			return title;
 		}
@@ -64,7 +68,9 @@ public class NewsAutoMessage extends WechatAutoMessage {
 			setUrl(ele.elementText("Url"));
 		}
 	}
+	/**文章数量*/
 	private String articleCount;
+	/**文章列表*/
 	private List<NewsAutoMessage.Item> articles;
 	
 	public NewsAutoMessage() {

@@ -20,7 +20,8 @@ public class SystemCameraMenuEvent extends WechatMenuEvent {
 	 *
 	 */
 	public static class Item{
-		private String picMd5Sum;/**图片md5摘要*/
+		/**图片md5摘要*/
+		private String picMd5Sum;
 		public String getPicMd5Sum() {
 			return picMd5Sum;
 		}
@@ -108,7 +109,7 @@ public class SystemCameraMenuEvent extends WechatMenuEvent {
 		}
 	}
 	
-	
+	/**发送的图片信息*/
 	private SendPicsInfo sendPicsInfo;
 	public SystemCameraMenuEvent() {
 		setMsgType(MENU_EVENT_PIC_SYSPHOTO);

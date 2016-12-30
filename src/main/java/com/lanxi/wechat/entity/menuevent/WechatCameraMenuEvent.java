@@ -12,6 +12,7 @@ import com.lanxi.wechat.entity.menuevent.SystemCameraMenuEvent.SendPicsInfo;
  *
  */
 public class WechatCameraMenuEvent extends WechatMenuEvent {
+	/**发送的图片信息*/
 	private SystemCameraMenuEvent.SendPicsInfo sendPicsInfo;
 	public WechatCameraMenuEvent() {
 		setMsgType(MENU_EVENT_PIC_WEIXIN);

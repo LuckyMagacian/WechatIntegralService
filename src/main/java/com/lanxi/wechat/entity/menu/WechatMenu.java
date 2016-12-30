@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 public class WechatMenu {
+	/**按键列表*/
 	private List<WechatButton> button;	
 	
 	public WechatMenu() {

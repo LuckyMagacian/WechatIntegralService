@@ -27,7 +27,8 @@ public abstract class WechatMessage extends BaseMessage{
 	/**微信消息类型-事件消息*/
 	public static final String MESSAGE_TYPE_EVENT		="event";
 
-	private String msgId;	/**消息编号*/
+	/**消息编号*/
+	private String msgId;	
 	
 	public String getMsgId() {
 		return msgId;

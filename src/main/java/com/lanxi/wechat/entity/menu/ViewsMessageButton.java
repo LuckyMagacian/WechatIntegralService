@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class ViewsMessageButton extends BaseButton {
-	private String mediaId;/**图文素材编号*/
+	/**图文素材编号*/
+	private String mediaId;
 	public ViewsMessageButton() {
 		setType(BUTTON_TYPE_VIEW_LIMITED);
 	}

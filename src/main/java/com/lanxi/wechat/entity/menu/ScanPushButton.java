@@ -5,7 +5,8 @@ package com.lanxi.wechat.entity.menu;
  *
  */
 public class ScanPushButton extends BaseButton{
-	private String key;	/**键值*/
+	/**键值*/
+	private String key;	
 	public ScanPushButton() {
 		setType(BUTTON_TYPE_SCANCODE_PUSH);
 	}

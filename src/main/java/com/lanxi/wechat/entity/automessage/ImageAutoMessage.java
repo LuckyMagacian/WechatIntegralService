@@ -17,7 +17,8 @@ public class ImageAutoMessage extends WechatAutoMessage {
 	 *
 	 */
 	public class Image{
-		private String mediaId;/**微信服务器上图片素材对应的编号*/
+		/**微信服务器上图片素材对应的编号*/
+		private String mediaId;
 
 		public String getMediaId() {
 			return mediaId;
@@ -47,7 +48,8 @@ public class ImageAutoMessage extends WechatAutoMessage {
 			}
 		}
 	}
-	private Image image;	/**图片*/
+	/**图片*/
+	private Image image;	
 	public ImageAutoMessage() {
 		setMsgType(AUTO_MESSAGE_TYPE_IMAGE);
 		image=new Image();

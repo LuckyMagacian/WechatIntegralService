@@ -17,11 +17,16 @@ public class LocationSelectMenuEvent extends WechatMenuEvent {
 	 *
 	 */
 	public class SendLocationInfo{
-		private String locationX;	/**经度*/
-		private String locationY;	/**纬度*/
-		private String scale;		/**精度,缩放比例*/
-		private String label;		/**地理位置字符串信息标签*/
-		private String poiname;		/**朋友圈名称*/
+		/**经度*/
+		private String locationX;	
+		/**纬度*/
+		private String locationY;	
+		/**精度,缩放比例*/
+		private String scale;		
+		/**地理位置字符串信息标签*/
+		private String label;		
+		/**朋友圈名称*/
+		private String poiname;		
 		public String getLocationX() {
 			return locationX;
 		}

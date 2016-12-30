@@ -11,8 +11,10 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class ShortVideoMessage extends WechatMessage {
-	private String mediaId;		/**媒体素材编号*/
-	private String thumbMediaId;/**媒体素材缩略图*/
+	/**媒体素材编号*/
+	private String mediaId;		
+	/**媒体素材缩略图*/
+	private String thumbMediaId;
 	public ShortVideoMessage() {
 		setMsgType(MESSAGE_TYPE_SHORT_VIDEO);
 	}

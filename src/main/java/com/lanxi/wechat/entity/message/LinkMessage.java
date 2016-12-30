@@ -11,9 +11,12 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class LinkMessage extends WechatMessage {
-	private String title;		/**链接标题*/
-	private String description;	/**链接描述*/
-	private String url;			/**url链接*/
+	/**链接标题*/
+	private String title;		
+	/**链接描述*/
+	private String description;	
+	/**url链接*/
+	private String url;			
 	public LinkMessage() {
 		setMsgType(MESSAGE_TYPE_LINK);
 	}

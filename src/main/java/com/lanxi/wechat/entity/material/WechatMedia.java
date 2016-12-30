@@ -16,13 +16,20 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class WechatMedia {
-	public static final String BOUNDARY="----------"+System.currentTimeMillis();/**表单分隔符*/
-	private File file;					/**媒体文件*/
-	private String connection;			/**上传后返回的获取链接*/
-	private String charset;				/**字符集*/
-	private String contentType;			/**内容形式*/
-	private String contentDisposition;	/**内容描述*/
-	private String contentLenght;		/**内容长度*/
+	/**表单分隔符*/
+	public static final String BOUNDARY="----------"+System.currentTimeMillis();
+	/**媒体文件*/
+	private File file;					
+	/**上传后返回的获取链接*/
+	private String connection;			
+	/**字符集*/
+	private String charset;				
+	/**内容形式*/
+	private String contentType;			
+	/**内容描述*/
+	private String contentDisposition;	
+	/**内容长度*/
+	private String contentLenght;		
 	public String getConnection() {
 		return connection;
 	}

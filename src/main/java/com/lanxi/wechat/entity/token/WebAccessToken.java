@@ -9,15 +9,24 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 public class WebAccessToken {
-	private String accessToken;		/**网页凭证*/
-	private String expiresIn;		/**有效期*/
-	private WebRefreshToken refreshToken;/**刷新凭证*/
-	private String openId;			/**对应用户id*/
-	private String scope;			/**权限范围*/
-	private String unionid;			/**用户通用id*/
-	private String generatorTime;	/**生成时间*/
-	private String overTime;		/**过期时间*/
-	private Timer  timer;			/**定时器*/
+	/**网页凭证*/
+	private String accessToken;		
+	/**有效期*/
+	private String expiresIn;		
+	/**刷新凭证*/
+	private WebRefreshToken refreshToken;
+	/**对应用户id*/
+	private String openId;			
+	/**权限范围*/
+	private String scope;			
+	/**用户通用id*/
+	private String unionid;			
+	/**生成时间*/
+	private String generatorTime;	
+	/**过期时间*/
+	private String overTime;		
+	/**定时器*/
+	private Timer  timer;			
 	public WebAccessToken(){
 		refreshToken=new WebRefreshToken();
 	}

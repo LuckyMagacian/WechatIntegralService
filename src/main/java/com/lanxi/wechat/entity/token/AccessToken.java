@@ -22,14 +22,22 @@ import com.lanxi.WechatIntegralService.util.TimeUtil;
  *
  */
 public class AccessToken {
-	private String grantType;		/**授权类型-获取accesstooken时填写client_credential*/
-	private String appid;			/**开发者id*/
-	private String secret;			/**开发者密钥*/
-	private String accessToken;		/**获取到的凭证串*/
-	private String expiresIn;		/**有效时间*/
-	private String generatorTime;	/**生成时间*/
-	private String overTime;		/**过期时间*/
-	private Timer  timer;			/**定时器*/
+	/**授权类型-获取accesstooken时填写client_credential*/
+	private String grantType;		
+	/**开发者id*/
+	private String appid;			
+	/**开发者密钥*/
+	private String secret;			
+	/**获取到的凭证串*/
+	private String accessToken;		
+	/**有效时间*/
+	private String expiresIn;		
+	/**生成时间*/
+	private String generatorTime;	
+	/**过期时间*/
+	private String overTime;		
+	/**定时器*/
+	private Timer  timer;			
 	public AccessToken(){
 		grantType="client_credential";
 		appid=ConfigUtil.get("appID");

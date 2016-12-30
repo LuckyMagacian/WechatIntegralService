@@ -19,7 +19,11 @@ import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
 import com.lanxi.wechat.service.ValidServerService;
-
+/**
+ * 测试用-控制器类
+ * @author 1
+ *
+ */
 @Controller
 public class TestController {
 	@Resource
@@ -67,6 +71,7 @@ public class TestController {
 		strBuffer.append("refreshToken:"+token.getRefreshToken().getRefreshToken()+"\n");
 		strBuffer.append("userInfo:"+UserManager.getWebUserInfo(token.getOpenId()));
 		System.out.println(strBuffer.toString());
+		System.out.println(TokenManager.getWebAccessTokens());
 		res.getOutputStream().println("<!DOCTYPE html>");
 		res.getOutputStream().println("<html>");
 		res.getOutputStream().println("<head>");

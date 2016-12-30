@@ -11,9 +11,12 @@ import com.lanxi.WechatIntegralService.util.AppException;
  *
  */
 public class LocationEvent extends WechatEventMessage {
-	private String latitude;		/**经度*/
-	private String longitude;		/**纬度*/
-	private String precision;		/**位置精度*/
+	/**经度*/
+	private String latitude;		
+	/**纬度*/
+	private String longitude;		
+	/**位置精度*/
+	private String precision;		
 	public LocationEvent() {
 		setEvent(EVENT_LOCATION);
 	}
