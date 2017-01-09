@@ -44,15 +44,6 @@ update wechat_integral_service_integral_transfer
 </set>
 <where>
 <if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
-<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
-<if test="giverOpenId != null and giverOpenId!=''"> and giver_open_id = #{giverOpenId}  </if>  
-<if test="receiverIdCard != null and receiverIdCard!=''"> and receiver_id_card = #{receiverIdCard}  </if>  
-<if test="receiverPhone != null and receiverPhone!=''"> and receiver_phone = #{receiverPhone}  </if>  
-<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
-<if test="transferTime != null and transferTime!=''"> and transfer_time = #{transferTime}  </if>  
-<if test="result != null and result!=''"> and result = #{result}  </if>  
-<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
-<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </update>
 <select id="selectIntegralTransfer" resultMap="integralTransferMap" parameterType="com.lanxi.WechatIntegralService.entity.IntegralTransfer" resultType="com.lanxi.WechatIntegralService.entity.IntegralTransfer">

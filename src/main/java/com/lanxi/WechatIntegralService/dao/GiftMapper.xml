@@ -40,13 +40,6 @@ update wechat_integral_service_gift
 </set>
 <where>
 <if test="id != null and id!=''"> and id = #{id}  </if>  
-<if test="merchantId != null and merchantId!=''"> and merchant_id = #{merchantId}  </if>  
-<if test="name != null and name!=''"> and name = #{name}  </if>  
-<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
-<if test="prizeLevel != null and prizeLevel!=''"> and prize_level = #{prizeLevel}  </if>  
-<if test="integralValue != null and integralValue!=''"> and integral_value = #{integralValue}  </if>  
-<if test="price != null and price!=''"> and price = #{price}  </if>  
-<if test="count != null and count!=''"> and count = #{count}  </if>  
 </where>
 </update>
 <select id="selectGift" resultMap="giftMap" parameterType="com.lanxi.WechatIntegralService.entity.Gift" resultType="com.lanxi.WechatIntegralService.entity.Gift">

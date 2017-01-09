@@ -40,13 +40,6 @@ update wechat_integral_service_account_binding
 </set>
 <where>
 <if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
-<if test="nickName != null and nickName!=''"> and nick_name = #{nickName}  </if>  
-<if test="headimgUrl != null and headimgUrl!=''"> and headimg_url = #{headimgUrl}  </if>  
-<if test="integralAccount != null and integralAccount!=''"> and integral_account = #{integralAccount}  </if>  
-<if test="bindingTime != null and bindingTime!=''"> and binding_time = #{bindingTime}  </if>  
-<if test="bindingPhone != null and bindingPhone!=''"> and binding_phone = #{bindingPhone}  </if>  
-<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
-<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </update>
 <select id="selectAccountBinding" resultMap="accountBindingMap" parameterType="com.lanxi.WechatIntegralService.entity.AccountBinding" resultType="com.lanxi.WechatIntegralService.entity.AccountBinding">

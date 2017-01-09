@@ -39,11 +39,6 @@ update wechat_integral_service_red_packet_receive
 <where>
 <if test="redPacketId != null and redPacketId!=''"> and red_packet_id = #{redPacketId}  </if>  
 <if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
-<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
-<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
-<if test="receiveTime != null and receiveTime!=''"> and receive_time = #{receiveTime}  </if>  
-<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
-<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </update>
 <select id="selectRedPacketReceive" resultMap="redPacketreceiveMap" parameterType="com.lanxi.WechatIntegralService.entity.RedPacketReceive" resultType="com.lanxi.WechatIntegralService.entity.RedPacketReceive">

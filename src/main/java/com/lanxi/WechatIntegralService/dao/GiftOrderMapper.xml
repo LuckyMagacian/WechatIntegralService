@@ -46,16 +46,6 @@ update wechat_integral_service_gift_order
 </set>
 <where>
 <if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
-<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
-<if test="giftId != null and giftId!=''"> and gift_id = #{giftId}  </if>  
-<if test="giftCount != null and giftCount!=''"> and gift_count = #{giftCount}  </if>  
-<if test="workTime != null and workTime!=''"> and work_time = #{workTime}  </if>  
-<if test="status != null and status!=''"> and status = #{status}  </if>  
-<if test="resCode != null and resCode!=''"> and res_code = #{resCode}  </if>  
-<if test="moreInfo != null and moreInfo!=''"> and more_info = #{moreInfo}  </if>  
-<if test="resMsg != null and resMsg!=''"> and res_msg = #{resMsg}  </if>  
-<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
-<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </update>
 <select id="selectGiftOrder" resultMap="giftOrderMap" parameterType="com.lanxi.WechatIntegralService.entity.GiftOrder" resultType="com.lanxi.WechatIntegralService.entity.GiftOrder">
