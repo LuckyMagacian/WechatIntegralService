@@ -69,7 +69,7 @@
 	<bean id="redPacketOverTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
 		<property name="jobDetail" ref="redPacketOverTimeJob"/> 
 		<property name="cronExpression">
-			<value>* 0 * * * ?</value><!-- 每小时执行一次点触发 -->
+			<value>0 0 * * * ?</value><!-- 每小时执行一次点触发 -->
 		</property>
 	</bean>
 	<!-- 任务 -->
