@@ -58,4 +58,25 @@
 		<property name="basePackage" value="com.lanxi.WechatIntegralService.dao"></property>
 	</bean>
 	
+	<bean id="tasks"   lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref local="redPacketOverTime"></ref>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="redPacketOverTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="redPacketOverTimeJob"/> 
+		<property name="cronExpression">
+			<value>* 0 0 * * ?</value><!-- 每天的早上0点触发 -->
+		</property>
+	</bean>
+	<!-- 任务 -->
+	<bean id="redPacketOverTimeJob"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="quartzService"/>
+		<property name="targetMethod">
+			<value>redPacketOverTime</value>
+		</property>
+	</bean>
 </beans>

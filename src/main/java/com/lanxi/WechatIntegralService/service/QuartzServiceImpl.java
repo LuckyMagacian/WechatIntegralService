@@ -12,7 +12,7 @@ import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
-@Service
+@Service("quartzService")
 public class QuartzServiceImpl implements QuartzService{
 	@Resource
 	private DaoService dao;
