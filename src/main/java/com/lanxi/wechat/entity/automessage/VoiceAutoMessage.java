@@ -16,7 +16,7 @@ public class VoiceAutoMessage extends WechatAutoMessage {
 	 * @author 1
 	 *
 	 */
-	public class Voice{
+	public static class Voice{
 		/**语音素材编号*/
 		private String mediaId;		
 		public String getMediaId() {

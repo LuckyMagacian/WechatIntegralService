@@ -16,7 +16,7 @@ public class MusicAutoMessage extends WechatAutoMessage {
 	 * @author 1
 	 *
 	 */
-	public class Music{
+	public static class Music{
 		/**音乐标题*/
 		private String title;		
 		/**音乐描述*/

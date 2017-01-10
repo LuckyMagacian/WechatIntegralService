@@ -89,5 +89,11 @@ public class GiftOrder {
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
 	}
+	@Override
+	public String toString() {
+		return "GiftOrder [orderId=" + orderId + ", openId=" + openId + ", giftId=" + giftId + ", giftCount="
+				+ giftCount + ", workTime=" + workTime + ", status=" + status + ", resCode=" + resCode + ", moreInfo="
+				+ moreInfo + ", resMsg=" + resMsg + ", remark=" + remark + ", beiy=" + beiy + "]";
+	}
 	
 }

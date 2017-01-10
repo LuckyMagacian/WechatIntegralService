@@ -16,7 +16,7 @@ public class LocationSelectMenuEvent extends WechatMenuEvent {
 	 * @author 1
 	 *
 	 */
-	public class SendLocationInfo{
+	public static class SendLocationInfo{
 		/**经度*/
 		private String locationX;	
 		/**纬度*/

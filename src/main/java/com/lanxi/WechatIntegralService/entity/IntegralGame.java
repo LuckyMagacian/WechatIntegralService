@@ -1,5 +1,7 @@
 package com.lanxi.WechatIntegralService.entity;
 
+import com.lanxi.WechatIntegralService.util.TimeUtil;
+
 public class IntegralGame {
 	/**流水号*/
 	private String serialId;
@@ -88,6 +90,19 @@ public class IntegralGame {
 	}
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
+	}
+	public void setGame(Game game){
+		setGameId(game.getId());
+		setGameName(game.getName());
+		setGameTime(TimeUtil.getDateTime());
+		setIntegral(game.getIntegral()+"");
+	}
+	
+	@Override
+	public String toString() {
+		return "IntegralGame [serialId=" + serialId + ", openId=" + openId + ", plateformSerialId=" + plateformSerialId
+				+ ", gameName=" + gameName + ", gameId=" + gameId + ", gameTime=" + gameTime + ", integral=" + integral
+				+ ", result=" + result + ", orderId=" + orderId + ", remark=" + remark + ", beiy=" + beiy + "]";
 	}
 	
 }

@@ -27,6 +27,7 @@ public class TokenManager {
 	static{
 		webAccessTokenRequst=new WebAccessTokenRequst();
 		webAccessTokens=new HashMap<>();
+		loadAccessToken();
 	}
 	
 	private TokenManager(){

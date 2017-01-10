@@ -1,4 +1,7 @@
 package com.lanxi.integral.report;
+
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 响应信息类
  * @author 1
@@ -28,6 +31,14 @@ public class ReturnMessage {
 	}
 	public void setObj(Object obj) {
 		this.obj = obj;
+	}
+	@Override
+	public String toString() {
+		return "ReturnMessage [retCode=" + retCode + ", retMsg=" + retMsg + ", obj=" + obj + "]";
+	}
+	
+	public String toJson(){
+		return JSONObject.toJSONString(this);
 	}
 	
 }

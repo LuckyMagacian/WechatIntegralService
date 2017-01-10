@@ -16,7 +16,7 @@ public class VideoAutoMessage extends WechatAutoMessage {
 	 * @author 1
 	 *
 	 */
-	public class Video{
+	public static class Video{
 		/**素材编号*/
 		private String mediaId;		
 		/**视频标题*/

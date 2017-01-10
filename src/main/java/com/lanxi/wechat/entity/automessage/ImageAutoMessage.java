@@ -16,7 +16,7 @@ public class ImageAutoMessage extends WechatAutoMessage {
 	 * @author 1
 	 *
 	 */
-	public class Image{
+	public static class Image{
 		/**微信服务器上图片素材对应的编号*/
 		private String mediaId;
 

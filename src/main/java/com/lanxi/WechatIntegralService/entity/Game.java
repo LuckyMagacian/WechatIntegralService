@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.entity;
 
+
 public class Game {
 	/**游戏编号*/
 	private String 	id;
@@ -64,6 +65,25 @@ public class Game {
 	}
 	public void setIntegral(Integer integral) {
 		this.integral = integral;
+	}
+	
+	public Integer getPrize(Double prize){
+		if(prize<specialPrize)
+			return 0;
+		if(prize<firstPrize)
+			return 1;
+		if(prize<secondPrize)
+			return 2;
+		if(prize<thirdPrize)
+			return 3;
+			return null;
+	}
+	
+	@Override
+	public String toString() {
+		return "Game [id=" + id + ", name=" + name + ", specialPrize=" + specialPrize + ", firstPrize=" + firstPrize
+				+ ", secondPrize=" + secondPrize + ", thirdPrize=" + thirdPrize + ", noPrize=" + noPrize + ", integral="
+				+ integral + "]";
 	}
 	
 }

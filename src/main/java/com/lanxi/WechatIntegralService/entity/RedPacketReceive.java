@@ -57,5 +57,11 @@ public class RedPacketReceive {
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
 	}
+	@Override
+	public String toString() {
+		return "RedPacketReceive [redPacketId=" + redPacketId + ", openId=" + openId + ", integral=" + integral
+				+ ", plateformSerialId=" + plateformSerialId + ", receiveTime=" + receiveTime + ", remark=" + remark
+				+ ", beiy=" + beiy + "]";
+	}
 	
 }

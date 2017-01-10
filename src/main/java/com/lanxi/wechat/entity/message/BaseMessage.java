@@ -82,6 +82,9 @@ public abstract class BaseMessage {
 	private String createTime;
 	/**消息类型*/
 	private String msgType;
+	public BaseMessage(){
+		setCreateTime(System.currentTimeMillis()+"");
+	}
 	public String getToUserName() {
 		return toUserName;
 	}

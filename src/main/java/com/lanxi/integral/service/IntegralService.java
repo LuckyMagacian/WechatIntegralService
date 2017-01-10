@@ -86,7 +86,7 @@ public class IntegralService {
 	 * @param account 积分帐号
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage queryService(String account){
+	public static ReturnMessage queryIntegral(String account){
 		try{
 			QueryReqBody body=new QueryReqBody();
 			body.setIdNo(account);
@@ -103,7 +103,7 @@ public class IntegralService {
 	 * @param startDate 查询起始日期,不得早于6个月
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage historyService(String account,String startDate){
+	public static ReturnMessage historyIntegral(String account,String startDate){
 		startDate=nullAsSpace(startDate);
 		HistoryReqBody body=new HistoryReqBody();
 		body.setIdNo(account);
@@ -118,7 +118,7 @@ public class IntegralService {
 	 * @param reducePoints 扣除积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage reduceService(String account,String reducePoints){
+	public static ReturnMessage reduceIntegral(String account,String reducePoints){
 		ReduceReqBody body=new ReduceReqBody();
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
 		body.setIdNo(account);
@@ -133,7 +133,7 @@ public class IntegralService {
 	 * @param transferPoints 赠送积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage transferService(String account,String receiveAccount,String transferPoints){
+	public static ReturnMessage transferIntegral(String account,String receiveAccount,String transferPoints){
 		TransferReqBody body=new TransferReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
@@ -148,7 +148,7 @@ public class IntegralService {
 	 * @param serialNo 流水号
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage reversalService(String serialNo){
+	public static ReturnMessage reversalIntegral(String serialNo){
 		ReversalReqBody body=new ReversalReqBody();
 		body.setSerialNo(serialNo);
 		String res=postReq(body, ConfigUtil.get("reversalUrl"));
@@ -160,7 +160,7 @@ public class IntegralService {
 	 * @param addPoint 增加的积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage addService(String account,String addPoint){
+	public static ReturnMessage addIntegral(String account,String addPoint){
 		AddReqBody body=new AddReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
@@ -174,7 +174,7 @@ public class IntegralService {
 	 * @param newPhone 新手机号
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
 	 */
-	public static ReturnMessage modifyPhoneService(String account,String newPhone){
+	public static ReturnMessage modifyPhone(String account,String newPhone){
 		ModifyPhoneReqBody body=new ModifyPhoneReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);

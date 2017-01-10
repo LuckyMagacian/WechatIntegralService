@@ -81,5 +81,12 @@ public class IntegralTransfer {
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
 	}
+	@Override
+	public String toString() {
+		return "IntegralTransfer [serialId=" + serialId + ", plateformSerialId=" + plateformSerialId + ", giverOpenId="
+				+ giverOpenId + ", receiverIdCard=" + receiverIdCard + ", receiverPhone=" + receiverPhone
+				+ ", integral=" + integral + ", transferTime=" + transferTime + ", result=" + result + ", remark="
+				+ remark + ", beiy=" + beiy + "]";
+	}
 	
 }

@@ -20,7 +20,7 @@ public class NewsAutoMessage extends WechatAutoMessage {
 	 * @author 1
 	 *
 	 */
-	public class Item{
+	public static class Item{
 		/**文章标题*/
 		private String title;		
 		/**文章描述*/
@@ -54,7 +54,7 @@ public class NewsAutoMessage extends WechatAutoMessage {
 			this.url = url;
 		}
 		public DOMElement toElement() {
-			DOMElement element=new DOMElement("Item");
+			DOMElement element=new DOMElement("item");
 			element.addElement("Title").addCDATA(title==null?"":title);
 			element.addElement("Description").addCDATA(description==null?"":description);
 			element.addElement("PicUrl").addCDATA(picUrl);
@@ -104,6 +104,7 @@ public class NewsAutoMessage extends WechatAutoMessage {
 		DOMElement temp=new DOMElement("Articles");
 		for(Item each:articles)
 			temp.add(each.toElement());
+		element.add(temp);
 		return element;
 	}
 	@Override

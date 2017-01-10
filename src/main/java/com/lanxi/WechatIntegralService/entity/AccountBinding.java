@@ -65,5 +65,11 @@ public class AccountBinding {
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
 	}
+	@Override
+	public String toString() {
+		return "AccountBinding [openId=" + openId + ", nickName=" + nickName + ", headimgUrl=" + headimgUrl
+				+ ", integralAccount=" + integralAccount + ", bindingTime=" + bindingTime + ", bindingPhone="
+				+ bindingPhone + ", remark=" + remark + ", beiy=" + beiy + "]";
+	}
 	
 }

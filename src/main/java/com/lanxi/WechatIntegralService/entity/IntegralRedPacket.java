@@ -1,6 +1,14 @@
 package com.lanxi.WechatIntegralService.entity;
 
 public class IntegralRedPacket {
+	/**红包状态-正常*/
+	public static final String RED_PACKET_STATUS_NORML="1";
+	/**红包状态-领完*/
+	public static final String RED_PACKET_STATUS_NONE="2";
+	/**红包状态-过期*/
+	public static final String RED_PACKET_STATUS_OVERTIME="3";
+	
+	
 	/**红包编号*/
 	private String 	redPacketId;
 	/**红包名称*/
@@ -15,6 +23,8 @@ public class IntegralRedPacket {
 	private Integer lessIntegeral;
 	/**红包url*/
 	private String  redPacketUrl;
+	/**红包状态*/
+	private String  redPacketStatus;
 	/**发放者微信号*/
 	private String	openId;
 	/**平台流水号*/
@@ -112,6 +122,22 @@ public class IntegralRedPacket {
 	}
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
+	}
+	
+	public String getRedPacketStatus() {
+		return redPacketStatus;
+	}
+	public void setRedPacketStatus(String redPacketStatus) {
+		this.redPacketStatus = redPacketStatus;
+	}
+	@Override
+	public String toString() {
+		return "IntegralRedPacket [redPacketId=" + redPacketId + ", redPacketName=" + redPacketName
+				+ ", redPacketCount=" + redPacketCount + ", redPacketLessCount=" + redPacketLessCount
+				+ ", totalIntegral=" + totalIntegral + ", lessIntegeral=" + lessIntegeral + ", redPacketUrl="
+				+ redPacketUrl + ", redPacketStatus=" + redPacketStatus + ", openId=" + openId + ", plateformSerialId="
+				+ plateformSerialId + ", startTime=" + startTime + ", overTime=" + overTime + ", receivers=" + receivers
+				+ ", remark=" + remark + ", beiy=" + beiy + "]";
 	}
 	
 }

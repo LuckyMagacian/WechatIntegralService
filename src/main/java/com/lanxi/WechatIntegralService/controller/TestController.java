@@ -15,6 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
+import com.lanxi.WechatIntegralService.util.HttpUtil;
+import com.lanxi.WechatIntegralService.util.TimeUtil;
+import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
+import com.lanxi.wechat.entity.automessage.TextAutoMessage;
+import com.lanxi.wechat.entity.message.LinkMessage;
+import com.lanxi.wechat.entity.message.TextMessage;
 import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
@@ -26,6 +34,13 @@ import com.lanxi.wechat.service.ValidServerService;
  */
 @Controller
 public class TestController {
+	static{
+		try {
+			Class.forName("com.lanxi.wechat.manageer.TokenManager");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 	@Resource
 	private ValidServerService test;
 	@RequestMapping("/validService")
@@ -49,8 +64,40 @@ public class TestController {
 		System.out.println(strBuffer.toString());
 		if(strBuffer.toString().trim().equals(""))
 			return test.validService(req, res);
-		
 		in.close();
+
+		
+		if(strBuffer.toString().trim().contains("百度")){
+			TextMessage textMessage=new TextMessage();
+			textMessage.fromString(strBuffer.toString().trim());
+			System.out.println(textMessage.toElement().asXML());
+			
+//			LinkMessage linkMessage=new LinkMessage();
+//			linkMessage.setCreateTime(textMessage.getCreateTime());
+//			linkMessage.setDescription("百度一下,你就知道!");
+//			linkMessage.setFromUserName(textMessage.getToUserName());
+//			linkMessage.setToUserName(textMessage.getFromUserName());
+//			linkMessage.setMsgId(textMessage.getMsgId());
+//			linkMessage.setUrl("www.baidu.com");
+//			linkMessage.setTitle("百度");
+//			System.out.println(linkMessage.toElement().asXML());
+//			
+//			System.out.println(HttpUtil.postXml(linkMessage.toElement().asXML(), res, "utf-8"));;
+			NewsAutoMessage back=new NewsAutoMessage();
+			back.setArticleCount(1+"");
+			NewsAutoMessage.Item item=new NewsAutoMessage.Item();
+			item.setDescription("百度一下,你就知道");
+			item.setPicUrl("http://imgs.technews.cn/wp-content/uploads/2014/10/Baidu.jpg");
+			item.setTitle("百度");
+			item.setUrl("www.baidu.com");
+			back.setCreateTime(textMessage.getCreateTime());
+			back.setFromUserName(textMessage.getToUserName());
+			back.setToUserName(textMessage.getFromUserName());
+			back.addArticle(item);
+			System.out.println(back.toElement().asXML());
+			System.out.println(HttpUtil.postXml(back.toElement().asXML(), res,"utf-8"));;
+		}
+		
 		res.getOutputStream().close();
 		return "finish";
 	}
