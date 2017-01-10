@@ -63,6 +63,12 @@ from wechat_integral_service_integral_transfer
 <if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </select>
+
+<insert id="insert">
+    INSERT INTO wechat_integral_service_integral_transfer(serial_id,giver_open_id,receiver_id_card,transfer_time,integral)
+    VALUES(#{giverOpenId},#{receiverIdCard},#{transferTime},#{integral},#{serialId})
+</insert>
+
 <resultMap id="integralTransferMap" type="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
 <result property="serialId" 			column="serial_id"></result>
 <result property="plateformSerialId" 			column="plateform_serial_id"></result>

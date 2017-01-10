@@ -1,7 +1,10 @@
 package com.lanxi.WechatIntegralService.util;
+
+import com.alibaba.fastjson.JSONObject;
+
 /**
- * 应用响应信息�?
- * 用于与前端交�?
+ * 应用响应信息�?
+ * 用于与前端交�?
  * @author 1
  */
 public class AppMessage {
@@ -26,5 +29,11 @@ public class AppMessage {
 	public void setContent(Object content) {
 		this.content = content;
 	}
-	
+	@Override
+	public String toString() {
+		return "AppMessage [errCode=" + errCode + ", errMsg=" + errMsg + ", content=" + content + "]";
+	}
+	public String toJson(){
+		return JSONObject.toJSONString(this);
+	}
 }

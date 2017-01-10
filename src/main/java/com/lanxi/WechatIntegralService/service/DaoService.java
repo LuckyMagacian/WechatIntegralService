@@ -9,6 +9,7 @@ import com.lanxi.WechatIntegralService.entity.IntegralGame;
 import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
 import com.lanxi.WechatIntegralService.entity.RedPacketReceive;
+import com.lanxi.WechatIntegralService.entity.ValidCode;
 
 public interface DaoService {
 	// TODO----------------------------account---------------------------------------------------
@@ -63,4 +64,11 @@ public interface DaoService {
 	public void updateRedPacketReceive(RedPacketReceive redPacketReceive);
 	public List<RedPacketReceive> selectRedPacketReceive(RedPacketReceive redPacketReceive);
 	public RedPacketReceive getReceiveRecord(String redPacketId,String wechatId);
+	//TODO-----------------------------validCode------------------------------------------------------------
+	public void addValidCode(ValidCode validCode);
+	public void addValidCodeDefault(ValidCode validCode);
+	public void deleteValidCode(ValidCode validCode);
+	public void updateValidCode(ValidCode validCode);
+	public List<ValidCode> selectValidCode(ValidCode validCode);
+	public ValidCode getValidCode(String phone);
 }

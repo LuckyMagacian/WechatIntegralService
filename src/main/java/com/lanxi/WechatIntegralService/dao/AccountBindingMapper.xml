@@ -57,6 +57,27 @@ from wechat_integral_service_account_binding
 <if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
 </where>
 </select>
+
+<select id="getCountByOpenId" resultType="Integer">
+  SELECT COUNT(integral_account) FROM wechat_integral_service_account_binding WHERE open_id=#{openId}
+</select>
+
+<select id="getCountByPhone" resultType="Integer">
+    SELECT COUNT(binding_phone) FROM wechat_integral_service_account_binding WHERE binding_phone=#{phone}
+</select>
+
+<select id="getMessage" resultMap="accountBindingMap">
+    SELECT integralAccount,bindingPhone FROM wechat_integral_service_account_binding WHERE open_id=#{openId}
+</select>
+
+<select id="getCountByIntegralAccount" resultType="Integer">
+    SELECT COUNT(1) FROM wechat_integral_service_account_binding WHERE integral_account=#{integralAccount}
+</select>
+
+<select id="getPhoneByIntegralAccount" resultType="String">
+    SELECT bindingPhone FROM wechat_integral_service_account_binding WHERE integral_account=#{integralAccount}
+</select>
+
 <resultMap id="accountBindingMap" type="com.lanxi.WechatIntegralService.entity.AccountBinding">
 <result property="openId" 			column="open_id"></result>
 <result property="nickName" 			column="nick_name"></result>

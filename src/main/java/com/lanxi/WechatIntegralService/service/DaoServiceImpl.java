@@ -14,6 +14,7 @@ import com.lanxi.WechatIntegralService.dao.IntegralGameDao;
 import com.lanxi.WechatIntegralService.dao.IntegralRedPacketDao;
 import com.lanxi.WechatIntegralService.dao.IntegralTransferDao;
 import com.lanxi.WechatIntegralService.dao.RedPacketReceiveDao;
+import com.lanxi.WechatIntegralService.dao.ValidCodeDao;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
@@ -21,6 +22,7 @@ import com.lanxi.WechatIntegralService.entity.IntegralGame;
 import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
 import com.lanxi.WechatIntegralService.entity.RedPacketReceive;
+import com.lanxi.WechatIntegralService.entity.ValidCode;
 @Service("daoService")
 public class DaoServiceImpl implements DaoService {
 	@Resource
@@ -39,6 +41,8 @@ public class DaoServiceImpl implements DaoService {
 	private IntegralTransferDao transferDao;
 	@Resource
 	private RedPacketReceiveDao receiveDao;
+	@Resource
+	private ValidCodeDao codeDao;
 	@Override
 	public void addAccountBinding(AccountBinding accountBinding) {
 		accountDao.addAccountBinding(accountBinding);
@@ -285,6 +289,39 @@ public class DaoServiceImpl implements DaoService {
 		receive.setRedPacketId(redPacketId);
 		receive.setOpenId(wechatId);
 		List<RedPacketReceive> result=receiveDao.selectRedPacketReceive(receive);
+		return result.isEmpty()?null:result.get(0);
+	}
+
+	@Override
+	public void addValidCode(ValidCode validCode) {
+		codeDao.addValidCode(validCode);	
+	}
+
+	@Override
+	public void addValidCodeDefault(ValidCode validCode) {
+		codeDao.addValidCodeDefault(validCode);
+	}
+
+	@Override
+	public void deleteValidCode(ValidCode validCode) {
+		codeDao.deleteValidCode(validCode);
+	}
+
+	@Override
+	public void updateValidCode(ValidCode validCode) {
+		codeDao.updateValidCode(validCode);
+	}
+
+	@Override
+	public List<ValidCode> selectValidCode(ValidCode validCode) {
+		return codeDao.selectValidCode(validCode);
+	}
+
+	@Override
+	public ValidCode getValidCode(String phone) {
+		ValidCode code=new ValidCode();
+		code.setPhone(phone);
+		List<ValidCode> result=selectValidCode(code);
 		return result.isEmpty()?null:result.get(0);
 	}
 

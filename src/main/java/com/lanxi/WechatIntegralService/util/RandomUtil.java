@@ -31,8 +31,8 @@ public class RandomUtil {
 		return rs.toString();
 	}
 	/**
-	 * 生成指定数量的随数字 字符�?
-	 * @param count	字符�?
+	 * 生成指定数量的随数字 字符�?
+	 * @param count	字符�?
 	 * @return
 	 */
 	public static String getRandomNumber(int count){
@@ -48,5 +48,13 @@ public class RandomUtil {
 	public static String getUUID(){
 		return UUID.randomUUID().toString();
 	}
-
+	/**
+	 * 生成验证码
+	 * @return
+	 */
+	public static String getValidateCode(){
+		String numbel=Math.random()*10000+"";
+		String num=numbel.substring(0,4);
+		return num;
+	}
 }

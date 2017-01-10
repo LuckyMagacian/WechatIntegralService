@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lanxi.WechatIntegralService.dao.ValidCodeDao">
+<insert id="addValidCode" parameterType="com.lanxi.WechatIntegralService.entity.ValidCode">
+insert into wechat_integral_service_valid_code 
+(phone,code,start_time,over_time,valid_code_status)
+values
+(#{phone},#{code},#{startTime},#{overTime},#{validCodeStatus})
+</insert>
+<insert id="addValidCodeDefault" parameterType="com.lanxi.WechatIntegralService.entity.ValidCode">
+insert into wechat_integral_service_valid_code 
+(phone,code,start_time,over_time,valid_code_status)
+values
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+<delete id="deleteValidCode" parameterType="com.lanxi.WechatIntegralService.entity.ValidCode">
+delete from wechat_integral_service_valid_code
+<where>
+<if test="phone != null and phone!=''"> and phone = #{phone}  </if>  
+<if test="code != null and code!=''"> and code = #{code}  </if>  
+<if test="startTime != null and startTime!=''"> and start_time = #{startTime}  </if>  
+<if test="overTime != null and overTime!=''"> and over_time = #{overTime}  </if>  
+<if test="validCodeStatus != null and validCodeStatus!=''"> and valid_code_status = #{validCodeStatus}  </if>  
+</where>
+</delete>
+<update id="updateValidCode" parameterType="com.lanxi.WechatIntegralService.entity.ValidCode">
+update wechat_integral_service_valid_code
+<set> 
+<if test="phone != null and phone!=''">phone = #{phone},</if>  
+<if test="code != null and code!=''">code = #{code},</if>  
+<if test="startTime != null and startTime!=''">start_time = #{startTime},</if>  
+<if test="overTime != null and overTime!=''">over_time = #{overTime},</if>  
+<if test="validCodeStatus != null and validCodeStatus!=''">valid_code_status = #{validCodeStatus},</if>  
+</set>
+<where>
+<if test="phone != null and phone!=''"> and phone = #{phone}  </if>   
+</where>
+</update>
+<select id="selectValidCode" resultMap="validCodeMap" parameterType="com.lanxi.WechatIntegralService.entity.ValidCode" resultType="com.lanxi.WechatIntegralService.entity.ValidCode">
+select
+phone,code,start_time,over_time,valid_code_status
+from wechat_integral_service_valid_code
+<where> 
+<if test="phone != null and phone!=''"> and phone = #{phone}  </if>  
+<if test="code != null and code!=''"> and code = #{code}  </if>  
+<if test="startTime != null and startTime!=''"> and start_time = #{startTime}  </if>  
+<if test="overTime != null and overTime!=''"> and over_time = #{overTime}  </if>  
+<if test="validCodeStatus != null and validCodeStatus!=''"> and valid_code_status = #{validCodeStatus}  </if>  
+</where>
+</select>
+<resultMap id="validCodeMap" type="com.lanxi.WechatIntegralService.entity.ValidCode">
+<result property="phone" 			column="phone"></result>
+<result property="code" 			column="code"></result>
+<result property="startTime" 			column="start_time"></result>
+<result property="overTime" 			column="over_time"></result>
+<result property="validCodeStatus" 			column="valid_code_status"></result>
+</resultMap>
+</mapper>

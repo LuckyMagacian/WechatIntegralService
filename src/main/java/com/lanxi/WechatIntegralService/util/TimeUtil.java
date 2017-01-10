@@ -2,6 +2,7 @@ package com.lanxi.WechatIntegralService.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -194,5 +195,22 @@ public class TimeUtil {
 	 */
 	public static void setDefTimeFormat(String format){
 		defTimeFormat=new SimpleDateFormat(format);
+	}
+	/**
+	 * 得到六个月前的今天的日期
+	 * @return
+	 */
+	public static String getBeforeDate(){
+		Date Now = new Date();   //当前时间
+		Date Before = new Date();
+		Calendar calendar = Calendar.getInstance(); //得到日历
+		calendar.setTime(Now);//把当前时间赋给日历
+		calendar.add(calendar.MONTH, -6);  //设置为前6月
+		Before = calendar.getTime();   //得到前6月的时间
+		String defaultStartDate = defFormat.format(Before);    //格式化前6月的时间
+		String defaultEndDate = defFormat.format(Now); //格式化当前时间
+		System.out.println("前6个月的时间是：" + defaultStartDate);
+		System.out.println("生成的时间是：" + defaultEndDate);
+		return defaultStartDate;
 	}
 }

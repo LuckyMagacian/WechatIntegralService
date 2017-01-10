@@ -19,6 +19,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class HttpUtil {
 	/** 默认编码字符�? */
@@ -355,5 +356,57 @@ public class HttpUtil {
 		for (Map.Entry<String, Object> each : param.entrySet())
 			params.append(each.getKey() + "=" + each.getValue() + "&");
 		return get(url + params.substring(0, params.length()), charset);
+	}
+	/**
+	 *
+	 * 通过URL POST的方式获取JSON数据
+	 * @param _url	接口地址
+	 * @param _params	传递参数
+	 * @param _charSet	字符编码
+	 * @return jsonData
+	 */
+	public static final String getJsonByPost(String _url, Map<String, String> _params, String _charSet) {
+		if (_charSet == null || _charSet.length() == 0){
+			_charSet = "utf-8";
+		}
+		String jsonData = "";
+		try {
+			URL httpurl = new URL(_url);
+			//打开连接
+			HttpURLConnection conn = (HttpURLConnection) httpurl.openConnection();
+			if(_params!=null){
+				conn.setDoOutput(true);//设置连接允许发送数据
+				conn.setDoInput(true);//设置连接允许接收数据
+				conn.setRequestMethod("POST");
+				// Post 请求不能使用缓存
+//				conn.setUseCaches(false);
+				PrintWriter out = new PrintWriter((new OutputStreamWriter(conn.getOutputStream(), _charSet)));
+				int i = 0;
+				//处理post中发送的参数
+				Set<Map.Entry<String, String>> set = _params.entrySet();
+				for (Map.Entry<String, String> entry:set){
+					out.print(entry.getKey());
+					out.print("=");
+					out.print(entry.getValue());
+					if (i!=set.size()-1){
+						out.print("&");
+					}
+					i++;
+				}
+				out.flush();
+				out.close();
+			}
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), _charSet));
+			StringBuffer result = new StringBuffer();//存放结果
+			String line;//存放读取单行拿到的数据
+			while ((line = in.readLine()) != null) {
+				result.append(line);
+			}
+			jsonData = result.toString();
+			in.close();
+		} catch (Exception e) {
+			throw new RuntimeException("发送post请求IO出错,url:" + _url,e);
+		}
+		return jsonData ;
 	}
 }
