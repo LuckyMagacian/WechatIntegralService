@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -16,12 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
-import com.lanxi.WechatIntegralService.util.TimeUtil;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
-import com.lanxi.wechat.entity.automessage.TextAutoMessage;
-import com.lanxi.wechat.entity.message.LinkMessage;
 import com.lanxi.wechat.entity.message.TextMessage;
 import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;

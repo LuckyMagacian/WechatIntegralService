@@ -48,6 +48,43 @@ from wechat_integral_service_valid_code
 <if test="validCodeStatus != null and validCodeStatus!=''"> and valid_code_status = #{validCodeStatus}  </if>  
 </where>
 </select>
+
+<insert id="insert">
+    INSERT INTO wechat_integral_service_valid_code(code,phone,start_time,over_time,valid_code_status)
+    VALUES(#{code},#{phone},#{startTime},#{overTime},#{validCodeStatus})
+</insert>
+
+<select id="getCodeByPhone" resultType="String">
+    SELECT code FROM wechat_integral_service_valid_code WHERE phone=#{phone}
+</select>
+
+<update id="updateStatusByPhone">
+    UPDATE wechat_integral_service_valid_code SET valid_code_status=#{2} WHERE phone=#{phone}
+</update>
+
+<select id="getStatusByPhone" resultType="String">
+    SELECT valid_code_status FROM wechat_integral_service_valid_code WHERE phone=#{phone}
+</select>
+
+<update id="updateStatusByTime">
+    UPDATE wechat_integral_service_valid_code SET valid_code_status=#{3}
+    WHERE  <![CDATA[ over_time<#{time} ]]>
+</update>
+
+<delete id="deleteCode">
+    DELETE FROM wechat_integral_service_valid_code WHERE valid_code_status=#{3}
+</delete>
+
+<select id="getCountByPhone" resultType="Integer">
+    SELECT COUNT(1) FROM wechat_integral_service_valid_code WHERE phone=#{phone}
+</select>
+
+<update id="updateCode">
+    UPDATE wechat_integral_service_valid_code
+    SET valid_code_status=#{validCodeStatus},code=#{code},start_time=#{startTime},over_time=#{overTime}
+    WHERE  phone=#{phone}
+</update>
+
 <resultMap id="validCodeMap" type="com.lanxi.WechatIntegralService.entity.ValidCode">
 <result property="phone" 			column="phone"></result>
 <result property="code" 			column="code"></result>

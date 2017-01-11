@@ -71,4 +71,18 @@ public interface DaoService {
 	public void updateValidCode(ValidCode validCode);
 	public List<ValidCode> selectValidCode(ValidCode validCode);
 	public ValidCode getValidCode(String phone);
+	void insert(ValidCode validCode);
+	String getCodeByPhone(String phone);
+	void updateStatusByPhone(String phone);
+	String getStatusByPhone(String phone);
+	void updateStatusByTime();
+	void deleteCode();
+	/**
+	 * 查询数据库中是否有该手机号
+	 */
+	int getCountByPhone(String phone);
+	/**
+	 * 修改验证码
+	 */
+	void updateCode(ValidCode validCode);
 }

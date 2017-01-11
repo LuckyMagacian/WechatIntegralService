@@ -23,6 +23,7 @@ import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
 import com.lanxi.WechatIntegralService.entity.RedPacketReceive;
 import com.lanxi.WechatIntegralService.entity.ValidCode;
+import com.lanxi.WechatIntegralService.util.TimeUtil;
 @Service("daoService")
 public class DaoServiceImpl implements DaoService {
 	@Resource
@@ -324,5 +325,42 @@ public class DaoServiceImpl implements DaoService {
 		List<ValidCode> result=selectValidCode(code);
 		return result.isEmpty()?null:result.get(0);
 	}
+	@Override
+	public void insert(ValidCode validCode) {
+		codeDao.insert(validCode);
+	}
 
+	@Override
+	public String getCodeByPhone(String phone) {
+		return codeDao.getCodeByPhone(phone);
+	}
+
+	@Override
+	public void updateStatusByPhone(String phone) {
+		codeDao.updateStatusByPhone(phone);
+	}
+
+	@Override
+	public String getStatusByPhone(String phone) {
+		return codeDao.getStatusByPhone(phone);
+	}
+
+	@Override
+	public void updateStatusByTime() {
+		codeDao.updateStatusByTime(TimeUtil.getDateTime());
+	}
+
+	@Override
+	public void deleteCode() {
+		codeDao.deleteCode();
+	}
+	@Override
+	public int getCountByPhone(String phone) {
+		return codeDao.getCountByPhone(phone);
+	}
+
+	@Override
+	public void updateCode(ValidCode validCode) {
+		codeDao.updateCode(validCode);
+	}
 }

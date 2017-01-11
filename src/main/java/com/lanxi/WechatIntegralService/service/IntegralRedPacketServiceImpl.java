@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
@@ -26,10 +27,11 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 	@Resource
 	private DaoService dao;
 	private static Logger logger=Logger.getLogger(IntegralRedPacketServiceImpl.class);
+	@SuppressWarnings("finally")
 	@Override
 	public String grantRedPacket(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
 		try {
-			ReturnMessage returnMessage=new ReturnMessage();
 			req.setCharacterEncoding("utf-8");
 			String count=req.getParameter("redPacketCount").trim();
 			String integral=req.getParameter("redPacketIntegral").trim();
@@ -100,14 +102,20 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			returnMessage.setObj(redPacket.getRedPacketUrl());
 			return JSONObject.toJSONString(returnMessage);
 		} catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("红包创建异常!");
+			returnMessage.setObj(null);
 			throw new AppException("红包功能异常!",e);
+		}finally {
+			return returnMessage.toJson();
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@Override
 	public String unpackRedPacket(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
 		try {
-			ReturnMessage returnMessage=new ReturnMessage();
 			req.setCharacterEncoding("utf-8");
 			String redPacketId=req.getParameter("redPacketId");
 			String tokenStr=req.getParameter("token");
@@ -206,6 +214,11 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			return returnMessage.toJson();
 		} catch (Exception e) {
 			throw new AppException("拆红包异常!",e);
+		}finally {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("拆红包异常");
+			returnMessage.setObj(null);
+			return returnMessage.toJson();
 		}
 	}
 

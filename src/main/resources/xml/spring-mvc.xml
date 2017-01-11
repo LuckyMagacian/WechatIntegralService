@@ -79,4 +79,38 @@
 			<value>redPacketOverTime</value>
 		</property>
 	</bean>
+	
+	<bean id="UpdateExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="UpdateExpiredJob" />
+        </property>
+        <property name="cronExpression">
+            <value>0 0/1 * * * ?</value>
+        </property>
+    </bean>
+    <bean id="UpdateExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="daoService" />
+        </property>
+        <property name="targetMethod">
+            <value>updateCodeStatus</value>
+        </property>
+    </bean>
+    
+     <bean id="DeleteExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail">
+            <ref bean="DeleteExpiredJob" />
+        </property>
+        <property name="cronExpression">
+            <value>0 0 0 * * ?</value>
+        </property>
+    </bean>
+    <bean id="DeleteExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject">
+            <ref bean="daoService" />
+        </property>
+        <property name="targetMethod">
+            <value>deleteCode</value>
+        </property>
+    </bean>
 </beans>

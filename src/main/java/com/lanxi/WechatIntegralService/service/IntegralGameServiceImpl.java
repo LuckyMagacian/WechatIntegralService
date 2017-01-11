@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.Game;
@@ -18,17 +19,18 @@ import com.lanxi.integral.report.ReduceResBody;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
-
+@Service("integralGameService")
 public class IntegralGameServiceImpl implements IntegralGameService {
 	private static Logger logger=Logger.getLogger(IntegralGameServiceImpl.class);
 	@Resource
 	private DaoService dao;
 	
 	private static Random random=new Random();
+	@SuppressWarnings("finally")
 	@Override
 	public String startGame(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
 		try{
-			ReturnMessage returnMessage=new ReturnMessage();
 			req.setCharacterEncoding("utf-8");
 			String gameId=req.getParameter("gameId").trim();
 			String tokenStr =req.getParameter("token").trim();
@@ -113,10 +115,13 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			dao.addIntegralGame(integralGame);
 			logger.info("增加游戏记录:"+integralGame);
 		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("游戏异常!");
+			returnMessage.setObj(null);
 			throw new AppException("游戏开始异常",e);
-		}
-		return "未中奖!";
-		
+		}finally {
+			return returnMessage.toJson();
+		}		
 	}
 
 	@Override
