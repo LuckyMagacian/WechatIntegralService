@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
+import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
@@ -19,6 +20,7 @@ public class QuartzServiceImpl implements QuartzService{
 	private static Logger logger=Logger.getLogger(QuartzServiceImpl.class);
 	@Override
 	public void redPacketOverTime() {
+		try {
 		List<IntegralRedPacket> redPackets=dao.getNormlRedPacket();
 		redPackets.addAll(dao.getNoneRedPacket());
 		for(IntegralRedPacket each:redPackets){
@@ -26,11 +28,12 @@ public class QuartzServiceImpl implements QuartzService{
 				logger.info("红包过期:"+each);
 				each.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_OVERTIME);
 				if(IntegralRedPacket.RED_PACKET_STATUS_NORML.equals(each.getRedPacketStatus())){
-					Integer returnIntegral=each.getLessIntegeral();
+					Integer returnIntegral=each.getLessIntegral();
 					logger.info("红包过期返还积分:"+returnIntegral);
 					String  userId=each.getOpenId();
 					AccountBinding account=dao.getAccount(userId);
-					ReturnMessage returnMessage=IntegralService.addIntegral(account.getIntegralAccount(),returnIntegral+"");
+					ReturnMessage returnMessage;
+						returnMessage = IntegralService.addIntegral(account.getIntegralAccount(),returnIntegral+"");
 					logger.info("积分返还结果:"+returnMessage);
 					if(!returnMessage.getRetCode().trim().equals("0000")){
 						returnMessage.setRetMsg("积分增加失败!");
@@ -41,6 +44,9 @@ public class QuartzServiceImpl implements QuartzService{
 				dao.updateIntegralRedPacket(each);
 				logger.info("更新红包信息!");
 			}
+		}
+		} catch (Exception e) {
+			throw new AppException("紅包過期異常！",e);
 		}
 	}
 

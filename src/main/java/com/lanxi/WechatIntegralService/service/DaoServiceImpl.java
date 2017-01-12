@@ -247,10 +247,9 @@ public class DaoServiceImpl implements DaoService {
 	public Gift getGift(String gameId, Integer level) {
 		Gift gift=new Gift();
 		gift.setGameId(gameId);
+		gift.setPrizeLevel(level);
 		List<Gift> result=giftDao.selectGift(gift);
-		for(Gift each:result)
-		gift=each.getPrizeLevel()==level?each:null;
-		return gift;
+		return result.isEmpty()?null:result.get(0);
 	}
 
 	@Override

@@ -52,8 +52,8 @@ public class TestMenu {
 		MenuManager.addButton(locationButton);
 		MenuManager.addButton(viewButton);
 		ViewButton viewButton1=new ViewButton();
-		viewButton1.setName("授权b");		
-		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl(null,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE));
+		viewButton1.setName("積分綁定");		
+		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/intoJf.do",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_BASE));
 		MenuManager.addButton(viewButton1);
 		System.out.println(viewButton.toJson());
 		System.out.println(viewButton1.toJson());

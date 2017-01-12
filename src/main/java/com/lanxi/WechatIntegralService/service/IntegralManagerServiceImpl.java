@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lanxi.WechatIntegralService.entity.ValidCode;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
-import com.lanxi.WechatIntegralService.entity.ValidCode;
 import com.lanxi.WechatIntegralService.util.AppException;
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
 import com.lanxi.WechatIntegralService.util.SendMessageUtil;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
@@ -28,9 +29,11 @@ import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.entity.user.WebUserInfo;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
+
 @Service("integralManagerService")
-public class IntegralManagerServiceImpl{
-	private static Logger logger = Logger.getLogger(IntegralManagerServiceImpl.class);
+public class IntegralManagerServiceImpl {
+
+    private static Logger logger = Logger.getLogger(IntegralManagerServiceImpl.class);
     @Resource
     BindingService bindingService;
     @Resource
@@ -49,7 +52,7 @@ public class IntegralManagerServiceImpl{
             //将openid存入token
             EasyToken easyToken = new EasyToken();
             easyToken.setInfo(openId);
-            easyToken.setValidTo(System.currentTimeMillis() + 7200000L);
+            easyToken.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime"))*1000);
             map.put("token", easyToken.toToken());
             logger.info("token==="+easyToken.toToken());
             //检查是否绑定积分账户
@@ -62,8 +65,14 @@ public class IntegralManagerServiceImpl{
                 //通过openid取出积分账户
                 String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
                 //通过积分账户取得姓名，积分值
-                Object message = IntegralService.queryIntegral(integralAccount).getObj();
-                QueryResBody queryResBody = (QueryResBody) message;
+                 ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+                 if(!message.getRetCode().equals("0000")){
+                     logger.error("取积分值和姓名失败");
+                     map.put("retCode", message.getRetCode());
+                     map.put("retMsg", message.getRetMsg());
+                     return map;
+                 }
+                QueryResBody queryResBody = (QueryResBody)message.getObj();
                 String name = queryResBody.getCustName();
                 String integralValue = queryResBody.getTotalPoints();
                 map.put("headimgUrl", headimgUrl);
@@ -100,12 +109,21 @@ public class IntegralManagerServiceImpl{
                 return map;
             }
             String openId = token.getInfo();
+            //取出用户详情
+            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            String nickname=webUserInfo.getNickName();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
             logger.info("积分账户==" + integralAccount);
             //通过积分账户取得姓名
-            Object message = IntegralService.queryIntegral(integralAccount).getObj();
-            QueryResBody queryResBody = (QueryResBody) message;
+            ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            if(!message.getRetCode().equals("0000")){
+                logger.error("取积分值和姓名失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody = (QueryResBody)message.getObj();
             String name = queryResBody.getCustName();
             //根据微信号取出身份证号和手机号
             AccountBinding accountBinding = bindingService.getMessage(openId);
@@ -114,7 +132,7 @@ public class IntegralManagerServiceImpl{
             String phone = accountBinding.getBindingPhone();
             map.put("idCard", idCrad);
             map.put("phone", phone);
-            map.put("openId", openId);
+            map.put("nickname", nickname);
             map.put("name", name);
             map.put("retCode", "0000");
             map.put("retMsg", "进入账户资料页面成功");
@@ -126,7 +144,7 @@ public class IntegralManagerServiceImpl{
         }
         return map;
     }
-    
+
     public Map<String, Object> phone(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -155,7 +173,6 @@ public class IntegralManagerServiceImpl{
         }
         return map;
     }
-
 
     public Map<String, Object> updatephone(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -228,7 +245,6 @@ public class IntegralManagerServiceImpl{
         return map;
     }
 
-
     public Map<String, Object> updatePhoneOper(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -242,6 +258,9 @@ public class IntegralManagerServiceImpl{
                 return map;
             }
             String openId = token.getInfo();
+            //取出用户详情
+            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            String nickname=webUserInfo.getNickName();
             //根据微信号取出身份证号和积分账号
             AccountBinding accountBinding = bindingService.getMessage(openId);
             String integralAccount = accountBinding.getIntegralAccount();
@@ -276,13 +295,25 @@ public class IntegralManagerServiceImpl{
                 dao.updateStatusByPhone(phone);
                 //修改表中手机号
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
+                if(!message.getRetCode().equals("0000")){
+                    logger.error("修改积分系统手机号失败");
+                    map.put("retCode", message.getRetCode());
+                    map.put("retMsg", message.getRetMsg());
+                    return map;
+                }
                 logger.info("修改结果"+message);
                 //通过积分账户取得姓名
-                Object obj = IntegralService.queryIntegral(integralAccount).getObj();
-                QueryResBody queryResBody = (QueryResBody) obj;
+                ReturnMessage returnMessage = IntegralService.queryIntegral(integralAccount);
+                if(!returnMessage.getRetCode().equals("0000")){
+                    logger.error("取积分值和姓名失败");
+                    map.put("retCode", returnMessage.getRetCode());
+                    map.put("retMsg", returnMessage.getRetMsg());
+                    return map;
+                }
+                QueryResBody queryResBody = (QueryResBody)returnMessage.getObj();
                 String name = queryResBody.getCustName();
                 map.put("name", name);
-                map.put("openId", openId);
+                map.put("nickName", nickname);
                 map.put("phone", phone);
                 map.put("idCard", idCard);
                 map.put("retCode", "0000");
@@ -303,7 +334,6 @@ public class IntegralManagerServiceImpl{
     }
 
     //绑定积分账户页面
-
     public Map<String, Object> bindings(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -317,9 +347,12 @@ public class IntegralManagerServiceImpl{
                 return map;
             }
             String openId = token.getInfo();
+            //取出用户详情
+            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            String nickname=webUserInfo.getNickName();
             map.put("retCode", "0000");
             map.put("retMsg", "进入绑定积分页面成功");
-            map.put("openId", openId);
+            map.put("nickName",nickname);
             logger.info("微信号"+openId);
             logger.info("进入绑定积分页面成功");
         } catch (Exception e) {
@@ -332,7 +365,6 @@ public class IntegralManagerServiceImpl{
     }
 
     //绑定积分账户操作
-
     public Map<String, Object> bindingsJf(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -401,7 +433,6 @@ public class IntegralManagerServiceImpl{
     }
 
     //绑定积分账户操作(校验验证码)
-
     public Map<String, Object> bindingsJfOper(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -460,10 +491,22 @@ public class IntegralManagerServiceImpl{
                 dao.updateStatusByPhone(phone);
                 //手机号入到积分表
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
+                if(!message.getRetCode().equals("0000")){
+                    logger.error("手机号入到积分系统失败");
+                    map.put("retCode", message.getRetCode());
+                    map.put("retMsg", message.getRetMsg());
+                    return map;
+                }
                 logger.info("手机号入表结果"+message);
                 //通过积分账户取得积分值
-                Object obj = IntegralService.queryIntegral(integralAccount).getObj();
-                QueryResBody queryResBody = (QueryResBody) obj;
+                ReturnMessage returnMessage= IntegralService.queryIntegral(integralAccount);
+                if(!returnMessage.getRetCode().equals("0000")){
+                    logger.error("取积分值和姓名失败");
+                    map.put("retCode", returnMessage.getRetCode());
+                    map.put("retMsg", returnMessage.getRetMsg());
+                    return map;
+                }
+                QueryResBody queryResBody = (QueryResBody)returnMessage.getObj();
                 String integralValue = queryResBody.getTotalPoints();
                 logger.info("积分值" + integralValue);
                 map.put("headimgUrl", headimgUrl);
@@ -484,7 +527,6 @@ public class IntegralManagerServiceImpl{
     }
 
     //积分明细查询
-
     public Map<String, Object> integralQuery(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -505,6 +547,12 @@ public class IntegralManagerServiceImpl{
             logger.info("积分账户=="+integralAccount+"六个月前的日期"+startDate);
             //查询明细
             ReturnMessage message = IntegralService.historyIntegral(integralAccount, startDate);
+            if(!message.getRetCode().equals("0000")){
+                logger.error("查询积分明细失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
             logger.info("积分明细" + message.getObj());
             map.put("message", message.getObj());
             map.put("retCode", "0000");
@@ -520,7 +568,6 @@ public class IntegralManagerServiceImpl{
     }
 
     //积分转增
-
     public Map<String, Object> deliveryIntegral(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -541,8 +588,14 @@ public class IntegralManagerServiceImpl{
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
             //通过积分账户取得积分值
-            Object message = IntegralService.queryIntegral(integralAccount).getObj();
-            QueryResBody queryResBody = (QueryResBody) message;
+            ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            if(!message.getRetCode().equals("0000")){
+                logger.error("取积分值和姓名失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody = (QueryResBody)message.getObj();
             String integralValue = queryResBody.getTotalPoints();
             logger.info("积分转增值" + integral + "接收方身份证号" + receiverIdCard + "积分账户" + integralAccount + "" + "现有积分值" + integralValue);
             int integral2 = Integer.parseInt(integral);
@@ -654,6 +707,12 @@ public class IntegralManagerServiceImpl{
                 dao.updateStatusByPhone(phone);
                 //转增操作
                 ReturnMessage message = IntegralService.transferIntegral(integralAccount, integralAccount2, integral);
+                if(!message.getRetCode().equals("0000")){
+                    logger.error("积分系统转增失败");
+                    map.put("retCode", message.getRetCode());
+                    map.put("retMsg", message.getRetMsg());
+                    return map;
+                }
                 //入到本地
                 IntegralTransfer integralTransfer = new IntegralTransfer();
                 integralTransfer.setGiverOpenId(integralAccount);
@@ -677,6 +736,7 @@ public class IntegralManagerServiceImpl{
     }
 
     //发送短信通知
+    @SuppressWarnings("finally")
     public Map<String, Object> sendMessage(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -693,8 +753,14 @@ public class IntegralManagerServiceImpl{
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
             //通过积分账户取得姓名
-            Object message = IntegralService.queryIntegral(integralAccount).getObj();
-            QueryResBody queryResBody = (QueryResBody) message;
+            ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            if(!message.getRetCode().equals("0000")) {
+                logger.error("取积分值和姓名失败");
+                map.put("retCode",message.getRetCode());
+                map.put("retMsg",message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody = (QueryResBody)message.getObj();
             String name = queryResBody.getCustName();
             //被赠送方手机号
             String phone = req.getParameter("phone");
@@ -711,7 +777,9 @@ public class IntegralManagerServiceImpl{
             map.put("retMsg", "发送短信失败");
             logger.info("发送短信失败");
             throw new AppException("发送短信页面出错", e);
-        } 
+        } finally {
             return map;
+        }
     }
+
 }

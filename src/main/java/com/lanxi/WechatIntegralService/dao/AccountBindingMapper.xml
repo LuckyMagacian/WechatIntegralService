@@ -67,7 +67,7 @@ from wechat_integral_service_account_binding
 </select>
 
 <select id="getMessage" resultMap="accountBindingMap">
-    SELECT integralAccount,bindingPhone FROM wechat_integral_service_account_binding WHERE open_id=#{openId}
+    SELECT integral_account,binding_phone FROM wechat_integral_service_account_binding WHERE open_id=#{openId}
 </select>
 
 <select id="getCountByIntegralAccount" resultType="Integer">
@@ -75,7 +75,7 @@ from wechat_integral_service_account_binding
 </select>
 
 <select id="getPhoneByIntegralAccount" resultType="String">
-    SELECT bindingPhone FROM wechat_integral_service_account_binding WHERE integral_account=#{integralAccount}
+    SELECT binding_phone FROM wechat_integral_service_account_binding WHERE integral_account=#{integralAccount}
 </select>
 
 <resultMap id="accountBindingMap" type="com.lanxi.WechatIntegralService.entity.AccountBinding">

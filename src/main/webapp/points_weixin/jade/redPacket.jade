@@ -1,0 +1,26 @@
+extends template
+block CSS
+  title 积分红包
+  link(rel="stylesheet" href="css/public.css")
+  link(rel="stylesheet" href="css/index.css")
+block content
+  #getPacketBg
+    #packetRedBg
+    #packetContent
+      #packetBgAdd
+        #packetHeadPic
+      p(style="margin: 10px 0px 6px 0px;")
+        span#packetUser Mr.rice
+        span 的红包
+      p.rice-color-777
+        span#packetinfo 积分红包,速来领取
+      #redPacketPic(onclick="location.href='redPacketList.html?id=1231'")
+      p.rice-color-777
+        span 共
+        span#redPacketNum 10
+        span 个红包,总积分
+        span#redPacketTotal 10000
+        span 积分  
+block JS
+  script(src="js/public.js")
+  script(src="js/pointsPacket.js")

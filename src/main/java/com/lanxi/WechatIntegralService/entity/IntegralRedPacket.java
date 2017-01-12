@@ -20,7 +20,7 @@ public class IntegralRedPacket {
 	/**总积分*/
 	private Integer totalIntegral;
 	/**剩余积分*/
-	private Integer lessIntegeral;
+	private Integer lessIntegral;
 	/**红包url*/
 	private String  redPacketUrl;
 	/**红包状态*/
@@ -69,11 +69,11 @@ public class IntegralRedPacket {
 	public void setTotalIntegral(Integer totalIntegral) {
 		this.totalIntegral = totalIntegral;
 	}
-	public Integer getLessIntegeral() {
-		return lessIntegeral;
+	public Integer getLessIntegral() {
+		return lessIntegral;
 	}
-	public void setLessIntegeral(Integer lessIntegeral) {
-		this.lessIntegeral = lessIntegeral;
+	public void setLessIntegral(Integer lessIntegral) {
+		this.lessIntegral = lessIntegral;
 	}
 	public String getRedPacketUrl() {
 		return redPacketUrl;
@@ -134,7 +134,7 @@ public class IntegralRedPacket {
 	public String toString() {
 		return "IntegralRedPacket [redPacketId=" + redPacketId + ", redPacketName=" + redPacketName
 				+ ", redPacketCount=" + redPacketCount + ", redPacketLessCount=" + redPacketLessCount
-				+ ", totalIntegral=" + totalIntegral + ", lessIntegeral=" + lessIntegeral + ", redPacketUrl="
+				+ ", totalIntegral=" + totalIntegral + ", lessIntegral=" + lessIntegral + ", redPacketUrl="
 				+ redPacketUrl + ", redPacketStatus=" + redPacketStatus + ", openId=" + openId + ", plateformSerialId="
 				+ plateformSerialId + ", startTime=" + startTime + ", overTime=" + overTime + ", receivers=" + receivers
 				+ ", remark=" + remark + ", beiy=" + beiy + "]";

@@ -13,8 +13,8 @@ import com.lanxi.WechatIntegralService.service.IntegralGameService;
 public class GameController {
 	@Resource
 	IntegralGameService gameService;
-//	@RequestMapping(value = "/game" , produces = {"application/json;charset=UTF-8"})
-	@RequestMapping("/game")
+//	@RequestMapping("/game")
+	@RequestMapping(value = "/game.do" , produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String game(HttpServletRequest req){
 		return gameService.startGame(req);

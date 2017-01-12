@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
@@ -22,7 +23,7 @@ import com.lanxi.integral.report.ReduceResBody;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
-
+@Service("integralRedPacketService")
 public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 	@Resource
 	private DaoService dao;
@@ -87,7 +88,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			redPacket.setRedPacketCount(Integer.parseInt(count));
 			redPacket.setRedPacketLessCount(redPacket.getRedPacketCount());
 			redPacket.setTotalIntegral(Integer.parseInt(integral));
-			redPacket.setLessIntegeral(redPacket.getTotalIntegral());
+			redPacket.setLessIntegral(redPacket.getTotalIntegral());
 			redPacket.setRedPacketUrl(ConfigUtil.get("unpackRedPacketUrl?redPacketId=")+redPacket.getRedPacketId());
 			redPacket.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_NORML);
 			Long startTime=System.currentTimeMillis();
@@ -182,16 +183,16 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			
 			if(redPacket.getRedPacketLessCount()==1){
 				logger.info("最后一个红包!");
-				receive.setIntegral(redPacket.getLessIntegeral());
-				redPacket.setLessIntegeral(0);
+				receive.setIntegral(redPacket.getLessIntegral());
+				redPacket.setLessIntegral(0);
 				redPacket.setRedPacketLessCount(0);
 				redPacket.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_NONE);
 				logger.info("拆得积分:"+receive.getIntegral());
 			}else{
 				Random random=new Random();
 				Double percent=random.nextInt(100)/100D;
-				receive.setIntegral((int)(redPacket.getLessIntegeral()*percent));	
-				redPacket.setLessIntegeral(redPacket.getLessIntegeral()-receive.getIntegral());
+				receive.setIntegral((int)(redPacket.getLessIntegral()*percent));	
+				redPacket.setLessIntegral(redPacket.getLessIntegral()-receive.getIntegral());
 				redPacket.setRedPacketLessCount(redPacket.getRedPacketLessCount()-1);
 			}
 			returnMessage=IntegralService.addIntegral(account.getIntegralAccount(), receive.getIntegral()+"");

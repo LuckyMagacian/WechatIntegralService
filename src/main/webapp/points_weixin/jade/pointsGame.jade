@@ -1,0 +1,23 @@
+extends template
+block CSS
+  title 积分游戏
+  link(rel="stylesheet" href="css/public.css")
+  link(rel="stylesheet" href="css/index.css")
+block content
+  p.gameItem 热门游戏
+  #gameList
+    .gamePic#zpBg(onclick="location.href='game-zp.html'")
+      .gameTitle
+        p 
+          span 小积分 抽大奖
+          br
+          span 9积分玩转大转盘
+    .gamePic#gglBg(onclick="location.href='game-ggl.html'")
+      .gameTitle
+        p 
+          span 小积分 抽大奖
+          br
+          span 9积分幸运刮刮乐
+block JS
+  script(src="js/public.js")
+  script(src="js/pointsGame.js")

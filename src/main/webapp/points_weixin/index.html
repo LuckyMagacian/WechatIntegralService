@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/mui-icons-extra.css">
+    <title>蓝喜微信积分系统</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <div id="indexheader">
+      <div id="userPic" onclick="hrefTo('userInfo')"></div>
+      <p id="username" onclick="hrefTo('userInfo')">username</p>
+      <p>积分:
+        <label id="userPoints">1000</label>
+      </p>
+    </div>
+    <div id="content">
+      <div id="bgIndexAdd"></div>
+      <div id="funcTitle">功能</div>
+      <div id="funcList" class="weui-grids"><a href="javascript:hrefTo('card');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-1.png"></div>
+          <label class="weui-grid__label">卡券包</label></a><a href="javascript:hrefTo('pointsDetail');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-3.png"></div>
+          <label class="weui-grid__label">积分明细</label></a><a href="javascript:hrefTo('pointsGive');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-2.png"></div>
+          <label class="weui-grid__label">积分转赠</label></a><a href="javascript:hrefTo('pointsGame');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-5.png"></div>
+          <label class="weui-grid__label">抽奖游戏</label></a><a href="javascript:hrefTo('');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-6.png"></div>
+          <label class="weui-grid__label">积分权益</label></a><a href="javascript:hrefTo('pointsPacket');" class="weui-grid">
+          <div class="weui-grid__icon"><img src="img/icon-4.png"></div>
+          <label class="weui-grid__label">积分红包</label></a>
+      </div>
+    </div>
+    <footer class="weui-footer weui-footer_fixed-bottom"><span class="weui-footer__text">Copyright &copy; 2015-2017 杭州蓝喜信息技术有限公司</span></footer>
+    <script src="js/mui.js"></script>
+    <script src="js/jquery.2.2.4.min.js"></script>
+    <script src="js/jweixin-1.0.0.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/index.js"> </script>
+  </body>
+</html>

@@ -93,7 +93,7 @@
             <ref bean="daoService" />
         </property>
         <property name="targetMethod">
-            <value>updateCodeStatus</value>
+            <value>updateStatusByTime</value>
         </property>
     </bean>
     

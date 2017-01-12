@@ -47,14 +47,14 @@ select
 id,merchant_id,name,game_id,prize_level,integral_value,price,count
 from wechat_integral_service_gift
 <where> 
-<if test="id != null and id!=''"> and id = #{id}  </if>  
-<if test="merchantId != null and merchantId!=''"> and merchant_id = #{merchantId}  </if>  
-<if test="name != null and name!=''"> and name = #{name}  </if>  
-<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
-<if test="prizeLevel != null and prizeLevel!=''"> and prize_level = #{prizeLevel}  </if>  
-<if test="integralValue != null and integralValue!=''"> and integral_value = #{integralValue}  </if>  
-<if test="price != null and price!=''"> and price = #{price}  </if>  
-<if test="count != null and count!=''"> and count = #{count}  </if>  
+<if test="id != null"> and id = #{id}  </if>  
+<if test="merchantId != null"> and merchant_id = #{merchantId}  </if>  
+<if test="name != null"> and name = #{name}  </if>  
+<if test="gameId != null"> and game_id = #{gameId}  </if>  
+<if test="prizeLevel != null"> and prize_level = #{prizeLevel}  </if>  
+<if test="integralValue != null"> and integral_value = #{integralValue}  </if>  
+<if test="price != null"> and price = #{price}  </if>  
+<if test="count != null"> and count = #{count}  </if>  
 </where>
 </select>
 <resultMap id="giftMap" type="com.lanxi.WechatIntegralService.entity.Gift">

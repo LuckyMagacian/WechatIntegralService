@@ -1,0 +1,36 @@
+extends template
+block CSS
+  title 卡券包
+  link(rel="stylesheet" href="css/public.css")
+  link(rel="stylesheet" href="css/index.css")
+block content
+  #card
+    .weui-cells__title 全部卡券
+    ul#cardSwipe.mui-table-view
+      li.mui-table-view-cell
+        .mui-slider-right.mui-disabled
+          a.mui-btn.mui-btn-red 删除
+        a.weui-media-box.weui-media-box_appmsg.mui-slider-handle
+          .weui-media-box__hd
+            img.weui-media-box__thumb(src="img/card-hgds.jpg")
+          .weui-media-box__bd
+            label 哈根达斯
+            p.cardConent
+              span.red 50元
+              span 代金券
+          .cardDeadline
+            span 有效期限:
+              label 2016年10月21日--2016年12月21日
+    #dialog-cardDel.hidden
+      .weui-mask
+      .weui-dialog
+        .weui-dialog__hd
+          strong.weui-dialog__title 删除卡券
+        .weui-dialog__bd 
+          p 确认卡券已使用并删除?
+        .weui-dialog__ft
+          a.weui-dialog__btn.weui-dialog__btn_default(href="javascript:cardDelCancel()") 取消
+          a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:cardDel()") 确认
+block JS
+  script(src="js/public.js")
+  script(src="js/card.js")

@@ -3,13 +3,13 @@
 <mapper namespace="com.lanxi.WechatIntegralService.dao.IntegralRedPacketDao">
 <insert id="addIntegralRedPacket" parameterType="com.lanxi.WechatIntegralService.entity.IntegralRedPacket">
 insert into wechat_integral_service_integral_red_packet 
-(red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integeral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy)
+(red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy)
 values
-(#{redPacketId},#{redPacketName},#{redPacketCount},#{redPacketLessCount},#{totalIntegral},#{lessIntegeral},#{redPacketUrl},#{redPacketStatus},#{openId},#{plateformSerialId},#{startTime},#{overTime},#{receivers},#{remark},#{beiy})
+(#{redPacketId},#{redPacketName},#{redPacketCount},#{redPacketLessCount},#{totalIntegral},#{lessIntegral},#{redPacketUrl},#{redPacketStatus},#{openId},#{plateformSerialId},#{startTime},#{overTime},#{receivers},#{remark},#{beiy})
 </insert>
 <insert id="addIntegralRedPacketDefault" parameterType="com.lanxi.WechatIntegralService.entity.IntegralRedPacket">
 insert into wechat_integral_service_integral_red_packet 
-(red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integeral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy)
+(red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy)
 values
 (DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
 </insert>
@@ -21,7 +21,7 @@ delete from wechat_integral_service_integral_red_packet
 <if test="redPacketCount != null and redPacketCount!=''"> and red_packet_count = #{redPacketCount}  </if>  
 <if test="redPacketLessCount != null and redPacketLessCount!=''"> and red_packet_less_count = #{redPacketLessCount}  </if>  
 <if test="totalIntegral != null and totalIntegral!=''"> and total_integral = #{totalIntegral}  </if>  
-<if test="lessIntegeral != null and lessIntegeral!=''"> and less_integeral = #{lessIntegeral}  </if>  
+<if test="lessIntegral != null and lessIntegral!=''"> and less_integral = #{lessIntegral}  </if>  
 <if test="redPacketUrl != null and redPacketUrl!=''"> and red_packet_url = #{redPacketUrl}  </if>  
 <if test="redPacketStatus != null and redPacketStatus!=''"> and red_packet_status = #{redPacketStatus}  </if>  
 <if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
@@ -41,7 +41,7 @@ update wechat_integral_service_integral_red_packet
 <if test="redPacketCount != null and redPacketCount!=''">red_packet_count = #{redPacketCount},</if>  
 <if test="redPacketLessCount != null and redPacketLessCount!=''">red_packet_less_count = #{redPacketLessCount},</if>  
 <if test="totalIntegral != null and totalIntegral!=''">total_integral = #{totalIntegral},</if>  
-<if test="lessIntegeral != null and lessIntegeral!=''">less_integeral = #{lessIntegeral},</if>  
+<if test="lessIntegral != null and lessIntegral!=''">less_integral = #{lessIntegral},</if>  
 <if test="redPacketUrl != null and redPacketUrl!=''">red_packet_url = #{redPacketUrl},</if>  
 <if test="redPacketStatus != null and redPacketStatus!=''">red_packet_status = #{redPacketStatus},</if>  
 <if test="openId != null and openId!=''">open_id = #{openId},</if>  
@@ -58,7 +58,7 @@ update wechat_integral_service_integral_red_packet
 </update>
 <select id="selectIntegralRedPacket" resultMap="integralRedPacketMap" parameterType="com.lanxi.WechatIntegralService.entity.IntegralRedPacket" resultType="com.lanxi.WechatIntegralService.entity.IntegralRedPacket">
 select
-red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integeral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy
+red_packet_id,red_packet_name,red_packet_count,red_packet_less_count,total_integral,less_integral,red_packet_url,red_packet_status,open_id,plateform_serial_id,start_time,over_time,receivers,remark,beiy
 from wechat_integral_service_integral_red_packet
 <where> 
 <if test="redPacketId != null and redPacketId!=''"> and red_packet_id = #{redPacketId}  </if>  
@@ -66,7 +66,7 @@ from wechat_integral_service_integral_red_packet
 <if test="redPacketCount != null and redPacketCount!=''"> and red_packet_count = #{redPacketCount}  </if>  
 <if test="redPacketLessCount != null and redPacketLessCount!=''"> and red_packet_less_count = #{redPacketLessCount}  </if>  
 <if test="totalIntegral != null and totalIntegral!=''"> and total_integral = #{totalIntegral}  </if>  
-<if test="lessIntegeral != null and lessIntegeral!=''"> and less_integeral = #{lessIntegeral}  </if>  
+<if test="lessIntegral != null and lessIntegral!=''"> and less_integral = #{lessIntegral}  </if>  
 <if test="redPacketUrl != null and redPacketUrl!=''"> and red_packet_url = #{redPacketUrl}  </if>  
 <if test="redPacketStatus != null and redPacketStatus!=''"> and red_packet_status = #{redPacketStatus}  </if>  
 <if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
@@ -84,7 +84,7 @@ from wechat_integral_service_integral_red_packet
 <result property="redPacketCount" 			column="red_packet_count"></result>
 <result property="redPacketLessCount" 			column="red_packet_less_count"></result>
 <result property="totalIntegral" 			column="total_integral"></result>
-<result property="lessIntegeral" 			column="less_integeral"></result>
+<result property="lessIntegral" 			column="less_integral"></result>
 <result property="redPacketUrl" 			column="red_packet_url"></result>
 <result property="redPacketStatus" 			column="red_packet_status"></result>
 <result property="openId" 			column="open_id"></result>

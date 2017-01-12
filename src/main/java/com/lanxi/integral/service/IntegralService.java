@@ -11,6 +11,7 @@ import org.dom4j.Element;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
+import com.lanxi.httpsclient.core.HttpsClient;
 import com.lanxi.integral.report.AddReqBody;
 import com.lanxi.integral.report.Body;
 import com.lanxi.integral.report.HistoryReqBody;
@@ -45,7 +46,7 @@ public class IntegralService {
 		ReqHead head=new ReqHead();
 		head.setBusinessId(getDateTime()+getRandomNumber(4));
 		head.setReqDate(getDate());
-		head.setOrgId(ConfigUtil.get("orgId"));
+		head.setOrgId(ConfigUtil.get("orgID"));
 		return head;
 	}
 	/**
@@ -53,14 +54,16 @@ public class IntegralService {
 	 * @param body 	报文体
 	 * @param url   请求链接
 	 * @return      积分系统返回的报文
+	 * @throws Exception 
 	 */
-	private static String postReq(Body body,String url){
+	private static String postReq(Body body,String url) throws Exception{
 		ReqHead head=makeReqHead();
 		original.setHead(head);
 		original.setBody(body);
 		Document doc=baoWen.toDocument();
 		doc.setXMLEncoding("GBK");
-		return HttpUtil.postXml(doc.asXML(),url, "GBK");
+		System.out.println(doc.asXML());
+		return HttpsClient.sendData(doc.asXML(), url, "GBK", 10000);
 	}
 	/**
 	 * 构建通用响应信息对象并返回
@@ -70,12 +73,13 @@ public class IntegralService {
 	 */
 	private static <T extends Body> ReturnMessage makeMessage(T t,String xmlStr){
 		try{
+		System.err.println(xmlStr);
 		Document result=DocumentHelper.parseText(xmlStr);
 		ReturnMessage message=new ReturnMessage();
-		message.setRetCode(result.selectSingleNode("retCode").getText());
-		message.setRetMsg(result.selectSingleNode("retMsg").getText());
+		message.setRetCode(result.selectSingleNode("//retCode").getText());
+		message.setRetMsg(result.selectSingleNode("//retMsg").getText());
 		if("0000".equals(message.getRetCode()))
-			message.setObj(t.fromElement((Element) result.selectSingleNode("body")));
+			message.setObj(t.fromElement((Element) result.selectSingleNode("//body")));
 		return message;
 		}catch (Exception e) {
 			throw new AppException("构建返回对象异常",e);
@@ -102,8 +106,9 @@ public class IntegralService {
 	 * @param account 积分帐号
 	 * @param startDate 查询起始日期,不得早于6个月
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage historyIntegral(String account,String startDate){
+	public static ReturnMessage historyIntegral(String account,String startDate) throws Exception{
 		startDate=nullAsSpace(startDate);
 		HistoryReqBody body=new HistoryReqBody();
 		body.setIdNo(account);
@@ -117,8 +122,9 @@ public class IntegralService {
 	 * @param account 积分帐号
 	 * @param reducePoints 扣除积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage reduceIntegral(String account,String reducePoints){
+	public static ReturnMessage reduceIntegral(String account,String reducePoints) throws Exception{
 		ReduceReqBody body=new ReduceReqBody();
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
 		body.setIdNo(account);
@@ -132,8 +138,9 @@ public class IntegralService {
 	 * @param receiveAccount 接收方积分帐号
 	 * @param transferPoints 赠送积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage transferIntegral(String account,String receiveAccount,String transferPoints){
+	public static ReturnMessage transferIntegral(String account,String receiveAccount,String transferPoints) throws Exception{
 		TransferReqBody body=new TransferReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
@@ -147,8 +154,9 @@ public class IntegralService {
 	 * 积分冲正
 	 * @param serialNo 流水号
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage reversalIntegral(String serialNo){
+	public static ReturnMessage reversalIntegral(String serialNo) throws Exception{
 		ReversalReqBody body=new ReversalReqBody();
 		body.setSerialNo(serialNo);
 		String res=postReq(body, ConfigUtil.get("reversalUrl"));
@@ -159,8 +167,9 @@ public class IntegralService {
 	 * @param account 积分帐号
 	 * @param addPoint 增加的积分值
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage addIntegral(String account,String addPoint){
+	public static ReturnMessage addIntegral(String account,String addPoint) throws Exception{
 		AddReqBody body=new AddReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
@@ -173,8 +182,9 @@ public class IntegralService {
 	 * @param account 积分帐号
 	 * @param newPhone 新手机号
 	 * @return 		  返回信息{retCode,retMessage,obj(仅当retCode为0000时存在)}
+	 * @throws Exception 
 	 */
-	public static ReturnMessage modifyPhone(String account,String newPhone){
+	public static ReturnMessage modifyPhone(String account,String newPhone) throws Exception{
 		ModifyPhoneReqBody body=new ModifyPhoneReqBody();
 		body.setIdNo(account);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);

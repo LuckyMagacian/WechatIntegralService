@@ -58,6 +58,7 @@ public class JFPoints {
 	public Element toElement(){
 		DOMElement element=new DOMElement(NAME);
 		element.add(original.toElement());
+		sign();
 		element.addElement("sign").setText(sign);
 		return element;
 	}

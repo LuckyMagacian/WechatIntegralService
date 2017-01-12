@@ -37,13 +37,13 @@ public class TestController {
 	}
 	@Resource
 	private ValidServerService test;
-	@RequestMapping("/validService")
+	@RequestMapping("/validService.do")
 	@ResponseBody
 	public String validService(HttpServletRequest req,HttpServletResponse res){
 		System.out.println("request in");
 		return test.validService(req, res);
 	}
-	@RequestMapping("/receiveMessage")
+	@RequestMapping("/receiveMessage.do")
 	@ResponseBody
 	public String receiveMessage(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("receiveMessage");
@@ -95,7 +95,7 @@ public class TestController {
 		res.getOutputStream().close();
 		return "finish";
 	}
-	@RequestMapping("/codeIn")
+	@RequestMapping("/codeIn.do")
 	@ResponseBody
 	public void getCode(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		System.out.println("code info ");

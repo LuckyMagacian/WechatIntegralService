@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link rel="stylesheet" href="css/weui.min.css">
+    <link rel="stylesheet" href="css/mui-icons-extra.css">
+    <title>积分红包</title>
+    <link rel="stylesheet" href="css/public.css">
+    <link rel="stylesheet" href="css/index.css">
+  </head>
+  <body>
+    <div id="packetBg">
+      <div class="weui-cells">
+        <div class="weui-cell weui-cell_vcode">
+          <div class="weui-cell__hd weui-label">
+            <label>数量</label>
+          </div>
+          <div class="weui-cell__bd"></div>
+          <input type="number" placeholder="红包个数" maxlength="11" class="weui-input mui-text-right">
+          <div style="color:black;margin-right: 5px;" class="weui-cell__ft">
+            <label>个</label>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells">
+        <div class="weui-cell weui-cell_vcode">
+          <div class="weui-cell__hd weui-label">
+            <label>积分</label>
+          </div>
+          <div class="weui-cell__bd"></div>
+          <input type="number" placeholder="积分值" maxlength="11" class="weui-input mui-text-right">
+        </div>
+      </div>
+      <div class="rice-info">每人可领1个,积分随机</div>
+      <div class="weui-cells">
+        <div class="weui-cell weui-cell_vcode">
+          <div class="weui-cell__hd weui-label">
+            <label>留言</label>
+          </div>
+          <div class="weui-cell__bd"></div>
+          <input type="number" placeholder="积分红包,速来领取" maxlength="30" class="weui-input mui-text-right">
+        </div>
+      </div>
+      <div id="totalPacketPoints">
+        <p><span>18888</span>
+          <label>积分</label>
+        </p>
+      </div><a href="redPacket.html?id=1231" class="weui-btn weui-btn_warn">发红包</a>
+    </div>
+    <script src="js/mui.js"></script>
+    <script src="js/jquery.2.2.4.min.js"></script>
+    <script src="js/public.js"></script>
+    <script src="js/pointsPacket.js"></script>
+  </body>
+</html>
