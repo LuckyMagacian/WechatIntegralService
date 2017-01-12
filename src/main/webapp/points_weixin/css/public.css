@@ -61,6 +61,9 @@ p {
 .rice-color-777{
 	color: #777;
 }
+.rice-disabled,.rice-disabled:after,.rice-disabled:focus{
+	color: #c9c9c9;
+}
 
 /* mui 修正 */
 
@@ -80,7 +83,10 @@ span.mui-icon-clear {
 	vertical-align: middle;
 }
 
-
+#infoToast .weui-icon_toast{
+	font-size: 2.5em;
+    color: white;
+}
 /* weui修正 */
 
 .weui-label {
@@ -90,7 +96,9 @@ span.mui-icon-clear {
 .weui-icon-warn {
 	font-size: 24px;
 }
-
+.weui-cell_warn .mui-icon{
+	color: #e64340;
+}
 
 /* bootstrap load */
 
