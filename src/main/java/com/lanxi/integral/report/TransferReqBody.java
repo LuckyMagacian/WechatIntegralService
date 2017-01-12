@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class TransferReqBody implements Body {
+public class TransferReqBody extends Body {
 	/**帐号类型*/
 	private String idType;
 	/**帐号*/

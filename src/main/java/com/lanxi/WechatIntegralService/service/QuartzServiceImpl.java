@@ -22,7 +22,9 @@ public class QuartzServiceImpl implements QuartzService{
 	public void redPacketOverTime() {
 		try {
 		List<IntegralRedPacket> redPackets=dao.getNormlRedPacket();
-		redPackets.addAll(dao.getNoneRedPacket());
+		List<IntegralRedPacket> temp=dao.getNoneRedPacket();
+		if(temp!=null&&!temp.isEmpty())
+			redPackets.addAll(temp);
 		for(IntegralRedPacket each:redPackets){
 			if(each.getOverTime().compareTo(TimeUtil.getDateTime())<1){
 				logger.info("红包过期:"+each);
@@ -48,6 +50,15 @@ public class QuartzServiceImpl implements QuartzService{
 		} catch (Exception e) {
 			throw new AppException("紅包過期異常！",e);
 		}
+	}
+	
+	
+	public void updateStatusByTime(){
+		dao.updateStatusByTime();
+	}
+	
+	public void deleteCode(){
+		dao.deleteCode();
 	}
 
 }

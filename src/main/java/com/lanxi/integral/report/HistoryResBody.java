@@ -12,7 +12,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class HistoryResBody implements Body{
+public class HistoryResBody extends Body{
 	/**积分类别-增加*/
 	public static final String POINTS_TYPE_ADD="0000";
 	/**积分类别-转赠增加*/

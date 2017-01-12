@@ -13,6 +13,7 @@ import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.httpsclient.core.HttpsClient;
 import com.lanxi.integral.report.AddReqBody;
+import com.lanxi.integral.report.AddResBody;
 import com.lanxi.integral.report.Body;
 import com.lanxi.integral.report.HistoryReqBody;
 import com.lanxi.integral.report.HistoryResBody;
@@ -23,6 +24,7 @@ import com.lanxi.integral.report.Original;
 import com.lanxi.integral.report.QueryReqBody;
 import com.lanxi.integral.report.QueryResBody;
 import com.lanxi.integral.report.ReduceReqBody;
+import com.lanxi.integral.report.ReduceResBody;
 import com.lanxi.integral.report.ReqHead;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.report.ReversalReqBody;
@@ -62,7 +64,6 @@ public class IntegralService {
 		original.setBody(body);
 		Document doc=baoWen.toDocument();
 		doc.setXMLEncoding("GBK");
-		System.out.println(doc.asXML());
 		return HttpsClient.sendData(doc.asXML(), url, "GBK", 10000);
 	}
 	/**
@@ -73,7 +74,6 @@ public class IntegralService {
 	 */
 	private static <T extends Body> ReturnMessage makeMessage(T t,String xmlStr){
 		try{
-		System.err.println(xmlStr);
 		Document result=DocumentHelper.parseText(xmlStr);
 		ReturnMessage message=new ReturnMessage();
 		message.setRetCode(result.selectSingleNode("//retCode").getText());
@@ -130,7 +130,7 @@ public class IntegralService {
 		body.setIdNo(account);
 		body.setReducePoints(reducePoints);
 		String res=postReq(body, ConfigUtil.get("reduceUrl"));
-		return makeMessage(new HistoryResBody(), res);
+		return makeMessage(new ReduceResBody(), res);
 	}
 	/**
 	 * 积分赠送
@@ -175,7 +175,7 @@ public class IntegralService {
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
 		body.setAddPoints(addPoint);
 		String res=postReq(body, ConfigUtil.get("addUrl"));
-		return makeMessage(new HistoryResBody(), res);
+		return makeMessage(new AddResBody(), res);
 	}
 	/**
 	 * 绑定手机号修改

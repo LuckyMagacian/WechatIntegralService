@@ -50,9 +50,9 @@ public class IntegralManagerServiceImpl {
             WebAccessToken token = TokenManager.generatorWebAccessTokenMetadata(code);
             String openId = token.getOpenId();
             //将openid存入token
-            EasyToken easyToken = new EasyToken();
+            EasyToken easyToken = new EasyToken(); 
             easyToken.setInfo(openId);
-            easyToken.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime"))*1000);
+            easyToken.setValidTo(easyToken.getValidFrom() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime"))*1000);
             map.put("token", easyToken.toToken());
             logger.info("token==="+easyToken.toToken());
             //检查是否绑定积分账户

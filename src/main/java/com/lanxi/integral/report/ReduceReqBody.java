@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class ReduceReqBody implements Body{
+public class ReduceReqBody extends Body{
 	/**账户类型-帐号*/
 	public static final String CUST_ID_TYPE_ACCOUNT="0";
 	/**账户类型-卡号*/

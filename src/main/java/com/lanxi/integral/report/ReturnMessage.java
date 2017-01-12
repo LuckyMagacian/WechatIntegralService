@@ -14,6 +14,9 @@ public class ReturnMessage {
 	private String retMsg;
 	/**附带信息*/
 	private Object obj;
+	/**token*/
+	private String token;
+	
 	public String getRetCode() {
 		return retCode;
 	}
@@ -31,6 +34,13 @@ public class ReturnMessage {
 	}
 	public void setObj(Object obj) {
 		this.obj = obj;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
 	}
 	@Override
 	public String toString() {

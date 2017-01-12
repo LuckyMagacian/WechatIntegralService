@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class AddReqBody implements Body {
+public class AddReqBody extends Body {
 	/**编号类型*/
 	private String idType;
 	/**客户号/卡号*/

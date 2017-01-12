@@ -3,7 +3,7 @@ package com.lanxi.integral.report;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
-public class ModifyPhoneReqBody implements Body {
+public class ModifyPhoneReqBody extends Body {
 	/**编号类型*/
 	private String 	idType;
 	/**客户号/卡号*/

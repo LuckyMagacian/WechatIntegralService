@@ -3,7 +3,7 @@ package com.lanxi.integral.report;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
-public class ModifyPhoneResBody implements Body {
+public class ModifyPhoneResBody extends Body {
 
 	@Override
 	public Element toElement() {

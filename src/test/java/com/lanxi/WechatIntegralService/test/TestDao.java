@@ -11,6 +11,7 @@ import com.lanxi.WechatIntegralService.service.DaoService;
 import com.lanxi.WechatIntegralService.service.IntegralGameService;
 import com.lanxi.WechatIntegralService.service.IntegralManagerServiceImpl;
 import com.lanxi.WechatIntegralService.service.IntegralRedPacketService;
+import com.lanxi.WechatIntegralService.service.QuartzService;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
 
 public class TestDao {
@@ -20,6 +21,7 @@ public class TestDao {
 	private IntegralGameService game;
 	private IntegralManagerServiceImpl manager;
 	private IntegralRedPacketService redpacket;
+	private QuartzService quartz;
 //	private BindingService binding;
 	@Before
 	public void init(){
@@ -28,6 +30,7 @@ public class TestDao {
 		game=ac.getBean(IntegralGameService.class);
 		manager=ac.getBean(IntegralManagerServiceImpl.class);
 		redpacket=ac.getBean(IntegralRedPacketService.class);
+		quartz=ac.getBean(QuartzService.class);
 //		binding=ac.getBean(BindingService.class);
 	}
 	
@@ -37,6 +40,6 @@ public class TestDao {
 	}
 	@Test
 	public void testService(){
-		
+
 	}
 }

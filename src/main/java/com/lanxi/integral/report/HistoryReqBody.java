@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class HistoryReqBody implements Body {
+public class HistoryReqBody extends Body {
 	/**请求时间，格式yyyymmddhhmmss*/
 	private String reqDate;
 	/**帐号类型 0-账户号 1-卡号*/

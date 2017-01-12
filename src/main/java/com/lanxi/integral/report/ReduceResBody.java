@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class ReduceResBody implements Body {
+public class ReduceResBody extends Body {
 	/**平台流水号*/
 	private String serialNo;	
 	/**扣除的积分值*/

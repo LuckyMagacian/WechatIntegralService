@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class TransferResBody implements Body {
+public class TransferResBody extends Body {
 
 	@Override
 	public Element toElement() {

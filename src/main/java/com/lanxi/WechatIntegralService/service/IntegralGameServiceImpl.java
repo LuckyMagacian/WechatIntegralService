@@ -32,8 +32,8 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		ReturnMessage returnMessage=new ReturnMessage();
 		try{
 			req.setCharacterEncoding("utf-8");
-			String gameId=req.getParameter("gameId").trim();
-			String tokenStr =req.getParameter("token").trim();
+			String gameId=req.getParameter("gameId");
+			String tokenStr =req.getParameter("token");
 			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
 			if(token==null){
 				returnMessage.setRetCode("9998");
@@ -42,8 +42,8 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				logger.info("token过期!");
 				return returnMessage.toJson();
 			}
-//			String userId=token.getInfo();
-			String userId=req.getParameter("userId").trim();
+			String userId=token.getInfo();
+//			String userId=req.getParameter("userId");
 			logger.info("用户参与游戏,gameId="+gameId+",token="+token+",userId="+userId);
 			
 			AccountBinding account=dao.getAccount(userId);
@@ -56,10 +56,11 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage.setRetMsg("积分查询失败!");
 				returnMessage.setObj("积分查询失败!");
 				logger.info("积分查询异常!");
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 			
-			Integer point=Integer.parseInt(((QueryResBody)returnMessage.getObj()).getTotalPoints());
+			Integer point=(int)Double.parseDouble(((QueryResBody)returnMessage.getObj()).getTotalPoints());
 			Game   game =dao.getGame(gameId);
 			logger.info("游戏信息:"+game);
 			
@@ -67,9 +68,10 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage.setRetMsg("积分不足!");
 				returnMessage.setObj("积分不足!");
 				logger.info("积分不足!");
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
-			
+			logger.info("请求扣除积分-"+game.getIntegral());
 			returnMessage=IntegralService.reduceIntegral(account.getIntegralAccount(), game.getIntegral()+"");
 			logger.info("积分扣除结果:"+returnMessage);
 			
@@ -77,6 +79,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage.setRetMsg("积分扣除失败!");
 				returnMessage.setObj("积分扣除失败!");
 				logger.info("积分扣除失败!");
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 				
@@ -95,6 +98,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			if(prizeLevel==null){
 				returnMessage.setRetMsg("未中奖!");
 				returnMessage.setObj("未中奖!");
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 			
@@ -105,11 +109,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			if(gift.getMerchantId()==null||gift.getMerchantId().isEmpty()){
 				Integer pointPrize=gift.getIntegralValue();
 				returnMessage=IntegralService.addIntegral(account.getIntegralAccount(), pointPrize+"");
+				integralGame.setBeiy(((AddResBody)returnMessage.getObj()).getSerialNo());
 				logger.info("积分增加结果"+returnMessage);
 				returnMessage.setRetCode("0000");
 				returnMessage.setRetMsg("获得了"+gift.getIntegralValue()+"积分!");
-				returnMessage.setObj("获得了"+gift.getIntegralValue()+"积分!");
-				integralGame.setBeiy(((AddResBody)returnMessage.getObj()).getSerialNo());
+				returnMessage.setObj(gift.getPrizeLevel());
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 			dao.addIntegralGame(integralGame);

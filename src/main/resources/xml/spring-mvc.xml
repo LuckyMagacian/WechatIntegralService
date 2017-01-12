@@ -62,6 +62,8 @@
 		<property name="triggers">
 			<list>
 				<ref local="redPacketOverTime"></ref>
+				<ref local="updateExpiredTaskTrigger"></ref>
+				<ref local="deleteExpiredTaskTrigger"></ref>
 			</list>
 		</property>
 	</bean>
@@ -80,34 +82,34 @@
 		</property>
 	</bean>
 	
-	<bean id="UpdateExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+	<bean id="updateExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail">
-            <ref bean="UpdateExpiredJob" />
+            <ref bean="updateExpiredJob" />
         </property>
         <property name="cronExpression">
             <value>0 0/1 * * * ?</value>
         </property>
     </bean>
-    <bean id="UpdateExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="updateExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <ref bean="daoService" />
+            <ref bean="quartzService" />
         </property>
         <property name="targetMethod">
             <value>updateStatusByTime</value>
         </property>
     </bean>
     
-     <bean id="DeleteExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+     <bean id="deleteExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail">
-            <ref bean="DeleteExpiredJob" />
+            <ref bean="deleteExpiredJob" />
         </property>
         <property name="cronExpression">
             <value>0 0 0 * * ?</value>
         </property>
     </bean>
-    <bean id="DeleteExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+    <bean id="deleteExpiredJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         <property name="targetObject">
-            <ref bean="daoService" />
+            <ref bean="quartzService" />
         </property>
         <property name="targetMethod">
             <value>deleteCode</value>

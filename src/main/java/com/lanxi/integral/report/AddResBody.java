@@ -3,7 +3,7 @@ package com.lanxi.integral.report;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
-public class AddResBody implements Body {
+public class AddResBody extends Body {
 	/**平台流水号*/
 	private String serialNo;
 	/**增加的积分值*/

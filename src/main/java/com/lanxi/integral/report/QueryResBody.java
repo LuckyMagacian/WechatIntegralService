@@ -10,7 +10,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class QueryResBody implements Body{
+public class QueryResBody extends Body{
 	/**
 	 * 积分明细条目
 	 * @author 1

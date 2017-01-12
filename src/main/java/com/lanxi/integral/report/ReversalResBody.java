@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class ReversalResBody implements Body {
+public class ReversalResBody extends Body {
 	/**平台流水号*/
 	private String serialNo;
 	/**冲正积分值*/

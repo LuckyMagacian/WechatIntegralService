@@ -7,7 +7,7 @@ import org.dom4j.dom.DOMElement;
  * @author 1
  *
  */
-public class QueryReqBody implements Body{
+public class QueryReqBody extends Body{
 	/**帐号类型 0-账户号 1-卡号*/
 	private String idType;		
 	/**号码*/

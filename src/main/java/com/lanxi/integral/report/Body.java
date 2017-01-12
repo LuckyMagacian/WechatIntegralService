@@ -6,7 +6,7 @@ import org.dom4j.Element;
  * @author 1
  *
  */
-public interface Body {
+public abstract class Body {
 	/**报文体xml名称*/
 	public static final String NAME="body";
 	/**账户类型-帐号*/
@@ -17,11 +17,15 @@ public interface Body {
 	 * 将报文体转为Element
 	 * @return
 	 */
-	public Element toElement();
+	public abstract Element toElement();
 	/**
 	 * 根据报文元素设置body
 	 * @param element
 	 * @return
 	 */
-	public Body fromElement(Element element);
+	public abstract Body fromElement(Element element);
+	
+	public String toString(){
+		return toElement().asXML();
+	}
 }
