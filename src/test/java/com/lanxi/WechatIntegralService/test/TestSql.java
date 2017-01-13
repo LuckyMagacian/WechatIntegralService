@@ -18,7 +18,7 @@ public class TestSql {
 	
 	@Test
 	public void test(){
-		Class[] classes=new Class[]{ValidCode.class};
+		Class[] classes=new Class[]{IntegralRedPacket.class,RedPacketReceive.class};
 		for(Class<?> each:classes)
 			SqlUtil.createMapperFile(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));
 			//SqlUtil.createAll(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));

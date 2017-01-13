@@ -7,15 +7,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.lanxi.WechatIntegralService.entity.ValidCode;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
+import com.lanxi.WechatIntegralService.entity.ValidCode;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
@@ -38,7 +36,6 @@ public class IntegralManagerServiceImpl {
     BindingService bindingService;
     @Resource
     DaoService dao;
-
 
     /**
      * 进入积分账户页面
@@ -212,7 +209,7 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             //发送短信验证码
-            ReturnMessage returnMessage=sendCode(phone);
+            ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
                 map.put("retMsg", "发送短信失败");
                 map.put("retCode", "9999");
@@ -340,7 +337,7 @@ public class IntegralManagerServiceImpl {
                 logger.info("手机号不符合标准");
                 return map;
             }
-            ReturnMessage returnMessage=sendCode(phone);
+            ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
                 map.put("retMsg", "发送短信失败");
                 map.put("retCode", "9999");
@@ -455,6 +452,7 @@ public class IntegralManagerServiceImpl {
 
     /**
      * 查询积分明细
+     *
      * @param rep
      * @param req
      * @return
@@ -519,9 +517,9 @@ public class IntegralManagerServiceImpl {
             String receiverIdCard = req.getParameter("receiverIdCard");
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
-            if(integralAccount.equals("101"+receiverIdCard)){
-                map.put("retCode","9999");
-                map.put("retMsg","不能转增给自己");
+            if (integralAccount.equals("101" + receiverIdCard)) {
+                map.put("retCode", "9999");
+                map.put("retMsg", "不能转增给自己");
                 return map;
             }
             //通过积分账户取得积分值
@@ -555,7 +553,7 @@ public class IntegralManagerServiceImpl {
             //通过积分账户查询绑定的手机号
             String phone = bindingService.getPhoneByIntegralAccount(integralAccount);
             //发送验证码
-            ReturnMessage returnMessage=sendCode(phone);
+            ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
                 map.put("retMsg", "发送验证码失败");
                 map.put("retCode", "9999");
@@ -586,7 +584,7 @@ public class IntegralManagerServiceImpl {
                 logger.info("token过期");
                 return map;
             }
-            String openId=token.getInfo();
+            String openId = token.getInfo();
             String phone = req.getParameter("phone");
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
@@ -606,8 +604,8 @@ public class IntegralManagerServiceImpl {
                 //赠送方账户
                 String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
                 //接收方账户
-                String  receiverIdCard= req.getParameter("receiverIdCard");
-                String  integralAccount2="101"+receiverIdCard;
+                String receiverIdCard = req.getParameter("receiverIdCard");
+                String integralAccount2 = "101" + receiverIdCard;
                 //赠送的积分值
                 String integral = req.getParameter("integral");
                 //赠送时间
@@ -699,17 +697,18 @@ public class IntegralManagerServiceImpl {
             return map;
         }
     }
+
     //发送短信验证码
     public ReturnMessage sendCode(String phone) {
         //生成短信验证码
-        String code = RandomUtil.getValidateCode();
+        String code = RandomUtil.getRandomNumber(6);
         //验证码生成时间
         String startTime = TimeUtil.getDateTime();
         //短信验证码过期时间
         String overTime = TimeUtil.getAfterTime();
         //短信状态
         String validCodeStatus = ValidCode.VALID_CODE_STATUS_NORMAL;
-        logger.info("生成的验证码"+code);
+        logger.info("生成的验证码" + code);
         ValidCode validCode = new ValidCode();
         validCode.setCode(code);
         validCode.setStartTime(startTime);
@@ -726,8 +725,9 @@ public class IntegralManagerServiceImpl {
             //将短信入库
             dao.insert(validCode);
         }
+        String codeMessage="【蓝喜微管家】您的验证码为："+code+"，请尽快输入，不要泄露。";
         //发送短信
-        String result = SendMessageUtil.sendMessage("您的验证码为" + code, phone);
+        String result = SendMessageUtil.sendMessage(codeMessage, phone);
         ReturnMessage returnMessage = JSONObject.parseObject(result, ReturnMessage.class);
         return returnMessage;
     }

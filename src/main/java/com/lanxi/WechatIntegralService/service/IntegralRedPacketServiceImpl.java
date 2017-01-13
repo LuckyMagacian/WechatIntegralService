@@ -57,7 +57,13 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			
 			AccountBinding account=dao.getAccount(userId);
 			logger.info("用户信息:"+account);
-			
+			if(account==null){
+				returnMessage.setRetMsg("用户未绑定综合积分帐号!");
+				returnMessage.setObj("用户未绑定综合积分帐号!");
+				logger.info("用户未绑定综合积分帐号!");
+				returnMessage.setToken(token.toToken());
+				return returnMessage.toJson();
+			}
 			returnMessage=IntegralService.queryIntegral(account.getIntegralAccount());
 			logger.info("积分查询结果:"+returnMessage);
 			
@@ -92,6 +98,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			IntegralRedPacket redPacket=new IntegralRedPacket();
 			redPacket.setPlateformSerialId(((ReduceResBody)returnMessage.getObj()).getSerialNo());
 			redPacket.setOpenId(userId);
+			redPacket.setNickName(account.getNickName());
 			redPacket.setRedPacketName(name);
 			redPacket.setRedPacketId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(4));
 			redPacket.setRedPacketCount(Integer.parseInt(count));
@@ -165,7 +172,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			if(redPacket.getReceivers().contains(userId)){
 				returnMessage.setRetCode("9996");
 				returnMessage.setRetMsg("红包已领过!");
-				returnMessage.setObj("红包已领过!");
+				returnMessage.setObj(redPacketId);
 				logger.info("红包已领过!");
 				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
@@ -190,7 +197,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			receive.setOpenId(userId);
 			receive.setReceiveTime(TimeUtil.getDateTime());
 			receive.setRedPacketId(redPacket.getRedPacketId());
-			
+			receive.setNickName(account.getNickName());
 			if(redPacket.getRedPacketLessCount()==redPacket.getRedPacketCount())
 				redPacket.setReceivers(account.getOpenId());
 			else

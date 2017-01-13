@@ -219,12 +219,12 @@ public class TimeUtil {
 	 * @return
 	 */
 	public static String getAfterTime(){
-		String expiredTime=ConfigUtil.get("expiredTime");
+		String expiredTime=ConfigUtil.get("validCodeExpiryTime");
 		Date Now = new Date();   //当前时间
 		Date Before = new Date();
 		Calendar calendar = Calendar.getInstance(); //得到日历
 		calendar.setTime(Now);//把当前时间赋给日历
-		calendar.add(calendar.MINUTE,Integer.parseInt(expiredTime));  //两小时后
+		calendar.add(calendar.SECOND,Integer.parseInt(expiredTime));  //两小时后
 		Before = calendar.getTime();   //两小时后时间
 		String defaultStartDate = defFormat.format(Before);//格式化两小时后的时间
 		String defaultEndDate = defFormat.format(Now); //格式化当前时间
