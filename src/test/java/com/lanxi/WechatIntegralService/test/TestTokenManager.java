@@ -6,7 +6,7 @@ import java.util.Random;
 
 import javax.swing.Timer;
 
-import org.apache.el.parser.Token;
+
 import org.junit.Before;
 import org.junit.Test;
 
