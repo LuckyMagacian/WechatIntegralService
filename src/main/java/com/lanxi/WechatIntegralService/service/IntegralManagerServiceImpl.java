@@ -405,7 +405,7 @@ public class IntegralManagerServiceImpl {
             String headimgUrl = webUserInfo.getHeadImgUrl();
             String phone = req.getParameter("phone");
             String name = req.getParameter("name");
-            String idCard = req.getParameter("idCard");
+            String idCard = req.getParameter("idcard");
             String integralAccount = "101" + idCard;
             logger.info("新手机号" + phone + "姓名" + name + "积分账户" + integralAccount);
             //得到验证码状态
@@ -433,12 +433,11 @@ public class IntegralManagerServiceImpl {
                     return map;
                 }
                 //该身份证是否已经存在积分账户
-                int count = bindingService.getCountByIntegralAccount(integralAccount);
-                logger.info("count===" + count);
-                if (count < 1) {
-                    map.put("retCode", "9999");
-                    map.put("retMsg", "该身份证号没有绑定的积分账号");
-                    logger.info("该身份证号没有绑定的积分账号");
+                ReturnMessage message2=IntegralService.queryIntegral(integralAccount);
+                if (!message2.getRetCode().equals("0000")) {
+                    logger.error("该身份证号没有对应的积分账户");
+                    map.put("retCode", message2.getRetCode());
+                    map.put("retMsg","该身份证号没有对应的积分账户");
                     return map;
                 }
                 //修改短信验证码状态为已使用
@@ -527,7 +526,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //积分转增
+    /**
+     * 积分转增发送验证码
+     * @param rep
+     * @param req
+     * @return
+     */
     public Map<String, Object> deliveryIntegral(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -601,7 +605,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //积分转增操作（校验验证码）
+    /**
+     * 积分转增校验验证码
+     * @param rep
+     * @param req
+     * @return
+     */
     public Map<String, Object> deliveryIntegralOper(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -675,7 +684,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //发送短信通知
+    /**
+     * 积分转增发送短信通知
+     * @param rep
+     * @param req
+     * @return
+     */
     @SuppressWarnings("finally")
     public Map<String, Object> sendMessage(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
