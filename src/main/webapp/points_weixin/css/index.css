@@ -10,8 +10,9 @@
 	width: 80px;
 	height: 80px;
 	margin: auto;
-	background-color: red;
+	background-color: white;
 	border-radius: 40px;
+	border: 1px solid white;
 }
 
 #indexheader>p {

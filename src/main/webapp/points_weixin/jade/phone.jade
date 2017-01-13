@@ -8,7 +8,7 @@ block content
   h4.center(style="font-weight: inherit;") 当前手机号:
     label#phoneNumber 15757857341
   .weui-cells
-    a.weui-cell.weui-cell_access(href="javascript:void(0);")
+    //-a.weui-cell.weui-cell_access(href="javascript:void(0);")
       .weui-cell__bd
         label 所在地
       .weui-cell__ft#cityInfo 浙江 杭州
@@ -16,7 +16,7 @@ block content
       .weui-cell__hd
         label.weui-label 手机号
       .weui-cell__bd.mui-input-row
-        input.weui-input.mui-input-clear(type='tel' placeholder='请输入手机号' maxlength='11')
+        input.weui-input.mui-input-clear(type='tel' placeholder='请输入新的手机号' maxlength='11')
       .weui-cell__ft
         i.weui-icon-warn.hidden
     .weui-cell.weui-cell_vcode
@@ -41,4 +41,4 @@ block content
         a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:editphone()") 确认
 block JS
   script(src="js/public.js")
-  script(src="js/userInfo.js")
+  script(src="js/phone.js")

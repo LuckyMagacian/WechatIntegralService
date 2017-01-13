@@ -375,7 +375,7 @@ public class IntegralManagerServiceImpl {
             String headimgUrl = webUserInfo.getHeadImgUrl();
             String phone = req.getParameter("phone");
             String name = req.getParameter("name");
-            String idCard = req.getParameter("idCard");
+            String idCard = req.getParameter("idcard");
             String integralAccount = "101" + idCard;
             logger.info("新手机号" + phone + "姓名" + name + "积分账户" + integralAccount);
             //得到验证码状态

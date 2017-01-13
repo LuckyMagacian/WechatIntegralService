@@ -7,7 +7,12 @@ $(function() {
 
 /* 跳转 */
 function hrefTo(linkStr) {
-	location.href = linkStr + '.html';
+	if(linkStr==''){
+		showInfo('功能开发中');
+	}else{
+		location.href = linkStr + '.html';
+	}
+	
 }
 /* 显示弹窗 */
 function showDialog(str) {
@@ -22,15 +27,6 @@ function getParam() {
 	var params = location.search.substr(1); //  获取参数 并且去掉？
 	var ArrParam = params.split('&');
 	var paramsArr = new Object();
-	/*if(ArrParam.length == 1) {
-		//只有一个参数的情况
-		return params.split('=')[1];
-	} else {
-		//多个参数参数的情况
-		for(var i = 0; i < ArrParam.length; i++) {
-			return ArrParam[i].split('=')[1];
-		}
-	}*/
 	if(ArrParam == '') {
 		return '';
 	} else {
@@ -62,11 +58,13 @@ function ajaxPost(url, dataJson, successFunc) {
 			showLoading();
 		},
 		success: function(jsonStr) {
+			removeMsg('loadingToast');
 			if(jsonStr.retCode == '0000') {
 				if(jsonStr.token != undefined && jsonStr.token != '' && jsonStr.token != null) {
 					setCookie('token', jsonStr.token);
 				}
 				if(typeof successFunc == 'function') {
+					console.log(jsonStr);
 					successFunc(jsonStr);
 				}
 			} else {
