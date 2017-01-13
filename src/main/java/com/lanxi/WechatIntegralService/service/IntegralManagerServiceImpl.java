@@ -442,6 +442,12 @@ public class IntegralManagerServiceImpl {
                 }
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
+                AccountBinding accountBinding=new AccountBinding();
+                accountBinding.setOpenId(openId);
+                accountBinding.setBindingPhone(phone);
+                accountBinding.setHeadimgUrl(headimgUrl);
+                accountBinding.setIntegralAccount(integralAccount);
+                bindingService.insert(accountBinding);
                 //手机号入到积分表
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
@@ -467,10 +473,10 @@ public class IntegralManagerServiceImpl {
                 map.put("integralValue", integralValue);
                 map.put("retCode", "0000");
                 map.put("retMsg", "绑定积分账户校验验证码成功");
-                logger.info("绑定积分账户成功");
+                logger.info("绑定积分账户校验验证码成功");
             } else {
                 map.put("retCode", "9999");
-                map.put("retMsg", "绑定失败");
+                map.put("retMsg", "绑定积分账户校验验证码失败");
                 logger.info("绑定积分账户校验验证码失败");
             }
         } catch (Exception e) {
