@@ -23,7 +23,7 @@ public class SendMessageUtil {
             String date=TimeUtil.getDate();
             String time=TimeUtil.getTime();
             String url=ConfigUtil.get("messageUrl");
-            String key=ConfigUtil.get("key");
+            String key=ConfigUtil.get("smsKey");
             Map<String,String> map =new HashMap<String,String>();
             map.put("mchtId","10");
             map.put("orderId","10"+TimeUtil.getDateTime()+"0000");

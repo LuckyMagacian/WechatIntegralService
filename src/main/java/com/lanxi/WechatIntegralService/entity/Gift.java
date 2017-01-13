@@ -17,6 +17,8 @@ public class Gift {
 	private Double 	price;
 	/**商品数量*/
 	private Integer count;
+	/**卡券类商品图片代码*/
+	private String  imageCode;
 	public String getId() {
 		return id;
 	}
@@ -65,11 +67,19 @@ public class Gift {
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+	
+	public String getImageCode() {
+		return imageCode;
+	}
+	public void setImageCode(String imageCode) {
+		this.imageCode = imageCode;
+	}
+	
 	@Override
 	public String toString() {
 		return "Gift [id=" + id + ", merchantId=" + merchantId + ", name=" + name + ", gameId=" + gameId
 				+ ", prizeLevel=" + prizeLevel + ", integralValue=" + integralValue + ", price=" + price + ", count="
-				+ count + "]";
+				+ count + ", imageCode=" + imageCode + "]";
 	}
 	
 }

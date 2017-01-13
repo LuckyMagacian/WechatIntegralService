@@ -18,11 +18,6 @@ function closeDialog(str) {
 	$('#dialog-' + str).addClass('hidden');
 }
 
-/* 发送短信 */
-function sendMsg() {
-
-}
-
 function getParam() {
 	var params = location.search.substr(1); //  获取参数 并且去掉？
 	var ArrParam = params.split('&');
@@ -54,7 +49,10 @@ function getParam() {
  * successFunc:成功时触发函数,带一个参数jsonStr
  * */
 function ajaxPost(url, dataJson, successFunc) {
-	dataJson.token = getCookie('token');
+	if(dataJson.token=='' || dataJson.token==undefined){
+		dataJson.token = getCookie('token');
+	}
+	console.log('[ajax]' + url + ',params:' + JSON.stringify(dataJson));
 	$.ajax({
 		type: "post",
 		url: url,
@@ -124,6 +122,18 @@ function showInfo(msg) {
 		'<p class="weui-toast__content">' + msg + '</p></div></div>');
 	setTimeout(function() {
 		removeMsg('infoToast');
+	}, 1800);
+}
+
+/* 显示成功界面 */
+function showSuccess(msg) {
+	$('body').append('<div id="successToast">' +
+		'<div class="weui-mask_transparent"></div>' +
+		'<div class="weui-toast">' +
+		'<i class="weui-icon-success-no-circle weui-icon_toast"></i>' +
+		'<p class="weui-toast__content">' + msg + '</p></div></div>');
+	setTimeout(function() {
+		removeMsg('successToast');
 	}, 1800);
 }
 
@@ -200,5 +210,63 @@ function countDown(time, id, func) {
 			$(idStr).text(func);
 		else
 			$(idStr).text('获取验证码');
+	}
+}
+
+/** 15位或18位身份证验证*/
+function valiIdcard(value) {
+	/*
+	 * 身份证15位编码规则：dddddd yymmdd xx p
+	 * dddddd：6位地区编码
+	 * yymmdd: 出生年(两位年)月日，如：910215
+	 * xx: 顺序编码，系统产生，无法确定
+	 * p: 性别，奇数为男，偶数为女
+	 * 
+	 * 身份证18位编码规则：dddddd yyyymmdd xxx y
+	 * 前17位号码加权因子为 Wi = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ]
+	 * 验证位 Y = [ 1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2 ]
+	 * 如果验证码恰好是10，为了保证身份证是十八位，那么第十八位将用X来代替
+	 * 校验位计算公式：Y_P = mod( ∑(Ai×Wi),11 )
+	 * i为身份证号码1...17 位; Y_P为校验码Y所在校验码数组位置
+	 */
+	//15位或者18位身份证正则式
+	var regStr = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-2]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/;
+	var valiStr = value;
+	var flag = 0;
+	if(!regStr.test(valiStr)) { //test()方法搜索字符串指定的值，根据结果并返回真或假。
+		flag = 1; //匹配不正确
+	} else {
+		if(valiStr.length == 18) {
+			var idCardWi = new Array(7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2),
+				idCardY = new Array(1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2),
+				idCardWiSum = 0; //用来保存前17位各自乖以加权因子后的总和
+			for(var i = 0; i < 17; i++) {
+				idCardWiSum += valiStr.substring(i, i + 1) * idCardWi[i];
+			}
+
+			var idCardMod = idCardWiSum % 11; //计算出校验码所在数组的位置
+			var idCardLast = valiStr.substring(17); //得到最后一位身份证号码
+			if(idCardMod == 2) {
+				if(idCardLast == "X" || idCardLast == "x") {
+					flag = 0;
+				} else {
+					flag = 1;
+				}
+			} else {
+				//用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+				if(idCardLast == idCardY[idCardMod]) {
+					flag = 0;
+				} else {
+					flag = 1;
+				}
+			}
+		} else {
+			flag = 0;
+		}
+	}
+	if(flag) { //匹配不正确
+		return false;
+	} else { //匹配正确
+		return true;
 	}
 }
