@@ -362,4 +362,12 @@ public class DaoServiceImpl implements DaoService {
 	public void updateCode(ValidCode validCode) {
 		codeDao.updateCode(validCode);
 	}
+
+	@Override
+	public List<RedPacketReceive> getReceives(String redPacketId) {
+		RedPacketReceive receive=new RedPacketReceive();
+		receive.setRedPacketId(redPacketId);
+		List<RedPacketReceive> result=receiveDao.selectRedPacketReceive(receive);
+		return result.isEmpty()?null:result;
+	}
 }

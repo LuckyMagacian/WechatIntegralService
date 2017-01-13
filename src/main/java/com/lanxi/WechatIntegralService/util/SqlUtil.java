@@ -9,10 +9,9 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class SqlUtil {
 	/**
-	 * 私有的构造方�? 禁止实例�?
+	 * 私有的构造方法 禁止实例化
 	 */
 	private SqlUtil() {
 	};
@@ -21,7 +20,7 @@ public class SqlUtil {
 	 * 根据类对象和表名 创建 insert sql语句
 	 * 
 	 * @param clazz
-	 *            类对�?
+	 *            类对象
 	 * @param tableName
 	 *            表名
 	 * @return
@@ -29,7 +28,7 @@ public class SqlUtil {
 	public static String createInsert(Class<?> clazz, String tableName) {
 		// logger.info("生成mybatis插入语句->类名:"+clazz.getName()+"->表名:"+tableName);
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		temp.append("<insert id=\"add" + sName.replace("Bean", "") + "\" " + "parameterType=\"" + tName + "\">\n");
 		temp.append("insert into " + tableName + " \n(");
@@ -65,10 +64,10 @@ public class SqlUtil {
 	}
 	
 	/**
-	 * 根据类对象和表名 创建 insert sql语句  �?有�?�采用默认�?? �?要修改Id为正常的取�??
+	 * 根据类对象和表名 创建 insert sql语句  所有值采用默认值 需要修改Id为正常的取值
 	 * 
 	 * @param clazz
-	 *            类对�?
+	 *            类对象
 	 * @param tableName
 	 *            表名
 	 * @return
@@ -76,7 +75,7 @@ public class SqlUtil {
 	public static String createInsertDefault(Class<?> clazz, String tableName) {
 		// logger.info("生成mybatis插入语句->类名:"+clazz.getName()+"->表名:"+tableName);
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		temp.append("<insert id=\"add" + sName.replace("Bean", "") + "Default\" " + "parameterType=\"" + tName + "\">\n");
 		temp.append("insert into " + tableName + " \n(");
@@ -116,7 +115,7 @@ public class SqlUtil {
 	 * 根据 类对象和表名 创建 delete sql语句
 	 * 
 	 * @param clazz
-	 *            类对�?
+	 *            类对象
 	 * @param tableName
 	 *            表名
 	 * @return
@@ -124,7 +123,7 @@ public class SqlUtil {
 	public static String createDelete(Class<?> clazz, String tableName) {
 		// logger.info("生成mybatis删除语句->类名:"+clazz.getName()+"->表名:"+tableName);
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		temp.append("<delete id=\"delete" + sName.replace("Bean", "") + "\" " + "parameterType=\"" + tName + "\">\n");
 		temp.append("delete from " + tableName);
@@ -141,7 +140,7 @@ public class SqlUtil {
 				if (chars[i] <= 'Z' && chars[i] >= 'A')
 					name = name.replaceFirst("" + chars[i], "_" + (char) (chars[i] + 32));
 			}
-			temp.append("<if test=\"" + each.getName() + " != null and " + each.getName() + "!=''\"> and " + name
+			temp.append("<if test=\"" + each.getName() + " != null\"> and " + name
 					+ " = #{" + each.getName() + "}  </if>  \n");
 		}
 		temp.append("</where>\n</delete>\n");
@@ -149,8 +148,8 @@ public class SqlUtil {
 	}
 
 	/**
-	 * 根据 类对象和表名 创建 update sql语句 where部分请根据需要手动删�?!!! 若仅保留�?个条�?
-	 * 请把<if>标签也去�?,否则将会更新�?有记�?
+	 * 根据 类对象和表名 创建 update sql语句 where部分请根据需要手动删除!!! 若仅保留一个条件
+	 * 请把<if>标签也去掉,否则将会更新所有记录
 	 * 
 	 * @param clazz
 	 * @param tableName
@@ -159,7 +158,7 @@ public class SqlUtil {
 	public static String createUpdate(Class<?> clazz, String tableName) {
 		// logger.info("生成mybatis更新语句->类名:"+clazz.getName()+"->表名:"+tableName);
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		List<Field> list = new ArrayList<Field>();
 		temp.append("<update id=\"update" + sName.replace("Bean", "") + "\" " + "parameterType=\"" + tName + "\">\n");
@@ -177,7 +176,7 @@ public class SqlUtil {
 				if (chars[i] <= 'Z' && chars[i] >= 'A')
 					name = name.replaceFirst("" + chars[i], "_" + (char) (chars[i] + 32));
 			}
-			temp.append("<if test=\"" + each.getName() + " != null and " + each.getName() + "!=''\">" + name + " = #{"
+			temp.append("<if test=\"" + each.getName() + " != null\">" + name + " = #{"
 					+ each.getName() + "},</if>  \n");
 		}
 		temp.append("</set>\n<where>\n");
@@ -192,7 +191,7 @@ public class SqlUtil {
 				if (chars[i] <= 'Z' && chars[i] >= 'A')
 					name = name.replaceFirst("" + chars[i], "_" + (char) (chars[i] + 32));
 			}
-			temp.append("<if test=\"" + each.getName() + " != null and " + each.getName() + "!=''\"> and " + name
+			temp.append("<if test=\"" + each.getName() + " != null\"> and " + name
 					+ " = #{" + each.getName() + "}  </if>  \n");
 		}
 		temp.append("</where>\n</update>\n");
@@ -200,7 +199,7 @@ public class SqlUtil {
 	}
 
 	/**
-	 * 根据 类对象和表名 创建 select sql语句 where部分�?要根据需要手动删�?
+	 * 根据 类对象和表名 创建 select sql语句 where部分需要根据需要手动删除
 	 * 
 	 * @param clazz
 	 * @param tableName
@@ -209,7 +208,7 @@ public class SqlUtil {
 	public static String createSelect(Class<?> clazz, String tableName) {
 		// logger.info("生成mybatis查询语句->类名:"+clazz.getName()+"->表名:"+tableName);
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		List<Field> list = new ArrayList<Field>();
 		temp.append("<select id=\"select" + sName.replace("Bean", "") + "\" " + "resultMap=\""
@@ -245,7 +244,7 @@ public class SqlUtil {
 				if (chars[i] <= 'Z' && chars[i] >= 'A')
 					name = name.replaceFirst("" + chars[i], "_" + (char) (chars[i] + 32));
 			}
-			temp.append("<if test=\"" + each.getName() + " != null and " + each.getName() + "!=''\"> and " + name
+			temp.append("<if test=\"" + each.getName() + " != null\"> and " + name
 					+ " = #{" + each.getName() + "}  </if>  \n");
 		}
 		temp.append("</where>\n</select>\n");
@@ -261,7 +260,7 @@ public class SqlUtil {
 	public static String createResultMap(Class<?> clazz) {
 		// logger.info("生成mybatis ResiltMap语句->类名:"+clazz.getName());
 		StringBuffer temp = new StringBuffer();
-		String tName = clazz.getName(); // 类全�?
+		String tName = clazz.getName(); // 类全名
 		String sName = clazz.getSimpleName(); // 类名
 		temp.append(
 				"<resultMap id=\"" + sName.replace("Bean", "").replace(sName.charAt(0), (char) (sName.charAt(0) + 32))
@@ -285,7 +284,7 @@ public class SqlUtil {
 	}
 
 	/**
-	 * 根据 类对象和表名 创建 mybatis映射文件,命名空间将根据类名取�?< 3 段作�? 公司域名+项目�?
+	 * 根据 类对象和表名 创建 mybatis映射文件,命名空间将根据类名取前< 3 段作为 公司域名+项目名
 	 * 
 	 * @param clazz
 	 * @param tableName
@@ -313,13 +312,13 @@ public class SqlUtil {
 		try {
 			// 获取classpath路径
 			String path = SqlUtil.class.getClassLoader().getResource(File.separator).toURI().getPath();
-			// 设置保存文件夹位�?
+			// 设置保存文件夹位置
 			path = path + File.separatorChar + "mapper";
-			// 判断文件夹是否存�?,若不存在 创建mapper文件�?
+			// 判断文件夹是否存在,若不存在 创建mapper文件夹
 			File dir = new File(path);
 			if (!dir.exists())
 				dir.mkdir();
-			// 设置生成文件路径及名�?
+			// 设置生成文件路径及名称
 			path = path + File.separatorChar + clazz.getSimpleName().replace("Bean", "") + "Mapper.xml";
 			File file = new File(path);
 			if (!file.exists())
@@ -336,7 +335,7 @@ public class SqlUtil {
 		}
 	}
 	/**
-	 * 生成默认的方法名�?
+	 * 生成默认的方法名称
 	 * @param clazz
 	 * @return
 	 */
@@ -354,7 +353,7 @@ public class SqlUtil {
 	
 	
 	/**
-	 * 全部调用�?�?
+	 * 全部调用一次
 	 * @param clazz
 	 * @param tableName
 	 */

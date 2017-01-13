@@ -64,6 +64,7 @@ public interface DaoService {
 	public void updateRedPacketReceive(RedPacketReceive redPacketReceive);
 	public List<RedPacketReceive> selectRedPacketReceive(RedPacketReceive redPacketReceive);
 	public RedPacketReceive getReceiveRecord(String redPacketId,String wechatId);
+	public List<RedPacketReceive> getReceives(String redPacketId);
 	//TODO-----------------------------validCode------------------------------------------------------------
 	public void addValidCode(ValidCode validCode);
 	public void addValidCodeDefault(ValidCode validCode);

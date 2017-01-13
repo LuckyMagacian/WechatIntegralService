@@ -1,10 +1,12 @@
 package com.lanxi.WechatIntegralService.service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 	private static Logger logger=Logger.getLogger(IntegralRedPacketServiceImpl.class);
 	@SuppressWarnings("finally")
 	@Override
-	public String grantRedPacket(HttpServletRequest req) {
+	public String grantRedPacket(HttpServletRequest req,HttpServletResponse res) {
 		ReturnMessage returnMessage=new ReturnMessage();
 		try {
 			req.setCharacterEncoding("utf-8");
@@ -122,7 +124,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 
 	@SuppressWarnings("finally")
 	@Override
-	public String unpackRedPacket(HttpServletRequest req) {
+	public String unpackRedPacket(HttpServletRequest req,HttpServletResponse res) {
 		ReturnMessage returnMessage=new ReturnMessage();
 		try {
 			req.setCharacterEncoding("utf-8");
@@ -238,10 +240,46 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@Override
-	public String redPacketDetail(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		return null;
+	public String redPacketDetail(HttpServletRequest req,HttpServletResponse res) {
+		ReturnMessage returnMessage=new ReturnMessage();
+		try{
+			req.setCharacterEncoding("utf-8");
+			String redPacketId=req.getParameter("redPacketId");
+			String tokenStr=req.getParameter("token");
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			if(token==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("token过期!");
+				returnMessage.setObj("token过期!");
+				logger.info("token过期!");
+				return returnMessage.toJson();
+			}
+			String userId=token.getInfo();
+			logger.info("用户查询红包领取详情!"+"userId="+userId+",token="+tokenStr+",redPacketId="+redPacketId);
+			List<RedPacketReceive> receives=dao.getReceives(redPacketId);
+			logger.info("红包领取详情"+receives);
+			if(receives==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("红包不存在!");
+				returnMessage.setObj("红包不存在!");
+				logger.info("不存在!");
+				return returnMessage.toJson();
+			}
+			RedPacketReceive receive=dao.getReceiveRecord(redPacketId, userId);
+			logger.info("发起查询用户记录"+receive);
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg(receive.getIntegral()+"");
+			returnMessage.setObj(receives);
+		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("查看红包领取详情异常");
+			returnMessage.setObj(null);
+			throw new AppException("查看红包领取详情异常",e);
+		}finally {
+			return returnMessage.toJson();
+		}
 	}
 
 }
