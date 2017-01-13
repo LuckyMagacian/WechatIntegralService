@@ -27,6 +27,8 @@ public class IntegralRedPacket {
 	private String  redPacketStatus;
 	/**发放者微信号*/
 	private String	openId;
+	/**发放者微信昵称*/
+	private String  nickName;
 	/**平台流水号*/
 	private String 	plateformSerialId;
 	/**发放时间*/
@@ -130,14 +132,21 @@ public class IntegralRedPacket {
 	public void setRedPacketStatus(String redPacketStatus) {
 		this.redPacketStatus = redPacketStatus;
 	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	@Override
 	public String toString() {
 		return "IntegralRedPacket [redPacketId=" + redPacketId + ", redPacketName=" + redPacketName
 				+ ", redPacketCount=" + redPacketCount + ", redPacketLessCount=" + redPacketLessCount
 				+ ", totalIntegral=" + totalIntegral + ", lessIntegral=" + lessIntegral + ", redPacketUrl="
-				+ redPacketUrl + ", redPacketStatus=" + redPacketStatus + ", openId=" + openId + ", plateformSerialId="
-				+ plateformSerialId + ", startTime=" + startTime + ", overTime=" + overTime + ", receivers=" + receivers
-				+ ", remark=" + remark + ", beiy=" + beiy + "]";
+				+ redPacketUrl + ", redPacketStatus=" + redPacketStatus + ", openId=" + openId + ", nickName="
+				+ nickName + ", plateformSerialId=" + plateformSerialId + ", startTime=" + startTime + ", overTime="
+				+ overTime + ", receivers=" + receivers + ", remark=" + remark + ", beiy=" + beiy + "]";
 	}
 	
 }

@@ -5,6 +5,8 @@ public class RedPacketReceive {
 	private String 	redPacketId;
 	/**微信号*/
 	private String 	openId;
+	/**发放者微信昵称*/
+	private String  nickName;
 	/**所得积分*/
 	private Integer integral;
 	/**平台流水号*/
@@ -57,11 +59,18 @@ public class RedPacketReceive {
 	public void setBeiy(String beiy) {
 		this.beiy = beiy;
 	}
+	
+	public String getNickName() {
+		return nickName;
+	}
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
 	@Override
 	public String toString() {
-		return "RedPacketReceive [redPacketId=" + redPacketId + ", openId=" + openId + ", integral=" + integral
-				+ ", plateformSerialId=" + plateformSerialId + ", receiveTime=" + receiveTime + ", remark=" + remark
-				+ ", beiy=" + beiy + "]";
+		return "RedPacketReceive [redPacketId=" + redPacketId + ", openId=" + openId + ", nickName=" + nickName
+				+ ", integral=" + integral + ", plateformSerialId=" + plateformSerialId + ", receiveTime=" + receiveTime
+				+ ", remark=" + remark + ", beiy=" + beiy + "]";
 	}
 	
 }
