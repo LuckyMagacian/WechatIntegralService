@@ -28,7 +28,7 @@ public class IntegralController {
             if (map.get("retCode").equals("0000"))
                 rep.sendRedirect("points_weixin/index.html?token=" + map.get("token"));
             else if (map.get("retCode").equals("9999"))
-                rep.sendRedirect("points_weixin/binding.html?openId=" + map.get("openId") + "&token=" + map.get("token"));
+                rep.sendRedirect("points_weixin/binding.html?token=" + map.get("token"));
             else
                 rep.sendRedirect("points_weixin/404.html");
         } catch (Exception e) {

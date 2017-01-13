@@ -13,7 +13,7 @@
   </head>
   <body><span id="phoneIcon" class="mui-icon-extra mui-icon-extra-phone"></span>
     <h4 style="font-weight: inherit;" class="center">当前手机号:
-      <label id="phoneNumber">15757857341</label>
+      <label id="phoneNumber"></label>
     </h4>
     <div class="weui-cells">
       <div style="padding-top: 2px;padding-bottom: 2px;" class="weui-cell weui-cell_vcode">
@@ -21,7 +21,7 @@
           <label class="weui-label">手机号</label>
         </div>
         <div class="weui-cell__bd mui-input-row">
-          <input type="tel" placeholder="请输入新的手机号" maxlength="11" class="weui-input mui-input-clear">
+          <input id="newPhone" type="tel" placeholder="请输入新的手机号" maxlength="11" class="weui-input mui-input-clear">
         </div>
         <div class="weui-cell__ft"><i class="weui-icon-warn hidden"></i></div>
       </div>
@@ -30,9 +30,9 @@
           <label class="weui-label">验证码</label>
         </div>
         <div class="weui-cell__bd mui-input-row">
-          <input type="tel" placeholder="6位验证码" maxlength="6" class="weui-input mui-input-clear">
+          <input id="phone-code" type="tel" placeholder="6位验证码" maxlength="6" class="weui-input mui-input-clear">
         </div>
-        <div class="weui-cell__ft"><a id="msgWord" href="javascript:sendMsg();" class="weui-vcode-btn">获取验证码</a></div>
+        <div class="weui-cell__ft"><a id="msgWord" href="javascript:sendPhoneMsg();" class="weui-vcode-btn">获取验证码</a></div>
       </div>
     </div>
     <div style="margin-top:44px" class="weui-cells">
@@ -46,7 +46,7 @@
       <div class="weui-mask"></div>
       <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">更改确认</strong></div>
-        <div class="weui-dialog__bd">修改手机号为XXXXXX?</div>
+        <div class="weui-dialog__bd"><span>修改手机号为</span><span id="dialogPhone">XXXXXX</span><span>?</span></div>
         <div class="weui-dialog__ft"><a href="javascript:closeDialog('editphone')" class="weui-dialog__btn weui-dialog__btn_default">取消</a><a href="javascript:editphone()" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div>
       </div>
     </div>

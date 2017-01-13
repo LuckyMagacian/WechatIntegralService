@@ -6,7 +6,7 @@ block CSS
 block content
   span#phoneIcon.mui-icon-extra.mui-icon-extra-phone
   h4.center(style="font-weight: inherit;") 当前手机号:
-    label#phoneNumber 15757857341
+    label#phoneNumber
   .weui-cells
     //-a.weui-cell.weui-cell_access(href="javascript:void(0);")
       .weui-cell__bd
@@ -16,16 +16,16 @@ block content
       .weui-cell__hd
         label.weui-label 手机号
       .weui-cell__bd.mui-input-row
-        input.weui-input.mui-input-clear(type='tel' placeholder='请输入新的手机号' maxlength='11')
+        input#newPhone.weui-input.mui-input-clear(type='tel' placeholder='请输入新的手机号' maxlength='11')
       .weui-cell__ft
         i.weui-icon-warn.hidden
     .weui-cell.weui-cell_vcode
       .weui-cell__hd
         label.weui-label 验证码
       .weui-cell__bd.mui-input-row
-        input.weui-input.mui-input-clear(type='tel' placeholder='6位验证码' maxlength='6')
+        input#phone-code.weui-input.mui-input-clear(type='tel' placeholder='6位验证码' maxlength='6')
       .weui-cell__ft
-        a.weui-vcode-btn#msgWord(href="javascript:sendMsg();") 获取验证码
+        a.weui-vcode-btn#msgWord(href="javascript:sendPhoneMsg();") 获取验证码
   .weui-cells(style="margin-top:44px")
     .weui-cell(style="text-align:center")
       .weui-cell__bd(onclick="showDialog('editphone')")
@@ -35,7 +35,10 @@ block content
     .weui-dialog
       .weui-dialog__hd
         strong.weui-dialog__title 更改确认
-      .weui-dialog__bd 修改手机号为XXXXXX?
+      .weui-dialog__bd
+        span 修改手机号为
+        span#dialogPhone XXXXXX
+        span ?
       .weui-dialog__ft
         a.weui-dialog__btn.weui-dialog__btn_default(href="javascript:closeDialog('editphone')") 取消
         a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:editphone()") 确认

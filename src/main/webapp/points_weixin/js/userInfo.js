@@ -4,7 +4,13 @@ $(function(){
 
 /* 用户解绑 */
 function unbundling(){
-	
+	var uri='../cancelBinding.do';
+	ajaxPost(uri,{},function(jsonStr){
+		showSuccess('帐号解绑成功,将跳转至绑定页面');
+		setTimeout(function(){
+			location.href='binding.html';
+		},1800);
+	});
 }
 
 /* 获取用户信息 */

@@ -20,6 +20,7 @@ import com.lanxi.integral.report.HistoryResBody;
 import com.lanxi.integral.report.JFBaoWen;
 import com.lanxi.integral.report.JFPoints;
 import com.lanxi.integral.report.ModifyPhoneReqBody;
+import com.lanxi.integral.report.ModifyPhoneResBody;
 import com.lanxi.integral.report.Original;
 import com.lanxi.integral.report.QueryReqBody;
 import com.lanxi.integral.report.QueryResBody;
@@ -190,6 +191,6 @@ public class IntegralService {
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
 		body.setPhoneNo(newPhone);
 		String res=postReq(body, ConfigUtil.get("modifyPhoneUrl"));
-		return makeMessage(new HistoryResBody(), res);
+		return makeMessage(new ModifyPhoneResBody(), res);
 	}
 }

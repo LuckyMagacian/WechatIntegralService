@@ -32,7 +32,7 @@ function binding() {
 			},
 			uri = "../bindingsJfOper.do";
 		ajaxPost(uri, $json, function(jsonStr) {
-			showSuccess('短信发送成功!');
+			showSuccess('账户绑定成功!正在跳转至首页..');
 			setTimeout(function() {
 				location.href = 'index.html';
 			}, 1800);
