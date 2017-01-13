@@ -143,6 +143,36 @@ public class IntegralManagerServiceImpl {
     }
 
     /**
+     * 取消绑定
+     * @param req
+     * @return
+     */
+    public Map<String, Object> cancelBindings(HttpServletRequest req) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            String tokenStr = req.getParameter("token");
+            logger.info("token==" + tokenStr);
+            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+            if (token == null) {
+                map.put("retCode", "9797");
+                map.put("retMsg", "用户需要重新登录");
+                logger.info("token过期");
+                return map;
+            }
+            String openId = token.getInfo();
+            //根据微信号删除记录
+            bindingService.cancelBindings(openId);
+            map.put("retCode", "0000");
+            map.put("retMsg", "取消绑定成功");
+        } catch (Exception e) {
+            map.put("retCode", "9999");
+            map.put("retMsg", "取消绑定失败");
+            throw new AppException("取消绑定出错", e);
+        }
+        return map;
+    }
+
+    /**
      * 更换手机号页面
      *
      * @param rep
@@ -727,7 +757,7 @@ public class IntegralManagerServiceImpl {
             //将短信入库
             dao.insert(validCode);
         }
-        String codeMessage="【蓝喜微管家】您的验证码为："+code+"，请尽快输入，不要泄露。";
+        String codeMessage = "【蓝喜微管家】您的验证码为：" + code + "，请尽快输入，不要泄露。";
         //发送短信
         String result = SendMessageUtil.sendMessage(codeMessage, phone);
         ReturnMessage returnMessage = JSONObject.parseObject(result, ReturnMessage.class);

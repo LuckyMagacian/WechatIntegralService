@@ -78,6 +78,9 @@ from wechat_integral_service_account_binding
     SELECT binding_phone FROM wechat_integral_service_account_binding WHERE integral_account=#{integralAccount}
 </select>
 
+    <delete id="cancelBindings">
+        DELETE FROM wechat_integral_service_account_binding WHERE open_id=#{open_id}
+    </delete>
 <resultMap id="accountBindingMap" type="com.lanxi.WechatIntegralService.entity.AccountBinding">
 <result property="openId" 			column="open_id"></result>
 <result property="nickName" 			column="nick_name"></result>

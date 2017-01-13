@@ -41,4 +41,9 @@ public class BindingServiceImpl implements BindingService {
     public String getPhoneByIntegralAccount(String integralAccount) {
         return accountBindingDao.getPhoneByIntegralAccount(integralAccount);
     }
+
+    @Override
+    public void cancelBindings(String openId) {
+        accountBindingDao.cancelBindings(openId);
+    }
 }
