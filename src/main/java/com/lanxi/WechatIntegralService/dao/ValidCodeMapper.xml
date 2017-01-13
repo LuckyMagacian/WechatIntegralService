@@ -59,7 +59,7 @@ from wechat_integral_service_valid_code
 </select>
 
 <update id="updateStatusByPhone">
-    UPDATE wechat_integral_service_valid_code SET valid_code_status=#{2} WHERE phone=#{phone}
+    UPDATE wechat_integral_service_valid_code SET valid_code_status='2' WHERE phone=#{phone}
 </update>
 
 <select id="getStatusByPhone" resultType="String">
@@ -67,12 +67,12 @@ from wechat_integral_service_valid_code
 </select>
 
 <update id="updateStatusByTime">
-    UPDATE wechat_integral_service_valid_code SET valid_code_status=#{3}
+    UPDATE wechat_integral_service_valid_code SET valid_code_status='3'
     WHERE  <![CDATA[ over_time<#{time} ]]>
 </update>
 
 <delete id="deleteCode">
-    DELETE FROM wechat_integral_service_valid_code WHERE valid_code_status=#{3}
+    DELETE FROM wechat_integral_service_valid_code WHERE valid_code_status='3'
 </delete>
 
 <select id="getCountByPhone" resultType="Integer">

@@ -15,4 +15,6 @@ public interface BindingService {
 	String getPhoneByIntegralAccount(String integralAccount);
 	//根据微信号删除记录
 	void cancelBindings(String openId);
+	//绑定积分账户入库
+	void insert(AccountBinding accountBinding);
 }

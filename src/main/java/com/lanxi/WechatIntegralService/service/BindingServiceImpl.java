@@ -46,4 +46,9 @@ public class BindingServiceImpl implements BindingService {
     public void cancelBindings(String openId) {
         accountBindingDao.cancelBindings(openId);
     }
+
+    @Override
+    public void insert(AccountBinding accountBinding) {
+        accountBindingDao.insert(accountBinding);
+    }
 }
