@@ -141,6 +141,36 @@ public class IntegralManagerServiceImpl {
     }
 
     /**
+     * 取消绑定
+     * @param req
+     * @return
+     */
+    public Map<String, Object> cancelBindings(HttpServletRequest req) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            String tokenStr = req.getParameter("token");
+            logger.info("token==" + tokenStr);
+            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+            if (token == null) {
+                map.put("retCode", "9797");
+                map.put("retMsg", "用户需要重新登录");
+                logger.info("token过期");
+                return map;
+            }
+            String openId = token.getInfo();
+            //根据微信号删除记录
+            bindingService.cancelBindings(openId);
+            map.put("retCode", "0000");
+            map.put("retMsg", "取消绑定成功");
+        } catch (Exception e) {
+            map.put("retCode", "9999");
+            map.put("retMsg", "取消绑定失败");
+            throw new AppException("取消绑定出错", e);
+        }
+        return map;
+    }
+
+    /**
      * 更换手机号页面
      *
      * @param rep
@@ -403,12 +433,11 @@ public class IntegralManagerServiceImpl {
                     return map;
                 }
                 //该身份证是否已经存在积分账户
-                int count = bindingService.getCountByIntegralAccount(integralAccount);
-                logger.info("count===" + count);
-                if (count < 1) {
-                    map.put("retCode", "9999");
-                    map.put("retMsg", "该身份证号没有绑定的积分账号");
-                    logger.info("该身份证号没有绑定的积分账号");
+                ReturnMessage message2=IntegralService.queryIntegral(integralAccount);
+                if (!message2.getRetCode().equals("0000")) {
+                    logger.error("该身份证号没有对应的积分账户");
+                    map.put("retCode", message2.getRetCode());
+                    map.put("retMsg","该身份证号没有对应的积分账户");
                     return map;
                 }
                 //修改短信验证码状态为已使用
@@ -497,7 +526,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //积分转增
+    /**
+     * 积分转增发送验证码
+     * @param rep
+     * @param req
+     * @return
+     */
     public Map<String, Object> deliveryIntegral(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -571,7 +605,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //积分转增操作（校验验证码）
+    /**
+     * 积分转增校验验证码
+     * @param rep
+     * @param req
+     * @return
+     */
     public Map<String, Object> deliveryIntegralOper(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -645,7 +684,12 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
-    //发送短信通知
+    /**
+     * 积分转增发送短信通知
+     * @param rep
+     * @param req
+     * @return
+     */
     @SuppressWarnings("finally")
     public Map<String, Object> sendMessage(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -725,7 +769,7 @@ public class IntegralManagerServiceImpl {
             //将短信入库
             dao.insert(validCode);
         }
-        String codeMessage="【蓝喜微管家】您的验证码为："+code+"，请尽快输入，不要泄露。";
+        String codeMessage = "【蓝喜微管家】您的验证码为：" + code + "，请尽快输入，不要泄露。";
         //发送短信
         String result = SendMessageUtil.sendMessage(codeMessage, phone);
         ReturnMessage returnMessage = JSONObject.parseObject(result, ReturnMessage.class);

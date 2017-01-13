@@ -39,6 +39,7 @@ public class RandomUtil {
 		StringBuilder rs=new StringBuilder();
 		while(count-->0)
 			rs.append(getRandomNum());
+		System.out.println(rs.toString());
 		return rs.toString();
 	}
 	/**
@@ -48,10 +49,7 @@ public class RandomUtil {
 	public static String getUUID(){
 		return UUID.randomUUID().toString();
 	}
-	/**
-	 * 生成验证码
-	 * @return
-	 */
+
 	public static String getValidateCode(){
 		String numbel=Math.random()*10000+"";
 		String num=numbel.substring(0,4);

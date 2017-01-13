@@ -1,5 +1,7 @@
 package com.lanxi.WechatIntegralService.util;
 
+import org.junit.Test;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

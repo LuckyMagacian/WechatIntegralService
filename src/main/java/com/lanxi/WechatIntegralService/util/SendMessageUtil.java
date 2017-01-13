@@ -14,8 +14,9 @@ import java.util.Map;
 public class SendMessageUtil {
     private static Logger logger=Logger.getLogger(SendMessageUtil.class);
     public static void main(String[] args) {
-        SendMessageUtil sendMessageUtil=new SendMessageUtil();
-        sendMessageUtil.sendMessage("6666","18368093686");
+//        SendMessageUtil sendMessageUtil=new SendMessageUtil();
+//        sendMessageUtil.sendMessage("6666","18368093686");
+        RandomUtil.getRandomNumber(6);
     }
     public static String sendMessage(String content,String phone){
         String result=null;
