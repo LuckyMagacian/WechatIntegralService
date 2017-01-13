@@ -10,16 +10,16 @@ function binding() {
 		idcard = $("#binding-idcard").val(),
 		phone = $("#binding-phone").val(),
 		validateCode = $("#binding-code").val();
-	if(!valiPhone(phone)) { //手机号有误
-		showInfo('手机号码格式有误');
-		warnInfo('binding-phone');
-	} else if(!valiName(name)) {
+	if(!valiName(name)) {
 		showInfo('姓名必须为汉字');
 		warnInfo('binding-name');
 	} else if(!valiIdcard(idcard)) {
 		showInfo('身份证号码有误');
 		warnInfo('binding-idcard');
-	} else if(valiMsgNum(validateCode)) {
+	} else if(!valiPhone(phone)) { //手机号有误
+		showInfo('手机号码格式有误');
+		warnInfo('binding-phone');
+	} else if(!valiMsgNum(validateCode)) {
 		showInfo('验证码必须为6位数字');
 		warnInfo('binding-code');
 	} else {
@@ -31,11 +31,11 @@ function binding() {
 				'validateCode': validateCode
 			},
 			uri = "../bindingsJfOper.do";
-		ajaxPost(uri,$json,function(jsonStr){
+		ajaxPost(uri, $json, function(jsonStr) {
 			showSuccess('短信发送成功!');
-			setTimeout(function(){
-				location.href='index.html';
-			},1800);
+			setTimeout(function() {
+				location.href = 'index.html';
+			}, 1800);
 		});
 	}
 }

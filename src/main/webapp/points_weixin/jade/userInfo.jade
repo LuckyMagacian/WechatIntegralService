@@ -8,16 +8,17 @@ block content
     .weui-cells
       .weui-cell
         .weui-cell__bd
-          label 微信号
-        .weui-cell__ft#wechatId zlmifan
+          label 微信昵称
+        .weui-cell__ft#nickname
       .weui-cell
         .weui-cell__bd
           label 身份证号
-        .weui-cell__ft#wechatId 330501199309081314
+        .weui-cell__ft#idCard
       a.weui-cell.weui-cell_access(href="javascript:hrefTo('phone');")
         .weui-cell__bd
           label 手机号
-        .weui-cell__ft#wechatId 15757857341
+        .weui-cell__ft
+          span#phone
     .weui-cells(style="margin-top:44px")
       .weui-cell(style="text-align:center")
         .weui-cell__bd(onclick="showDialog('unbundling')")
