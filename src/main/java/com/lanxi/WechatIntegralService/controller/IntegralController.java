@@ -42,7 +42,11 @@ public class IntegralController {
     public String getUserInfo(HttpServletResponse rep, HttpServletRequest req) {
         return JSONObject.toJSONString(integralService.getUserInfo(rep, req));
     }
-
+    @RequestMapping(value = "/cancelBinding.do", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String cancelBinding(HttpServletRequest req){
+        return JSONObject.toJSONString(integralService.cancelBindings(req));
+    }
     //     @RequestMapping("/phone")
     @RequestMapping(value = "/phone.do", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
