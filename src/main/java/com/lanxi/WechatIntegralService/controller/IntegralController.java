@@ -57,12 +57,6 @@ public class IntegralController {
      public String updatePhoneOper(HttpServletResponse rep, HttpServletRequest req){
     	 return JSONObject.toJSONString(integralService.updatePhoneOper(rep, req));
      }
-//     @RequestMapping("/bindings")
-	@RequestMapping(value = "/bindings.do" , produces = {"application/json;charset=UTF-8"})
-     @ResponseBody
-     public String bindings(HttpServletRequest req, HttpServletResponse rep){
-    	 return JSONObject.toJSONString(integralService.bindings(req, rep));
-     } 
 //     @RequestMapping("/bindingsJf")
 	@RequestMapping(value = "/bindingsJf.do" , produces = {"application/json;charset=UTF-8"})
      @ResponseBody
