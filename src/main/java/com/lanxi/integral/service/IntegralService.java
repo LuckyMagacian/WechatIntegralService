@@ -80,7 +80,7 @@ public class IntegralService {
 		message.setRetCode(result.selectSingleNode("//retCode").getText());
 		message.setRetMsg(result.selectSingleNode("//retMsg").getText());
 		if("0000".equals(message.getRetCode()))
-			message.setObj(t.fromElement((Element) result.selectSingleNode("//body")));
+			message.setObj(t.fromElement((Element)result.selectSingleNode("//body")));
 		return message;
 		}catch (Exception e) {
 			throw new AppException("构建返回对象异常",e);

@@ -54,7 +54,7 @@ public class IntegralManagerServiceImpl {
             String tokenStr = req.getParameter("token");
             logger.info("token==" + tokenStr);
             //检测是否第一次进入
-            if (tokenStr.equals("") || tokenStr == null) {
+            if (tokenStr == null||tokenStr.equals("")) {
                 String code = req.getParameter("code");
                 logger.info("code==" + code);
                 //通过code获得token
@@ -358,15 +358,14 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             String openId = token.getInfo();
-            //取出用户详情
-            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
-            String nickname = webUserInfo.getNickName();
+//            //取出用户详情
+//            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+//            String nickname = webUserInfo.getNickName();
             //根据微信号取出身份证号和积分账号
             AccountBinding accountBinding = bindingService.getMessage(openId);
             String integralAccount = accountBinding.getIntegralAccount();
-            String id = accountBinding.getIntegralAccount();
-            String idCard = id.substring(3, id.length());
-            logger.info("身份证号" + idCard + "积分账户" + integralAccount);
+//            String idCard = integralAccount.substring(3, integralAccount.length());
+            logger.info( "积分账户" + integralAccount);
             String phone = req.getParameter("phone");
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
@@ -404,13 +403,13 @@ public class IntegralManagerServiceImpl {
                 //修改绑定表中的手机号
                 bindingService.updatePhone(phone, openId);
                 logger.info("修改结果" + message);
-                map.put("nickName", nickname);
-                map.put("phone", phone);
-                map.put("idCard", idCard);
+//                map.put("nickName", nickname);
+//                map.put("phone", phone);
+//                map.put("idCard", idCard);
                 map.put("retCode", "0000");
                 map.put("retMsg", "更改手机号校验验证码成功");
                 logger.info("修改手机号码成功");
-                logger.info("姓名" + nickname + "新手机号" + phone + "身份证号" + idCard);
+                logger.info("新手机号" + phone);
             } else {
                 map.put("retCode", "9999");
                 map.put("retMsg", "验证码错误");
@@ -554,9 +553,9 @@ public class IntegralManagerServiceImpl {
                 QueryResBody queryResBody = (QueryResBody) returnMessage.getObj();
                 String integralValue = queryResBody.getTotalPoints();
                 logger.info("积分值" + integralValue);
-                map.put("headimgUrl", headimgUrl);
-                map.put("name", name);
-                map.put("integralValue", integralValue);
+//                map.put("headimgUrl", headimgUrl);
+//                map.put("name", name);
+//                map.put("integralValue", integralValue);
                 map.put("retCode", "0000");
                 map.put("retMsg", "绑定积分账户校验验证码成功");
                 logger.info("绑定积分账户校验验证码成功");
