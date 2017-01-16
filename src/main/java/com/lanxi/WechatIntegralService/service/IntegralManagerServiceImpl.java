@@ -311,7 +311,7 @@ public class IntegralManagerServiceImpl {
                 }
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
-                //修改表中手机号
+                //修改综合积分表中手机号
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("修改积分系统手机号失败");
@@ -319,6 +319,8 @@ public class IntegralManagerServiceImpl {
                     map.put("retMsg", message.getRetMsg());
                     return map;
                 }
+                //修改绑定表中的手机号
+                bindingService.updatePhone(phone,openId);
                 logger.info("修改结果" + message);
                 map.put("nickName", nickname);
                 map.put("phone", phone);
@@ -447,8 +449,7 @@ public class IntegralManagerServiceImpl {
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
                 accountBinding.setIntegralAccount(integralAccount);
-                //绑定账号插入表中
-                bindingService.insert(accountBinding);
+
                 //手机号入到积分表
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
@@ -458,6 +459,8 @@ public class IntegralManagerServiceImpl {
                     return map;
                 }
                 logger.info("手机号入表结果" + message);
+                //绑定账号插入表中
+                bindingService.insert(accountBinding);
                 //通过积分账户取得积分值
                 ReturnMessage returnMessage = IntegralService.queryIntegral(integralAccount);
                 if (!returnMessage.getRetCode().equals("0000")) {
