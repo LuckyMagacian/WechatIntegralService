@@ -34,12 +34,18 @@ public class IntegralController {
             throw new AppException("進入主頁異常！", e);
         }
     }
-
     // 	 @RequestMapping("/userInfo")
     @RequestMapping(value = "/userInfo.do", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
     public String getUserInfo(HttpServletResponse rep, HttpServletRequest req) {
         return JSONObject.toJSONString(integralService.getUserInfo(rep, req));
+    }
+
+    // 	 @RequestMapping("/userInfo")
+    @RequestMapping(value = "/getInfoByToken.do", produces = {"application/json;charset=UTF-8"})
+    @ResponseBody
+    public String getInfoByToken(HttpServletRequest req) {
+        return JSONObject.toJSONString(integralService.getInfoByToken(req));
     }
     @RequestMapping(value = "/cancelBinding.do", produces = {"application/json;charset=UTF-8"})
     @ResponseBody
