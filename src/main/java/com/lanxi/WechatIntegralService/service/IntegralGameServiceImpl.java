@@ -20,8 +20,6 @@ import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
-import com.lanxi.easyintegral.entity.IntegralOrder;
-import com.lanxi.easyintegral.report.ResHead;
 import com.lanxi.gift.report.BaoWen;
 import com.lanxi.gift.report.ReqHead;
 import com.lanxi.gift.report.ReqMsg;

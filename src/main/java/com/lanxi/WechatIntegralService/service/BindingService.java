@@ -1,6 +1,7 @@
 package com.lanxi.WechatIntegralService.service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import org.apache.ibatis.annotations.Param;
 
 public interface BindingService {
 	//根据微信号查询微信号是否绑定积分账户
@@ -17,4 +18,6 @@ public interface BindingService {
 	void cancelBindings(String openId);
 	//绑定积分账户入库
 	void insert(AccountBinding accountBinding);
+	//根据微信号修改绑定表中的手机号
+	void updatePhone(@Param("phone")String phone,@Param("openId")String openId);
 }

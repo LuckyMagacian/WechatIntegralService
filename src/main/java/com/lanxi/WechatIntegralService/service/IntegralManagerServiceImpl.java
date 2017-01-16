@@ -47,48 +47,80 @@ public class IntegralManagerServiceImpl {
     public Map<String, Object> intoJf(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            String code = req.getParameter("code");
-            logger.info("code==" + code);
-            //通过code获得token
-            WebAccessToken token = TokenManager.generatorWebAccessTokenMetadata(code);
-            String openId = token.getOpenId();
-            //将openid存入token
-            EasyToken easyToken = new EasyToken();
-            easyToken.setInfo(openId);
-            easyToken.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime")) * 1000);
-            map.put("token", easyToken.toToken());
-            logger.info("token===" + easyToken.toToken());
-            //检查是否绑定积分账户
-            int count = bindingService.getCountByOpenId(openId);
-            logger.info("count===" + count);
-            if (count > 0) {
-                //根据openid得到取出用户详情
-                WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
-                String headimgUrl = webUserInfo.getHeadImgUrl();
-                //通过openid取出积分账户
-                String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
-                //通过积分账户取得姓名，积分值
-                ReturnMessage message = IntegralService.queryIntegral(integralAccount);
-                if (!message.getRetCode().equals("0000")) {
-                    logger.error("取积分值和姓名失败");
-                    map.put("retCode", message.getRetCode());
-                    map.put("retMsg", message.getRetMsg());
+            //得到openid
+            String tokenStr = req.getParameter("token");
+            logger.info("token==" + tokenStr);
+            //检测是否第一次进入
+            if (tokenStr.equals("") || tokenStr == null) {
+                String code = req.getParameter("code");
+                logger.info("code==" + code);
+                //通过code获得token
+                WebAccessToken token = TokenManager.generatorWebAccessTokenMetadata(code);
+                String openId = token.getOpenId();
+                //将openid存入token
+                EasyToken easyToken = new EasyToken();
+                easyToken.setInfo(openId);
+                easyToken.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime")) * 1000);
+                map.put("token", easyToken.toToken());
+                logger.info("token===" + easyToken.toToken());
+                //检查是否绑定积分账户
+                int count = bindingService.getCountByOpenId(openId);
+                logger.info("count===" + count);
+                if (count > 0) {
+                    //根据openid得到取出用户详情
+                    WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+                    String headimgUrl = webUserInfo.getHeadImgUrl();
+                    //通过openid取出积分账户
+                    String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
+                    //通过积分账户取得姓名，积分值
+                    ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+                    if (!message.getRetCode().equals("0000")) {
+                        logger.error("取积分值和姓名失败");
+                        map.put("retCode", message.getRetCode());
+                        map.put("retMsg", message.getRetMsg());
+                        return map;
+                    }
+                    QueryResBody queryResBody = (QueryResBody) message.getObj();
+                    String name = queryResBody.getCustName();
+                    String integralValue = queryResBody.getTotalPoints();
+                    map.put("headimgUrl", headimgUrl);
+                    map.put("name", name);
+                    map.put("integralValue", integralValue);
+                    map.put("retCode", "0000");
+                    map.put("retMsg", "进入积分账户成功");
+                    logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
+                    return map;
+                } else {
+                    map.put("retCode", "9999");
+                    map.put("retMsg", "未绑定积分账户");
+                    logger.info("未绑定积分账户");
                     return map;
                 }
-                QueryResBody queryResBody = (QueryResBody) message.getObj();
-                String name = queryResBody.getCustName();
-                String integralValue = queryResBody.getTotalPoints();
-                map.put("headimgUrl", headimgUrl);
-                map.put("name", name);
-                map.put("integralValue", integralValue);
-                map.put("retCode", "0000");
-                map.put("retMsg", "进入积分账户成功");
-                logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
-            } else {
-                map.put("retCode", "9999");
-                map.put("retMsg", "未绑定积分账户");
-                logger.info("未绑定积分账户");
             }
+            EasyToken easyToken2 = EasyToken.verifyTokenRenew(tokenStr);
+            String openId = easyToken2.getInfo();
+            //根据openid得到取出用户详情
+            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            String headimgUrl = webUserInfo.getHeadImgUrl();
+            //通过openid取出积分账户
+            String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
+            //通过积分账户取得姓名，积分值
+            ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            if (!message.getRetCode().equals("0000")) {
+                logger.error("取积分值和姓名失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody = (QueryResBody) message.getObj();
+            String name = queryResBody.getCustName();
+            String integralValue = queryResBody.getTotalPoints();
+            map.put("headimgUrl", headimgUrl);
+            map.put("name", name);
+            map.put("integralValue", integralValue);
+            map.put("retCode", "0000");
+            map.put("retMsg", "进入积分账户成功");
+            logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
         } catch (Exception e) {
             throw new AppException("进入积分管理异常", e);
         }
@@ -142,6 +174,7 @@ public class IntegralManagerServiceImpl {
 
     /**
      * 取消绑定
+     *
      * @param req
      * @return
      */
@@ -311,7 +344,7 @@ public class IntegralManagerServiceImpl {
                 }
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
-                //修改表中手机号
+                //修改综合积分表中手机号
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("修改积分系统手机号失败");
@@ -319,6 +352,8 @@ public class IntegralManagerServiceImpl {
                     map.put("retMsg", message.getRetMsg());
                     return map;
                 }
+                //修改绑定表中的手机号
+                bindingService.updatePhone(phone, openId);
                 logger.info("修改结果" + message);
                 map.put("nickName", nickname);
                 map.put("phone", phone);
@@ -433,16 +468,16 @@ public class IntegralManagerServiceImpl {
                     return map;
                 }
                 //该身份证是否已经存在积分账户
-                ReturnMessage message2=IntegralService.queryIntegral(integralAccount);
+                ReturnMessage message2 = IntegralService.queryIntegral(integralAccount);
                 if (!message2.getRetCode().equals("0000")) {
                     logger.error("该身份证号没有对应的积分账户");
                     map.put("retCode", message2.getRetCode());
-                    map.put("retMsg","该身份证号没有对应的积分账户");
+                    map.put("retMsg", "该身份证号没有对应的积分账户");
                     return map;
                 }
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
-                AccountBinding accountBinding=new AccountBinding();
+                AccountBinding accountBinding = new AccountBinding();
                 accountBinding.setOpenId(openId);
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
@@ -456,7 +491,6 @@ public class IntegralManagerServiceImpl {
                     return map;
                 }
                 logger.info("手机号入表结果" + message);
-                //通过积分账户取得积分值
                 //绑定账号插入表中
                 bindingService.insert(accountBinding);
                 ReturnMessage returnMessage = IntegralService.queryIntegral(integralAccount);
@@ -535,6 +569,7 @@ public class IntegralManagerServiceImpl {
 
     /**
      * 积分转增发送验证码
+     *
      * @param rep
      * @param req
      * @return
@@ -614,6 +649,7 @@ public class IntegralManagerServiceImpl {
 
     /**
      * 积分转增校验验证码
+     *
      * @param rep
      * @param req
      * @return
@@ -693,6 +729,7 @@ public class IntegralManagerServiceImpl {
 
     /**
      * 积分转增发送短信通知
+     *
      * @param rep
      * @param req
      * @return

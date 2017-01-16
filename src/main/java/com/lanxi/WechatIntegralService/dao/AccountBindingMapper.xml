@@ -87,6 +87,9 @@ values
         INSERT INTO wechat_integral_service_account_binding(open_id,headimg_url,integral_account,binding_phone)
         VALUES(#{openId},#{headimgUrl},#{integralAccount},#{bindingPhone})
     </insert>
+    <update id="updatePhone">
+        UPDATE wechat_integral_service_account_binding SET binding_phone=#{phone} WHERE openId=#{openId}
+    </update>
     <resultMap id="accountBindingMap" type="com.lanxi.WechatIntegralService.entity.AccountBinding">
         <result property="openId" column="open_id"></result>
         <result property="nickName" column="nick_name"></result>

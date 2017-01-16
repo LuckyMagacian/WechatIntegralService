@@ -3,6 +3,7 @@ package com.lanxi.WechatIntegralService.dao;
 import java.util.List;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import org.apache.ibatis.annotations.Param;
 
 public interface AccountBindingDao {
 	public void addAccountBinding(AccountBinding accountBinding);
@@ -24,4 +25,6 @@ public interface AccountBindingDao {
 	void cancelBindings(String openId);
 	//绑定积分账户入库
 	void insert(AccountBinding accountBinding);
+	//根据微信号修改绑定表中的手机号
+	void updatePhone(@Param("phone")String phone,@Param("openId")String openId);
 }

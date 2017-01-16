@@ -2,6 +2,7 @@ package com.lanxi.WechatIntegralService.service;
 
 import com.lanxi.WechatIntegralService.dao.AccountBindingDao;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -50,5 +51,10 @@ public class BindingServiceImpl implements BindingService {
     @Override
     public void insert(AccountBinding accountBinding) {
         accountBindingDao.insert(accountBinding);
+    }
+
+    @Override
+    public void updatePhone(@Param("phone") String phone, @Param("openId") String openId) {
+        accountBindingDao.updatePhone(phone,openId);
     }
 }
