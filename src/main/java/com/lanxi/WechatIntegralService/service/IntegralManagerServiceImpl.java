@@ -51,7 +51,7 @@ public class IntegralManagerServiceImpl {
             String tokenStr = req.getParameter("token");
             logger.info("token==" + tokenStr);
             //检测是否第一次进入
-            if (tokenStr.equals("") || tokenStr == null) {
+            if (tokenStr == null||tokenStr.equals("") ) {
                 String code = req.getParameter("code");
                 logger.info("code==" + code);
                 //通过code获得token
