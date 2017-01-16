@@ -1,12 +1,15 @@
 package com.lanxi.WechatIntegralService.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.lanxi.integral.report.HistoryResBody;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -127,6 +130,52 @@ public class IntegralManagerServiceImpl {
         return map;
     }
 
+    /**
+     * 根据token获取用户信息
+     */
+    public Map<String, Object> getInfoByToken(HttpServletRequest req) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        try {
+            //得到openid
+            String tokenStr = req.getParameter("token");
+            logger.info("token==" + tokenStr);
+            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+            if (token == null) {
+                map.put("retCode", "9797");
+                map.put("retMsg", "用户需要重新登录");
+                logger.info("token过期");
+                return map;
+            }
+            String openId = token.getInfo();
+            //根据openid得到取出用户详情
+            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            String headimgUrl = webUserInfo.getHeadImgUrl();
+            //通过openid取出积分账户
+            String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
+            //通过积分账户取得姓名，积分值
+            ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            if (!message.getRetCode().equals("0000")) {
+                logger.error("取积分值和姓名失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody = (QueryResBody) message.getObj();
+            String name = queryResBody.getCustName();
+            String integralValue = queryResBody.getTotalPoints();
+            map.put("headimgUrl", headimgUrl);
+            map.put("name", name);
+            map.put("integralValue", integralValue);
+            map.put("retCode", "0000");
+            map.put("retMsg", "根据token获取用户信息成功");
+            logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
+        } catch (Exception e) {
+            map.put("retCode", "9999");
+            map.put("retMsg", "根据token获取用户信息失败");
+            throw new AppException("根据token获取用户信息失败", e);
+        }
+        return map;
+    }
 
     /**
      * 进入账户资料页面
@@ -531,6 +580,7 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> integralQuery(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        List<Map> mapList = new ArrayList<>();
         try {
             //得到openid
             String tokenStr = req.getParameter("token");
@@ -556,7 +606,24 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             logger.info("积分明细" + message.getObj());
-            map.put("message", message.getObj());
+            HistoryResBody historyResBody = (HistoryResBody) message.getObj();
+            List<HistoryResBody.Item> list = historyResBody.getSerialList();
+            for (HistoryResBody.Item item : list) {
+                Map<String, String> typeMap = HistoryResBody.POINTS_TYPE_MAP;
+                Map<String, String> itemMap = new HashMap<>();
+                //变更时间
+                String occurDate = item.getOccurDate();
+                //变更分值
+                String pointsVal = item.getPointsVal();
+                //变更类型
+                String type = item.getPointsType();
+                String pointType = typeMap.get(type);
+                itemMap.put("occurDate", occurDate);
+                itemMap.put("pointsVal", pointsVal);
+                itemMap.put("pointType", pointType);
+                mapList.add(itemMap);
+            }
+            map.put("message", mapList);
             map.put("retCode", "0000");
             map.put("retMsg", "查询积分明细成功");
             logger.info("查询积分明细成功");
