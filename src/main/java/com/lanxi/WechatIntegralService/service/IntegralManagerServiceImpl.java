@@ -1,12 +1,16 @@
 package com.lanxi.WechatIntegralService.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.alibaba.fastjson.JSON;
+import com.lanxi.integral.report.HistoryResBody;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -51,7 +55,7 @@ public class IntegralManagerServiceImpl {
             String tokenStr = req.getParameter("token");
             logger.info("token==" + tokenStr);
             //检测是否第一次进入
-            if (tokenStr.equals("") || tokenStr == null) {
+            if (tokenStr==null||tokenStr.equals("")) {
                 String code = req.getParameter("code");
                 logger.info("code==" + code);
                 //通过code获得token
@@ -98,6 +102,12 @@ public class IntegralManagerServiceImpl {
                 }
             }
             EasyToken easyToken2 = EasyToken.verifyTokenRenew(tokenStr);
+            if (easyToken2 == null) {
+                map.put("retCode", "9797");
+                map.put("retMsg", "用户需要重新登录");
+                logger.info("token过期");
+                return map;
+            }
             String openId = easyToken2.getInfo();
             //根据openid得到取出用户详情
             WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
@@ -531,6 +541,7 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> integralQuery(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        List<Map>mapList=new ArrayList<>();
         try {
             //得到openid
             String tokenStr = req.getParameter("token");
@@ -556,7 +567,24 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             logger.info("积分明细" + message.getObj());
-            map.put("message", message.getObj());
+            HistoryResBody historyResBody=(HistoryResBody)message.getObj();
+            List<HistoryResBody.Item> list=historyResBody.getSerialList();
+            for(HistoryResBody.Item item:list){
+                Map<String,String>itemMap=new HashMap<>();
+                //变更时间
+                String occurDate=item.getOccurDate();
+                //变更分值
+                String pointsVal=item.getPointsVal();
+                //变更类型
+                String type=item.getPointsType();
+                Map<String,String> typeMap=HistoryResBody.POINTS_TYPE_MAP;
+                String pointType=typeMap.get(type);
+                itemMap.put("occurDate",occurDate);
+                itemMap.put("pointsVal",pointsVal);
+                itemMap.put("pointType",pointType);
+                mapList.add(itemMap);
+            }
+            map.put("message",mapList);
             map.put("retCode", "0000");
             map.put("retMsg", "查询积分明细成功");
             logger.info("查询积分明细成功");
@@ -619,13 +647,14 @@ public class IntegralManagerServiceImpl {
                 logger.info("您的积分余额不足");
                 return map;
             }
+
             String integralAccount2 = "101" + receiverIdCard;
             //查询接受账户是否存在
-            int count = bindingService.getCountByIntegralAccount(integralAccount2);
-            if (count < 1) {
-                map.put("retCode", "9999");
-                map.put("retMsg", "该身份证号没有匹配的积分账号");
-                logger.info("该身份证号没有匹配的积分账号");
+            ReturnMessage message2 = IntegralService.queryIntegral(integralAccount2);
+            if (!message2.getRetCode().equals("0000")) {
+                logger.error("该身份证号没有对应的积分账户");
+                map.put("retCode", message2.getRetCode());
+                map.put("retMsg", "该身份证号没有对应的积分账户");
                 return map;
             }
             //通过积分账户查询绑定的手机号
