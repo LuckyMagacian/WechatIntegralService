@@ -1,0 +1,290 @@
+html,
+body {
+	margin: 0;
+	font-family: Helvetica, YouYuan;
+}
+
+a {
+	text-decoration: none;
+}
+.hide{
+	display: none !important;
+}
+#skySize {
+	margin: 0 auto;
+	max-width: 480px;
+}
+.button {
+	width: 63px;
+    height: 26px;
+    border-radius: 5px 5px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 27px;
+    display: inline-block;
+    text-decoration: none;
+    margin: 0 auto;
+    display: block;
+    margin-top: -18px;
+    position: relative;
+}
+.btn-orange{
+	color: #fa6938;
+    border: 2px solid #fa6938;
+}
+
+
+/* header */
+
+header {
+	background: url(../img/happyScratch/head.jpg) no-repeat;
+}
+
+#text {
+	color: white;
+	text-align: center;
+	overflow: hidden;
+}
+
+#integral {
+	font-weight: bold;
+	font-size: 1.1em;
+}
+
+#scratch {
+	width: 304px;
+	height: 110px;
+	margin: 11px 0px 0px 82px;
+	background-position: center;
+	background-size: 110%;
+}
+
+
+/* content */
+
+#content {
+	padding-top: 10px;
+	position: relative;
+	background: url(../img/happyScratch/bg2.jpg) repeat #8daac6;
+}
+
+#blackBg {
+	background-color: black;
+	opacity: 0.2;
+	-moz-opacity: 0.2;
+	filter: alpha(opacity: 20);
+	height: 480px;
+	width: 410px;
+	border-radius: 8px;
+	margin: 0 auto;
+}
+
+#activeInfo {
+	/*	height: 460px;*/
+	width: 378px;
+	margin: 0 auto;
+	position: absolute;
+	top: 18px;
+	left: 0;
+	right: 0;
+	color: white;
+}
+
+#activeInfo>label {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+#activeInfo>p {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+
+/* footer */
+
+#copyright {
+	color: #eee;
+	font-family: "Microsoft Yahei", Arial, Tahoma, Helvetica, "SimSun", "Hiragino Sans GB", sans-serif;
+	font-size: 1em;
+}
+
+#copyright>p {
+	margin: 10px 0px 0px 0px;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+/* dialog */
+#prizeModel {
+	width: 400px;
+	height: auto;
+	top: 105px;
+	/* border: #666 solid 1px; */
+	border-radius: 5px;
+	position: absolute;
+	font-size: 20px;
+	background-color: #fafafc;
+	z-index: 1002;
+	left: 0;
+	right: 0;
+	margin: auto;
+	/* color: #888; */
+	min-width: 320px;
+}
+
+#prizeModel p>input {
+	height: 24px;
+	vertical-align: middle;
+	padding: 1px 3px;
+	font-size: .85em;
+	width: 180px;
+	border: 1px solid #ccc;
+}
+
+.noPrize {
+	height: 152px !important;
+	top: 0 !important;
+	bottom: 0;
+}
+
+.modelHeader {
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: #e8e8ea solid 1px;
+	color: #303031;
+}
+
+.modelContent>p {
+	margin: 12px 0px 0px 0px;
+	text-align: center;
+	font-size: 0.9em;
+}
+
+.modelFooter {
+	height: 42px;
+	line-height: 37px;
+	border-top: #e8e8ea solid 1px;
+	text-align: center;
+}
+
+.modelBtn {
+	height: 40px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #333;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	width: 48%;
+}
+
+.modelBtn:hover {
+	background-color: #eee;
+}
+
+#prizeHint {
+	font-size: 0.75em;
+	color: #e50a0a;
+}
+
+#fullBlack {
+	z-index: 1001;
+	background-color: black;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	-webkit-opacity: 0.5;
+	opacity: 0.5;
+}
+#dialogHint {
+	font-size: 0.7em;
+	color: red;
+	text-align: center;
+    display: block;
+}
+.inputSussess {
+	border:1px solid #3c763d !important;
+}
+
+.inputError {
+	border:1px solid #a94442 !important;
+}
+/*pc & paid >480=px*/
+
+@media only screen and (min-width:480px) {
+	header {
+		width: 480px;
+		height: 538px;
+	}
+	#text {
+		padding-top: 323px;
+		padding-left: 30px;
+		padding-right: 310px;
+	}
+}
+
+
+/* 321~479px */
+
+@media only screen and (min-width: 321px) and (max-width: 479px) {
+	#skySize {
+		width: 100%;
+	}
+	header {
+		height: 400px;
+		background-size: 100%;
+	}
+	#text{
+		font-size: 0.8em;
+	}
+	#prizeModel{
+		width:85%;
+	}
+}
+
+
+/* <336px */
+
+@media only screen and (max-width:337px) {
+	#skySize {
+		width: 320px;
+	}
+	header {
+		height: 358px;
+		background-size: 100%;
+	}
+	#text {
+		padding-top: 212px;
+		padding-left: 17px;
+		padding-right: 205px;
+		font-size: 0.8em;
+	}
+	#scratch {
+		width: 203px;
+		height: 73px;
+		margin: 9px 0px 0px 55px;
+	}
+	#blackBg {
+		width: 280px;
+		height: 570px;
+	}
+	#activeInfo {
+		width: 260px;
+		top: 20px;
+	}
+	#activeInfo>label {
+		font-size: 1.1em;
+	}
+	#prizeModel{
+		width:320px;
+	}
+}
