@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-import org.apache.tomcat.util.buf.MessageBytes;
+
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;

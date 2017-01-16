@@ -407,7 +407,7 @@ public class IntegralManagerServiceImpl {
             String name = req.getParameter("name");
             String idCard = req.getParameter("idcard");
             String integralAccount = "101" + idCard;
-            logger.info("新手机号" + phone + "姓名" + name + "积分账户" + integralAccount);
+            logger.info("手机号" + phone + "姓名" + name + "积分账户" + integralAccount);
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
@@ -447,6 +447,7 @@ public class IntegralManagerServiceImpl {
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
                 accountBinding.setIntegralAccount(integralAccount);
+                //绑定账号插入表中
                 bindingService.insert(accountBinding);
                 //手机号入到积分表
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
