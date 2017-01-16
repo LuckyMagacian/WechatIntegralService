@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.dao.AccountBindingDao;
+import com.lanxi.WechatIntegralService.dao.ElectronicCouponDao;
 import com.lanxi.WechatIntegralService.dao.GameDao;
 import com.lanxi.WechatIntegralService.dao.GiftDao;
 import com.lanxi.WechatIntegralService.dao.GiftOrderDao;
@@ -16,6 +17,7 @@ import com.lanxi.WechatIntegralService.dao.IntegralTransferDao;
 import com.lanxi.WechatIntegralService.dao.RedPacketReceiveDao;
 import com.lanxi.WechatIntegralService.dao.ValidCodeDao;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import com.lanxi.WechatIntegralService.entity.ElectronicCoupon;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
 import com.lanxi.WechatIntegralService.entity.GiftOrder;
@@ -45,6 +47,8 @@ public class DaoServiceImpl implements DaoService {
 	private RedPacketReceiveDao receiveDao;
 	@Resource
 	private ValidCodeDao codeDao;
+	@Resource 
+	private ElectronicCouponDao couponDao;
 	@Override
 	public void addAccountBinding(AccountBinding accountBinding) {
 		accountDao.addAccountBinding(accountBinding);
@@ -396,4 +400,47 @@ public class DaoServiceImpl implements DaoService {
 	public List<GiftOrder> selectGiftOrder(GiftOrder giftorder) {
 		return orderDao.selectGiftOrder(giftorder);
 	}
+
+	@Override
+	public void addElectronicCoupon(ElectronicCoupon electronicCoupon) {
+		 couponDao.addElectronicCoupon(electronicCoupon);
+	}
+
+	@Override
+	public void addElectronicCouponDefault(ElectronicCoupon electronicCoupon) {
+		couponDao.addElectronicCouponDefault(electronicCoupon);
+	}
+
+	@Override
+	public void deleteElectronicCoupon(ElectronicCoupon electronicCoupon) {
+		couponDao.deleteElectronicCoupon(electronicCoupon);
+	}
+
+	@Override
+	public void updateElectronicCoupon(ElectronicCoupon electronicCoupon) {
+		couponDao.updateElectronicCoupon(electronicCoupon);
+	}
+
+	@Override
+	public List<ElectronicCoupon> selectElectronicCoupon(ElectronicCoupon electronicCoupon) {
+		return couponDao.selectElectronicCoupon(electronicCoupon);
+	}
+
+	@Override
+	public ElectronicCoupon getElectronicCoupon(String id) {
+		ElectronicCoupon coupon=new ElectronicCoupon();
+		coupon.setId(id);
+		List<ElectronicCoupon> result=selectElectronicCoupon(coupon);
+		return result.isEmpty()?null:result.get(0);
+	}
+
+	@Override
+	public List<ElectronicCoupon> getElectronicCoupons(String openId) {
+		ElectronicCoupon coupon=new ElectronicCoupon();
+		coupon.setOpenId(openId);
+		List<ElectronicCoupon> result=selectElectronicCoupon(coupon);
+		return result.isEmpty()?null:result;
+	}
+	
+	
 }

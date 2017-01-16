@@ -6,6 +6,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.wechat.entity.token.AccessToken;
+import com.lanxi.wechat.entity.token.JSSign;
+import com.lanxi.wechat.entity.token.JSTicket;
 import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.entity.token.WebAccessTokenRequst;
 
@@ -20,6 +22,12 @@ public class TokenManager {
 
 	/**网页授权请求*/
 	private static WebAccessTokenRequst webAccessTokenRequst;	
+	
+	/**Js凭证*/
+	private static JSTicket jsTicket;
+	
+	/**Js签名*/
+	private static JSSign jsSign;
 	
 	/**网页凭证列表*/
 	private static Map<String, WebAccessToken> webAccessTokens;	
@@ -162,5 +170,45 @@ public class TokenManager {
 	public static String loadAccessToken(){
 		accessToken=AccessToken.loadToken();
 		return accessToken.getAccessToken();
+	}
+	
+	/**
+	 * 获取jsTicket元数据
+	 * @return
+	 */
+	public static JSTicket getJsTicketMetaData(){
+		if(jsTicket==null){
+			jsTicket=new JSTicket();
+			jsTicket.generatorTicket();
+		}
+		if(jsTicket.getOverTime().compareTo(System.currentTimeMillis()+"")<1){
+			jsTicket.generatorTicket();
+		}
+		return jsTicket;
+	}
+	/**
+	 * 获取jsTicket
+	 * @return
+	 */
+	public static String getJsTicket(){
+		return getJsTicketMetaData().getTicket();
+	}
+	/**
+	 * jsTicket签名
+	 * @param nonceStr	随机字符串
+	 * @param timestamp	时间戳
+	 * @param url 		链接
+	 * @return
+	 */
+	public static JSSign getJsSign(String nonceStr,String timestamp,String url){
+		if(jsSign==null){
+			jsSign=new JSSign();
+		}
+		jsSign.setNonce(nonceStr);
+		jsSign.setTimeStamp(timestamp);
+		jsSign.setUrl(url);
+		jsSign.setTicket(getJsTicketMetaData());
+		jsSign.generatorSign();
+		return jsSign;
 	}
 }

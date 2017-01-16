@@ -3,6 +3,7 @@ package com.lanxi.WechatIntegralService.test;
 import org.junit.Test;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import com.lanxi.WechatIntegralService.entity.ElectronicCoupon;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
 import com.lanxi.WechatIntegralService.entity.GiftOrder;
@@ -18,7 +19,7 @@ public class TestSql {
 	
 	@Test
 	public void test(){
-		Class[] classes=new Class[]{IntegralRedPacket.class,RedPacketReceive.class};
+		Class[] classes=new Class[]{ElectronicCoupon.class};
 		for(Class<?> each:classes)
 			SqlUtil.createMapperFile(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));
 			//SqlUtil.createAll(each, "wechat_integral_service_"+CheckReplaceUtil.upcaseToUnderlineLowcaser(each.getSimpleName()));

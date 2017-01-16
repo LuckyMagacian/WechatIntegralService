@@ -19,7 +19,7 @@
             <label>数量</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input type="number" placeholder="红包个数" maxlength="11" class="weui-input mui-text-right">
+          <input id="redPacketCount" type="number" placeholder="红包个数" maxlength="6" class="weui-input mui-text-right">
           <div style="color:black;margin-right: 5px;" class="weui-cell__ft">
             <label>个</label>
           </div>
@@ -31,7 +31,7 @@
             <label>积分</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input type="number" placeholder="积分值" maxlength="11" class="weui-input mui-text-right">
+          <input id="redPacketIntegral" type="number" placeholder="积分值" maxlength="8" onkeyup="$('#totalPoints').text(this.value==''?0:this.value)" class="weui-input mui-text-right">
         </div>
       </div>
       <div class="rice-info">每人可领1个,积分随机</div>
@@ -41,17 +41,19 @@
             <label>留言</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input type="number" placeholder="积分红包,速来领取" maxlength="30" class="weui-input mui-text-right">
+          <input id="redPacketName" type="number" placeholder="积分红包,速来领取" maxlength="30" class="weui-input mui-text-right">
         </div>
       </div>
       <div id="totalPacketPoints">
-        <p><span>18888</span>
+        <p><span id="totalPoints">0</span>
           <label>积分</label>
         </p>
-      </div><a href="redPacket.html?id=1231" class="weui-btn weui-btn_warn">发红包</a>
+      </div><a href="javascript:sendPacket()" class="weui-btn weui-btn_warn">发红包</a>
     </div>
     <script src="js/mui.js"></script>
     <script src="js/jquery.2.2.4.min.js"></script>
+    <script src="js/jquery.cookie.min.js"></script>
+    <script src="js/jweixin-1.0.0.js"></script>
     <script src="js/public.js"></script>
     <script src="js/pointsPacket.js"></script>
   </body>

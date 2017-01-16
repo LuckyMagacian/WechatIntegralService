@@ -34,7 +34,7 @@ public class ValidServerService {
 			String nonce	=req.getParameter("nonce");
 			String echostr	=req.getParameter("echostr");
 			System.out.println("signature:"+signature);
-			System.out.println("timestamp:"+signature);
+			System.out.println("timestamp:"+timestamp);
 			System.out.println("nonce	 :"+nonce);
 			System.out.println("echostr	 :"+echostr);
 			List<String> list=new ArrayList<>();
@@ -75,4 +75,5 @@ public class ValidServerService {
 			throw new AppException("微信签名异常,",e);
 		}
 	}
+	
 }

@@ -289,4 +289,42 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 		}
 	}
 
+	@SuppressWarnings("finally")
+	@Override
+	public String redPacketInfo(HttpServletRequest req, HttpServletResponse res) {
+		ReturnMessage returnMessage=new ReturnMessage();
+		try{
+			req.setCharacterEncoding("utf-8");
+			String redPacketId=req.getParameter("redPacketId");
+			String tokenStr=req.getParameter("token");
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			if(token==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("token过期!");
+				returnMessage.setObj("token过期!");
+				logger.info("token过期!");
+				return returnMessage.toJson();
+			}
+			String userId=token.getInfo();
+			logger.info("查询红包详情!"+"userId="+userId+",token="+tokenStr+",redPacketId="+redPacketId);
+			IntegralRedPacket redPacket=dao.getRedPacket(redPacketId);
+			if(redPacket==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("红包不存在!");
+				return returnMessage.toJson();
+			}
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg("红包详情!");
+			returnMessage.setObj(redPacket);
+		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("查看红包详情异常");
+			returnMessage.setObj(null);
+			throw new AppException("查看红包详情异常",e);
+		}finally {
+			return returnMessage.toJson();
+		}
+	}
+
+	
 }

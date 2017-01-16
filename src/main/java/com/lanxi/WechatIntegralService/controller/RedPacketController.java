@@ -31,5 +31,10 @@ public class RedPacketController {
 	public String redPacketDetail(HttpServletRequest req,HttpServletResponse res){
 		return redPacketService.redPacketDetail(req,res);
 	}
+	@ResponseBody
+	@RequestMapping(value = "/redPacketInfo.do" , produces = {"application/json;charset=UTF-8"})
+	public String redPacketInfo(HttpServletRequest req,HttpServletResponse res){
+		return redPacketService.redPacketInfo(req, res);
+	}
 	
 }

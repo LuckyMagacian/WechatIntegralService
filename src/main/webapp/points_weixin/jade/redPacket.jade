@@ -10,17 +10,17 @@ block content
       #packetBgAdd
         #packetHeadPic
       p(style="margin: 10px 0px 6px 0px;")
-        span#packetUser Mr.rice
+        span#packetUser
         span 的红包
       p.rice-color-777
-        span#packetinfo 积分红包,速来领取
-      #redPacketPic(onclick="location.href='redPacketList.html?id=1231'")
+        span#packetinfo
+      #redPacketPic(onclick="unpackRedPacket()")
       p.rice-color-777
         span 共
-        span#redPacketNum 10
+        span#redPacketNum
         span 个红包,总积分
-        span#redPacketTotal 10000
-        span 积分  
+        span#redPacketTotal 
+        span 积分
 block JS
   script(src="js/public.js")
-  script(src="js/pointsPacket.js")
+  script(src="js/redPacket.js")

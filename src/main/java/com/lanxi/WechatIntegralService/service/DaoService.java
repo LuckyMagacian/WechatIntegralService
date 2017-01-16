@@ -3,6 +3,7 @@ package com.lanxi.WechatIntegralService.service;
 import java.util.List;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import com.lanxi.WechatIntegralService.entity.ElectronicCoupon;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
 import com.lanxi.WechatIntegralService.entity.GiftOrder;
@@ -93,4 +94,12 @@ public interface DaoService {
 	public void deleteGiftOrder(GiftOrder giftorder);
 	public void updateGiftOrder(GiftOrder giftorder);
 	public List<GiftOrder> selectGiftOrder(GiftOrder giftorder);
+	//TODO----------------------------electronicCoupon------------------------------------------------------
+	public void addElectronicCoupon(ElectronicCoupon electronicCoupon);
+	public void addElectronicCouponDefault(ElectronicCoupon electronicCoupon);
+	public void deleteElectronicCoupon(ElectronicCoupon electronicCoupon);
+	public void updateElectronicCoupon(ElectronicCoupon electronicCoupon);
+	public List<ElectronicCoupon> selectElectronicCoupon(ElectronicCoupon electronicCoupon);
+	public ElectronicCoupon getElectronicCoupon(String id);
+	public List<ElectronicCoupon> getElectronicCoupons(String openId);
 }

@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.service;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
@@ -8,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
+import org.dom4j.Node;
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import com.lanxi.WechatIntegralService.entity.ElectronicCoupon;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
 import com.lanxi.WechatIntegralService.entity.GiftOrder;
@@ -125,9 +128,11 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage.setRetMsg("获得了"+gift.getIntegralValue()+"积分!");
 				returnMessage.setObj(gift.getPrizeLevel());
 				returnMessage.setToken(token.toToken());
-				return returnMessage.toJson();
+//				return returnMessage.toJson();
 			}else{
-				dealEleGift(gift,account);
+				returnMessage=dealEleGift(gift,account);
+				returnMessage.setRetMsg("获得了"+gift.getName());
+				returnMessage.setObj(gift.getPrizeLevel());
 			}
 			dao.addIntegralGame(integralGame);
 			logger.info("增加游戏记录:"+integralGame);
@@ -156,7 +161,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 	private ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
 		ReturnMessage message=new ReturnMessage();
 		try {
-			
+			logger.info("开始处理电子券!");
 			ReqHead head=new ReqHead();
 			head.setMsgId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
 			head.setMsgNo(head.getMsgId().substring(0,14));
@@ -169,7 +174,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			baoWen.setHead(head);
 			baoWen.setMsg(body);
 			baoWen.sign();
-			
+			logger.info("电子礼品平台请求报文:"+baoWen.toDocument().asXML());
 			GiftOrder order=new GiftOrder();
 			order.setOrderId(head.getMsgId());
 			order.setOpenId(account.getOpenId());
@@ -178,15 +183,43 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			order.setWorkTime(head.getWorkTime());
 			order.setStatus(GiftOrder.ORDER_STATUS_WAIT);
 			dao.addGiftOrder(order);
+			logger.info("增加订单记录:"+order);
 			String rs=HttpUtil.postXml(baoWen.toDocument().asXML(), ConfigUtil.get("giftUrl"), "GBK");
+			logger.info("电子礼品平台响应信息:"+rs);
 			Document doc=DocumentHelper.parseText(rs);
 			if(!doc.selectSingleNode("//ResCode").getText().trim().equals("0000")){
 				logger.info("下单失败,订单异常!原因"+doc.selectSingleNode("//ResMsg").getText());
 				order.setStatus(GiftOrder.ORDER_STATUS_FAIL);
 				dao.updateGiftOrder(order);
+				logger.info("更新电子券订单信息:"+order);
+				logger.info("电子券购买失败!");
+				message.setRetCode("9998");
+				message.setRetMsg("电子券奖品处理失败!");
 			}else{
+				StringBuffer codes=new StringBuffer("");
+				@SuppressWarnings("unchecked")
+				List<Node> nodes=doc.selectNodes("//Code");
+				if(nodes!=null&&!nodes.isEmpty())
+				for(Node each:nodes){
+					ElectronicCoupon coupon=new ElectronicCoupon();
+					coupon.setId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
+					coupon.setCode(each.getText());
+					coupon.setImageCode(eleGift.getImageCode());
+					coupon.setOpenId(account.getOpenId());
+					coupon.setStartTime(TimeUtil.getDateTime());
+					coupon.setOvetTime(2017+TimeUtil.getDateTime().substring(4));
+					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
+					dao.addElectronicCoupon(coupon);
+					logger.info("电子券信息入库:"+coupon);
+					codes.append(codes.length()==0?each.getText():","+each.getText());
+				}
+				order.setMoreInfo(codes.toString());
 				order.setStatus(GiftOrder.ORDER_STATUS_SUCCESS);
 				dao.updateGiftOrder(order);
+				logger.info("更新电子券订单信息:"+order);
+				logger.info("电子券购买成功!"+codes.toString());
+				message.setRetCode("0000");
+				message.setRetMsg("电子券奖品处理完成!");
 			}
 		} catch (Exception e) {
 			message.setRetCode("9999");
@@ -195,4 +228,38 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}
 		return message;
 	}
+
+	@SuppressWarnings("finally")
+	@Override
+	public String getGifts(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
+		try{
+			req.setCharacterEncoding("utf-8");
+			String gameId=req.getParameter("gameId");
+			String tokenStr =req.getParameter("token");
+			logger.info("查询游戏奖励:gameId="+gameId+",token="+tokenStr);
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			if(token==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("token过期!");
+				returnMessage.setObj("token过期!");
+				logger.info("token过期!");
+				return returnMessage.toJson();
+			}
+			List<Gift> gifts=dao.getGifts(gameId);
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg("获取游戏奖品成功!");
+			returnMessage.setObj(gifts);
+			logger.info("游戏奖品:"+gifts);
+			return returnMessage.toJson();
+		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("获取游戏奖品异常!");
+			throw new AppException("获取游戏奖品异常!",e);
+		}finally{
+			return returnMessage.toJson();
+		}
+	}
+	
+	
 }

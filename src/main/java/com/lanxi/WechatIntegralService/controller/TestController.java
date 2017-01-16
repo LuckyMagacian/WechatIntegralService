@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
 import com.lanxi.wechat.entity.message.TextMessage;
+import com.lanxi.wechat.entity.token.JSSign;
 import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
@@ -124,5 +125,15 @@ public class TestController {
 		res.getOutputStream().println("</p>");
 		res.getOutputStream().println("</body>");
 		res.getOutputStream().println("</html>");
+	}
+	@RequestMapping("/getJsSign.do")
+	@ResponseBody
+	public String getJsSign(HttpServletRequest req,HttpServletResponse res) throws Exception{
+		req.setCharacterEncoding("utf-8");
+		String nonce=req.getParameter("nonce");
+		String timestamp=req.getParameter("timestamp");
+		String url=req.getParameter("url");
+		JSSign sign=TokenManager.getJsSign(nonce, timestamp, url);
+		return sign.toJson();
 	}
 }

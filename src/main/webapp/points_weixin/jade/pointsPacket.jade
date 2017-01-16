@@ -10,7 +10,7 @@ block content
         .weui-cell__hd.weui-label
           label 数量
         .weui-cell__bd
-        input.weui-input.mui-text-right(type='number' placeholder='红包个数' maxlength='11')
+        input#redPacketCount.weui-input.mui-text-right(type='number' placeholder='红包个数' maxlength='6')
         .weui-cell__ft(style="color:black;margin-right: 5px;")
           label 个
     .weui-cells
@@ -21,19 +21,19 @@ block content
             option 总积分
             option 单个积分
         .weui-cell__bd
-        input.weui-input.mui-text-right(type='number' placeholder='积分值' maxlength='11')
+        input#redPacketIntegral.weui-input.mui-text-right(type='number' placeholder='积分值' maxlength='8' onkeyup="$('#totalPoints').text(this.value==''?0:this.value)")
     .rice-info 每人可领1个,积分随机
     .weui-cells
       .weui-cell.weui-cell_vcode
         .weui-cell__hd.weui-label
           label 留言
         .weui-cell__bd
-        input.weui-input.mui-text-right(type='number' placeholder='积分红包,速来领取' maxlength='30')
+        input#redPacketName.weui-input.mui-text-right(type='number' placeholder='积分红包,速来领取' maxlength='30')
     #totalPacketPoints
       p
-        span 18888
+        span#totalPoints 0
         label 积分
-    a.weui-btn.weui-btn_warn(href="redPacket.html?id=1231") 发红包
+    a.weui-btn.weui-btn_warn(href="javascript:sendPacket()") 发红包
 block JS
   script(src="js/public.js")
   script(src="js/pointsPacket.js")

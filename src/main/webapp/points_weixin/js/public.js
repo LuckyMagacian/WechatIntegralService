@@ -34,6 +34,7 @@ function getParam() {
 			var param = this.split('=');
 			paramsArr[param[0]] = param[1];
 		});
+		console.log('[PARAMS]:'+JSON.stringify(paramsArr));
 		return paramsArr;
 	}
 }
@@ -64,7 +65,7 @@ function ajaxPost(url, dataJson, successFunc) {
 					setCookie('token', jsonStr.token);
 				}
 				if(typeof successFunc == 'function') {
-					console.log(jsonStr);
+					console.log('[AJAX res]:'+JSON.stringify(jsonStr));
 					successFunc(jsonStr);
 				}
 			} else {
@@ -87,7 +88,7 @@ function ajaxPost(url, dataJson, successFunc) {
 		error: function(e) {
 			removeMsg('loadingToast');
 			falseAlert('请求错误', '发送请求失败');
-			console.log(e);
+			console.log('[ERROR]:'+JSON.stringify(e));
 		}
 	});
 }
@@ -147,7 +148,13 @@ function falseAlert(msgTitle, msg) {
 		'</strong></div><div class="weui-dialog__bd">' + msg +
 		'</div><div class="weui-dialog__ft"><a href="javascript:removeMsg(\'falseAlert\');" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div></div></div>');
 }
-
+/* 信息提示 */
+function infoAlert(msgTitle, msg) {
+	$('body').append('<div id="infoAlert"><div class="weui-mask"></div>' +
+		'<div class="weui-dialog"><div class="weui-dialog__hd"><strong class="weui-dialog__title">' + msgTitle +
+		'</strong></div><div class="weui-dialog__bd">' + msg +
+		'</div><div class="weui-dialog__ft"><a href="javascript:removeMsg(\'infoAlert\');" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div></div></div>');
+}
 /* 去除弹出信息 */
 function removeMsg(id) {
 	$("#" + id).fadeOut('1000', function() {
@@ -158,7 +165,7 @@ function removeMsg(id) {
 
 /** 正整数验证 */
 function vailPositiveIntegral(val) {
-	var patten = /^[1-9]\d*[Xx]*$/;
+	var patten = /^[1-9]\d*$/;
 	return patten.test(val);
 }
 /** 正实数验证*/

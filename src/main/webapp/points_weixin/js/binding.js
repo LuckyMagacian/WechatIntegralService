@@ -1,6 +1,5 @@
 $(function() {
 	paramsArr = getParam(); //获取url参数数组
-	console.log(paramsArr);
 });
 
 /* 确认绑定 */

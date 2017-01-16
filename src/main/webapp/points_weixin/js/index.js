@@ -1,7 +1,6 @@
 $(function(){
 	paramsArr = getParam(); //获取url参数数组
-	getInfo();//获取信息
-	console.log(paramsArr);
+	//getInfo();//获取信息
 });
 
 function getInfo(){
