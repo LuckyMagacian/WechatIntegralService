@@ -25,6 +25,7 @@ public class QuartzServiceImpl implements QuartzService{
 		List<IntegralRedPacket> temp=dao.getNoneRedPacket();
 		if(temp!=null&&!temp.isEmpty())
 			redPackets.addAll(temp);
+		if(redPackets!=null&&!redPackets.isEmpty())
 		for(IntegralRedPacket each:redPackets){
 			if(each.getOverTime().compareTo(TimeUtil.getDateTime())<1){
 				logger.info("红包过期:"+each);

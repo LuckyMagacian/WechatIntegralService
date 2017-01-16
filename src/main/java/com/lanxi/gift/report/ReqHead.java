@@ -3,6 +3,7 @@ package com.lanxi.gift.report;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
 
 /**
@@ -25,14 +26,14 @@ public class ReqHead implements Head{
 	private String  reserve;	/**备注*/
 	private String  sign;		/**签名 参数值拼接加上密钥 结果为小写*/
 	public ReqHead(){
-		ver="1.0";
+		ver=ConfigUtil.get("giftVer");
 		chkDate=TimeUtil.getDate();
 		workDate=TimeUtil.getDate();
 		workTime=TimeUtil.getTime();
-		add="浙江省杭州市";
-		src="1000000000000000";
-		des="1000000000000000";
-		app="蓝喜电子礼品营销平台";
+		add=ConfigUtil.get("giftAdd");
+		src=ConfigUtil.get("giftSrc");
+		des=ConfigUtil.get("giftDes");
+		app=ConfigUtil.get("giftApp");
 	}
 	public String getVer() {
 		return ver;

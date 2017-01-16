@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.apache.tomcat.util.buf.MessageBytes;
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
@@ -141,4 +142,15 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		
 	}
 
+	private ReturnMessage dealEleGift(){
+		ReturnMessage message=new ReturnMessage();
+		try {
+			
+		} catch (Exception e) {
+			message.setRetCode("9999");
+			message.setRetMsg("电子券奖品处理异常!");
+			throw new AppException("电子券奖品处理异常!",e);
+		}
+		return message;
+	}
 }
