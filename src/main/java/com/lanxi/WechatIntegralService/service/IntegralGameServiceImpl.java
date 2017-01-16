@@ -6,14 +6,25 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
-
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
+import com.lanxi.WechatIntegralService.entity.GiftOrder;
 import com.lanxi.WechatIntegralService.entity.IntegralGame;
 import com.lanxi.WechatIntegralService.util.AppException;
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
+import com.lanxi.WechatIntegralService.util.HttpUtil;
+import com.lanxi.WechatIntegralService.util.RandomUtil;
+import com.lanxi.WechatIntegralService.util.TimeUtil;
+import com.lanxi.easyintegral.entity.IntegralOrder;
+import com.lanxi.easyintegral.report.ResHead;
+import com.lanxi.gift.report.BaoWen;
+import com.lanxi.gift.report.ReqHead;
+import com.lanxi.gift.report.ReqMsg;
 import com.lanxi.integral.report.AddResBody;
 import com.lanxi.integral.report.QueryResBody;
 import com.lanxi.integral.report.ReduceResBody;
@@ -117,6 +128,8 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage.setObj(gift.getPrizeLevel());
 				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
+			}else{
+				dealEleGift(gift,account);
 			}
 			dao.addIntegralGame(integralGame);
 			logger.info("增加游戏记录:"+integralGame);
@@ -142,10 +155,41 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		
 	}
 
-	private ReturnMessage dealEleGift(){
+	private ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
 		ReturnMessage message=new ReturnMessage();
 		try {
 			
+			ReqHead head=new ReqHead();
+			head.setMsgId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
+			head.setMsgNo(head.getMsgId().substring(0,14));
+			head.setReserve("");
+			ReqMsg  body=new ReqMsg();
+			body.setPhone(account.getBindingPhone());
+			body.setSkuCode(eleGift.getMerchantId());
+			body.setCount(eleGift.getCount()+"");
+			BaoWen baoWen=new BaoWen();
+			baoWen.setHead(head);
+			baoWen.setMsg(body);
+			baoWen.sign();
+			
+			GiftOrder order=new GiftOrder();
+			order.setOrderId(head.getMsgId());
+			order.setOpenId(account.getOpenId());
+			order.setGiftId(eleGift.getId());
+			order.setGiftCount(eleGift.getCount());
+			order.setWorkTime(head.getWorkTime());
+			order.setStatus(GiftOrder.ORDER_STATUS_WAIT);
+			dao.addGiftOrder(order);
+			String rs=HttpUtil.postXml(baoWen.toDocument().asXML(), ConfigUtil.get("giftUrl"), "GBK");
+			Document doc=DocumentHelper.parseText(rs);
+			if(!doc.selectSingleNode("//ResCode").getText().trim().equals("0000")){
+				logger.info("下单失败,订单异常!原因"+doc.selectSingleNode("//ResMsg").getText());
+				order.setStatus(GiftOrder.ORDER_STATUS_FAIL);
+				dao.updateGiftOrder(order);
+			}else{
+				order.setStatus(GiftOrder.ORDER_STATUS_SUCCESS);
+				dao.updateGiftOrder(order);
+			}
 		} catch (Exception e) {
 			message.setRetCode("9999");
 			message.setRetMsg("电子券奖品处理异常!");

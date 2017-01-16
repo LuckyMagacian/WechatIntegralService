@@ -447,8 +447,6 @@ public class IntegralManagerServiceImpl {
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
                 accountBinding.setIntegralAccount(integralAccount);
-                //绑定账号插入表中
-                bindingService.insert(accountBinding);
                 //手机号入到积分表
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
@@ -459,6 +457,8 @@ public class IntegralManagerServiceImpl {
                 }
                 logger.info("手机号入表结果" + message);
                 //通过积分账户取得积分值
+                //绑定账号插入表中
+                bindingService.insert(accountBinding);
                 ReturnMessage returnMessage = IntegralService.queryIntegral(integralAccount);
                 if (!returnMessage.getRetCode().equals("0000")) {
                     logger.error("取积分值和姓名失败");

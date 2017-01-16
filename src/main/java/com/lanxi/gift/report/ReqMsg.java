@@ -4,6 +4,7 @@ import org.dom4j.Element;
 import org.dom4j.dom.DOMElement;
 
 import com.lanxi.WechatIntegralService.util.CheckReplaceUtil;
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
 
 /**
  * 流量兑换业务请求信息
@@ -17,6 +18,12 @@ public class ReqMsg implements Msg{
 	private String count="";     /**商品数量*/
 	private String needSend="";  /**是否蓝喜下发短信*/
 	private String remark="";    /**备注*/
+	
+	public ReqMsg() {
+		setType(ConfigUtil.get("giftType"));
+		setNeedSend(ConfigUtil.get("giftSms"));
+	}
+	
 	public String getPhone() {
 		return phone;
 	}

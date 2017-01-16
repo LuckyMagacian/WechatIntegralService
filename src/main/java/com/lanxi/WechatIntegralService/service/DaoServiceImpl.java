@@ -18,6 +18,7 @@ import com.lanxi.WechatIntegralService.dao.ValidCodeDao;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
+import com.lanxi.WechatIntegralService.entity.GiftOrder;
 import com.lanxi.WechatIntegralService.entity.IntegralGame;
 import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
@@ -33,7 +34,7 @@ public class DaoServiceImpl implements DaoService {
 	@Resource
 	private GiftDao giftDao;
 	@Resource
-	private GiftOrderDao giftOrderDao;
+	private GiftOrderDao orderDao;
 	@Resource
 	private IntegralGameDao integralGameDao;
 	@Resource
@@ -369,5 +370,30 @@ public class DaoServiceImpl implements DaoService {
 		receive.setRedPacketId(redPacketId);
 		List<RedPacketReceive> result=receiveDao.selectRedPacketReceive(receive);
 		return result.isEmpty()?null:result;
+	}
+
+	@Override
+	public void addGiftOrder(GiftOrder giftorder) {
+		orderDao.addGiftOrder(giftorder);
+	}
+
+	@Override
+	public void addGiftOrderDefault(GiftOrder giftorder) {
+		orderDao.addGiftOrderDefault(giftorder);
+	}
+
+	@Override
+	public void deleteGiftOrder(GiftOrder giftorder) {
+		orderDao.deleteGiftOrder(giftorder);
+	}
+
+	@Override
+	public void updateGiftOrder(GiftOrder giftorder) {
+		orderDao.updateGiftOrder(giftorder);
+	}
+
+	@Override
+	public List<GiftOrder> selectGiftOrder(GiftOrder giftorder) {
+		return orderDao.selectGiftOrder(giftorder);
 	}
 }
