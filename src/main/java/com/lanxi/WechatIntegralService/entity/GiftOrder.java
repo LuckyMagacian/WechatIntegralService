@@ -1,6 +1,9 @@
 package com.lanxi.WechatIntegralService.entity;
 
 public class GiftOrder {
+	public static final String ORDER_STATUS_WAIT="1";
+	public static final String ORDER_STATUS_FAIL="2";
+	public static final String ORDER_STATUS_SUCCESS="3";
 	/**订单编号*/
 	private String 	orderId;
 	/**微信号*/

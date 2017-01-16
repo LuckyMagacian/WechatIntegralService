@@ -5,13 +5,15 @@ $(function(){
 });
 
 function getInfo(){
-	var uri='../infoJf.do';
+	var uri='../intoJf.do';
 	ajaxPost(uri,{},function(jsonStr){
 		var name=jsonStr.name,
 			integralValue=jsonStr.integralValue,
-			headimgUrl=jsonStr.headimgUrl;
+			headimgUrl=jsonStr.headimgUrl,
+			token=jsonStr.token;
 		$("#username").text(name);
 		$("#userPoints").text(integralValue);
 		$("#userPic").attr('background','url('+headimgUrl+') no-repeat center center');
+		setCookie('token',token);
 	});
 }

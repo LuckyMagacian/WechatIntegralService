@@ -34,6 +34,7 @@ public class ReqHead implements Head{
 		src=ConfigUtil.get("giftSrc");
 		des=ConfigUtil.get("giftDes");
 		app=ConfigUtil.get("giftApp");
+		msgNo=ConfigUtil.get("giftMsgNo");
 	}
 	public String getVer() {
 		return ver;

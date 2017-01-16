@@ -5,6 +5,7 @@ import java.util.List;
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
 import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
+import com.lanxi.WechatIntegralService.entity.GiftOrder;
 import com.lanxi.WechatIntegralService.entity.IntegralGame;
 import com.lanxi.WechatIntegralService.entity.IntegralRedPacket;
 import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
@@ -86,4 +87,10 @@ public interface DaoService {
 	 * 修改验证码
 	 */
 	void updateCode(ValidCode validCode);
+	//TODO----------------------------giftOrder------------------------------------------------------
+	public void addGiftOrder(GiftOrder giftorder);
+	public void addGiftOrderDefault(GiftOrder giftorder);
+	public void deleteGiftOrder(GiftOrder giftorder);
+	public void updateGiftOrder(GiftOrder giftorder);
+	public List<GiftOrder> selectGiftOrder(GiftOrder giftorder);
 }
