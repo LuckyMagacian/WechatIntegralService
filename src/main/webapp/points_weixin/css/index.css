@@ -11,9 +11,11 @@
 	height: 80px;
 	margin: auto;
 	background-color: white;
+	background-size: contain;
 	border-radius: 40px;
 	border: 1px solid white;
 }
+
 
 #indexheader>p {
 	color: white;
