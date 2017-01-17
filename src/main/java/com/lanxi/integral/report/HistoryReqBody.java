@@ -9,7 +9,7 @@ import org.dom4j.dom.DOMElement;
  */
 public class HistoryReqBody extends Body {
 	/**请求时间，格式yyyymmddhhmmss*/
-	private String reqDate;
+	private String startDate;
 	/**帐号类型 0-账户号 1-卡号*/
 	private String idType;		
 	/**号码*/
@@ -26,12 +26,15 @@ public class HistoryReqBody extends Body {
 	public void setIdNo(String idNo) {
 		this.idNo = idNo;
 	}
-	public String getReqDate() {
-		return reqDate;
+
+	public String getStartDate() {
+		return startDate;
 	}
-	public void setReqDate(String reqDate) {
-		this.reqDate = reqDate;
+
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
+
 	@Override
 	public String toString() {
 		return "Body [idType=" + idType + ", idNo=" + idNo +"]";
@@ -41,14 +44,14 @@ public class HistoryReqBody extends Body {
 		DOMElement element=new DOMElement(NAME);
 		element.addElement("idType").setText(idType);
 		element.addElement("idNo").setText(idNo);
-		element.addElement("reqDate").setText(reqDate);
+		element.addElement("startDate").setText(startDate);
 		return element;
 	}
 	public Body fromElement(Element element){
 		if(element.getName().trim().equals(NAME)){
 			setIdType(element.elementText("idType"));
 			setIdNo(element.elementText("idNo"));
-			setReqDate(element.elementText("reqDate"));
+			setStartDate(element.elementText("startDate"));
 		}
 		return this;
 	}

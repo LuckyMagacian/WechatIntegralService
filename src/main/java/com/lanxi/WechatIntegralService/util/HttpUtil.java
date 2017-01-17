@@ -170,8 +170,8 @@ public class HttpUtil {
 			res.setCharacterEncoding(charset);
 			res.setContentType(type + ";charset=" + charset);
 			post(content, res.getOutputStream(), charset);
-			if (res.getStatus() == 200)
-				return "0";
+//			if (res.getStatus() == 200)
+//				return "0";
 		} catch (Exception e) {
 			throw new AppException("发�?�xml文档异常", e);
 		}

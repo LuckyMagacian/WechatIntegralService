@@ -1,5 +1,7 @@
 package com.lanxi.WechatIntegralService.test;
 
+import com.lanxi.integral.report.ReturnMessage;
+import com.lanxi.integral.service.IntegralService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
@@ -36,10 +38,19 @@ public class TestDao {
 	
 	@Test
 	public void testDaoService(){
-		System.out.println();
+		String a="12345";
+		String b=a.substring(0,1);
+		System.out.println(b);
 	}
 	@Test
 	public void testService(){
-
+		ReturnMessage returnMessage= null;
+		try {
+			returnMessage = IntegralService.queryIntegral("101330326199412256115");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("数据"+returnMessage.getObj());
+		System.out.println(returnMessage.getRetCode());
 	}
 }

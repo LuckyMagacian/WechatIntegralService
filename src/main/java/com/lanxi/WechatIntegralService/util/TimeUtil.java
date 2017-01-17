@@ -199,18 +199,18 @@ public class TimeUtil {
 		defTimeFormat=new SimpleDateFormat(format);
 	}
 	/**
-	 * 得到六个月前的今天的日期
+	 * 得到num月前的今天的日期
 	 * @return
 	 */
-	public static String getBeforeDate(){
+	public static String getBeforeDate(int num){
 		Date Now = new Date();   //当前时间
 		Date Before = new Date();
 		Calendar calendar = Calendar.getInstance(); //得到日历
 		calendar.setTime(Now);//把当前时间赋给日历
-		calendar.add(calendar.MONTH, -6);  //设置为前6月
+		calendar.add(calendar.MONTH, num);  //设置为前6月
 		Before = calendar.getTime();   //得到前6月的时间
-		String defaultStartDate = defFormat.format(Before);    //格式化前6月的时间
-		String defaultEndDate = defFormat.format(Now); //格式化当前时间
+		String defaultStartDate = defDateFormat.format(Before);    //格式化前6月的时间
+		String defaultEndDate = defDateFormat.format(Now); //格式化当前时间
 		System.out.println("前6个月的时间是：" + defaultStartDate);
 		System.out.println("生成的时间是：" + defaultEndDate);
 		return defaultStartDate;
@@ -234,4 +234,5 @@ public class TimeUtil {
 		System.out.println("生成的时间是：" + defaultEndDate);
 		return defaultStartDate;
 	}
+
 }

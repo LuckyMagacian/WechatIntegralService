@@ -150,7 +150,7 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             String openId = token.getInfo();
-            logger.info("微信号"+openId);
+            logger.info("微信号" + openId);
             //根据openid得到取出用户详情
             WebUserInfo webUserInfo = new WebUserInfo();
             String infoStr = UserManager.getWebUserInfo(openId);
@@ -159,7 +159,7 @@ public class IntegralManagerServiceImpl {
             String headimgUrl = webUserInfo.getHeadImgUrl();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
-            logger.info("头像"+headimgUrl+"积分账户"+integralAccount);
+            logger.info("头像" + headimgUrl + "积分账户" + integralAccount);
             //通过积分账户取得姓名，积分值
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {
@@ -176,7 +176,7 @@ public class IntegralManagerServiceImpl {
             map.put("integralValue", integralValue);
             map.put("retCode", "0000");
             map.put("retMsg", "根据token获取用户信息成功");
-            logger.info("姓名==" + name + "积分值==" +integralValue);
+            logger.info("姓名==" + name + "积分值==" + integralValue);
         } catch (Exception e) {
             map.put("retCode", "9999");
             map.put("retMsg", "根据token获取用户信息失败");
@@ -575,6 +575,8 @@ public class IntegralManagerServiceImpl {
     public Map<String, Object> integralQuery(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         List<Map> mapList = new ArrayList<>();
+        int addPoint = 0;
+        int deadlinePoint = 0;
         try {
             //得到openid
             String tokenStr = req.getParameter("token");
@@ -588,11 +590,15 @@ public class IntegralManagerServiceImpl {
             String openId = token.getInfo();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
+            //通过积分账户查询总积分
+            ReturnMessage returnMessage = IntegralService.queryIntegral(integralAccount);
+            QueryResBody queryResBody = (QueryResBody) returnMessage.getObj();
+            String totalPoints = queryResBody.getTotalPoints();
             //得到六个月前的日期
-            String startDate = TimeUtil.getBeforeDate();
+            String startDate = TimeUtil.getBeforeDate(-6);
             logger.info("积分账户==" + integralAccount + "六个月前的日期" + startDate);
             //查询明细
-            ReturnMessage message = IntegralService.historyIntegral(integralAccount,startDate);
+            ReturnMessage message = IntegralService.historyIntegral(integralAccount, startDate);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("查询积分明细失败");
                 map.put("retCode", message.getRetCode());
@@ -611,12 +617,35 @@ public class IntegralManagerServiceImpl {
                 //变更类型
                 String type = item.getPointsType();
                 String pointType = typeMap.get(type);
+                //得到近期增加的积分
+                if (type.substring(0, 1).equals("0")) {
+                    int date=Integer.parseInt(TimeUtil.getBeforeDate(-1));
+                    int occurDates=Integer.parseInt(occurDate);
+                    int points = Integer.parseInt(pointsVal);
+                    if (occurDates>date){
+                        addPoint = addPoint + points;
+                    }
+                }
                 itemMap.put("occurDate", occurDate);
                 itemMap.put("pointsVal", pointsVal);
                 itemMap.put("pointType", pointType);
                 mapList.add(itemMap);
             }
+            //得到即将过期的积分
+            QueryResBody queryResBody1 = (QueryResBody) IntegralService.queryIntegral(integralAccount).getObj();
+            List<QueryResBody.PointsItem> list1 = queryResBody1.getDetailList();
+            for (QueryResBody.PointsItem item : list1) {
+                int deadline =Integer.parseInt(item.getDeadline());
+                int date=Integer.parseInt(TimeUtil.getBeforeDate(1));
+                if (deadline<date) {
+                    int points=Integer.parseInt(item.getPoints());
+                    deadlinePoint = deadlinePoint +points;
+                }
+            }
             logger.info("积分明细" + mapList);
+            map.put("deadLinePoint",deadlinePoint);
+            map.put("addPoint", addPoint);
+            map.put("totalPoints", totalPoints);
             map.put("message", mapList);
             map.put("retCode", "0000");
             map.put("retMsg", "查询积分明细成功");
@@ -673,7 +702,7 @@ public class IntegralManagerServiceImpl {
             }
             QueryResBody queryResBody = (QueryResBody) message.getObj();
             String integralValue = queryResBody.getTotalPoints();
-            logger.info( "积分账户" + integralAccount + "" + "现有积分值" + integralValue);
+            logger.info("积分账户" + integralAccount + "" + "现有积分值" + integralValue);
             int integral2 = Integer.parseInt(integral);
             int integralValue1 = Integer.parseInt(integralValue);
             if (integral2 > integralValue1) {
@@ -684,8 +713,8 @@ public class IntegralManagerServiceImpl {
             }
             //接收方积分账户
             String integralAccount2 = "101" + receiverIdCard;
-            ReturnMessage message1=IntegralService.queryIntegral(integralAccount2);
-            if(!message1.getObj().equals("0000")){
+            ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
+            if (!message1.getObj().equals("0000")) {
                 map.put("retCode", "9999");
                 map.put("retMsg", "该身份证号没有匹配的积分账号");
                 logger.info("该身份证号没有匹配的积分账号");
@@ -734,10 +763,10 @@ public class IntegralManagerServiceImpl {
             }
             String openId = token.getInfo();
             //得到绑定的手机号
-            String phone =bindingService.getMessage(openId).getBindingPhone();
+            String phone = bindingService.getMessage(openId).getBindingPhone();
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
-            logger.info("绑定的手机号"+phone+"验证码状态"+status);
+            logger.info("绑定的手机号" + phone + "验证码状态" + status);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
                 map.put("retCode", "9999");
                 map.put("retMsg", "该验证码已失效");
@@ -818,7 +847,7 @@ public class IntegralManagerServiceImpl {
             String openId = token.getInfo();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
-            logger.info("积分账户"+integralAccount);
+            logger.info("积分账户" + integralAccount);
             //通过积分账户取得姓名
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {

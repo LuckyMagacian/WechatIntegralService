@@ -113,7 +113,7 @@ public class IntegralService {
 		startDate=nullAsSpace(startDate);
 		HistoryReqBody body=new HistoryReqBody();
 		body.setIdNo(account);
-		body.setReqDate(startDate);
+		body.setStartDate(startDate);
 		body.setIdType(Body.CUST_ID_TYPE_ACCOUNT);
 		String res=postReq(body, ConfigUtil.get("historyUrl"));
 		return makeMessage(new HistoryResBody(), res);
