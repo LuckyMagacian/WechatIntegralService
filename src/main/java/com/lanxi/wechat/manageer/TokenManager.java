@@ -51,7 +51,7 @@ public class TokenManager {
 	/**
 	 * 生成网页凭证获取code
 	 * @param redirectUrl	重定向url
-	 * @param codeScope     凭证权限
+	 * @param codeScope     凭证权限(WebAccessTokenRequst中的常量字段)
 	 * @return
 	 */
 	public static String generatorWebTokenCodeUrl(String redirectUrl,String codeScope){
