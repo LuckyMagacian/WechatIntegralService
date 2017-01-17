@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lanxi.WechatIntegralService.util.HttpUtil;
+import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
 import com.lanxi.wechat.entity.message.TextMessage;
 import com.lanxi.wechat.entity.token.JSSign;
@@ -134,6 +135,10 @@ public class TestController {
 		String timestamp=req.getParameter("timestamp");
 		String url=req.getParameter("url");
 		JSSign sign=TokenManager.getJsSign(nonce, timestamp, url);
-		return sign.toJson();
+		ReturnMessage message=new ReturnMessage();
+		message.setRetCode("0000");
+		message.setRetMsg("6666");
+		message.setObj(sign);
+		return message.toJson();
 	}
 }
