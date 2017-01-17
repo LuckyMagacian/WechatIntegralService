@@ -29,7 +29,6 @@ public class QuartzServiceImpl implements QuartzService{
 		for(IntegralRedPacket each:redPackets){
 			if(each.getOverTime().compareTo(TimeUtil.getDateTime())<1){
 				logger.info("红包过期:"+each);
-				each.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_OVERTIME);
 				if(IntegralRedPacket.RED_PACKET_STATUS_NORML.equals(each.getRedPacketStatus())){
 					Integer returnIntegral=each.getLessIntegral();
 					logger.info("红包过期返还积分:"+returnIntegral);
@@ -44,8 +43,9 @@ public class QuartzServiceImpl implements QuartzService{
 						logger.info("积分增加失败!");
 					}
 				}
+				each.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_OVERTIME);
 				dao.updateIntegralRedPacket(each);
-				logger.info("更新红包信息!");
+				logger.info("更新红包信息:"+each);
 			}
 		}
 		} catch (Exception e) {
