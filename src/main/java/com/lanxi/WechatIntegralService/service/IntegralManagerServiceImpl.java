@@ -61,6 +61,7 @@ public class IntegralManagerServiceImpl {
                 WebAccessToken token = TokenManager.generatorWebAccessTokenMetadata(code);
                 String openId = token.getOpenId();
                 //将openid存入token
+                //TODO 固定easyToken密钥
                 EasyToken easyToken = new EasyToken();
                 easyToken.setInfo(openId);
                 easyToken.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime")) * 1000);

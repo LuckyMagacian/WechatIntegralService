@@ -11,7 +11,9 @@ import org.junit.Test;
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
+import com.lanxi.WechatIntegralService.util.RandomUtil;
 import com.lanxi.token.EasyToken;
+import com.lanxi.token.SignUtil;
 import com.lanxi.wechat.entity.automessage.VoiceAutoMessage;
 import com.lanxi.wechat.entity.message.BaseMessage;
 import com.lanxi.wechat.entity.message.TextMessage;
@@ -95,5 +97,9 @@ public class TestOther {
 		System.out.println(EasyToken.flipToken(string));
 		string="1485276806518";
 		System.out.println(new Date(Long.parseLong(string)));
+	}
+	@Test
+	public void testKey(){
+		System.out.println(RandomUtil.getRandomChar(64));
 	}
 }

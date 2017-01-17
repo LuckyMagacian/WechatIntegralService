@@ -15,7 +15,9 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.lanxi.WechatIntegralService.util.AppException;
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.FileUtil;
+import com.lanxi.token.EasyToken;
 
 
 @SuppressWarnings("serial")
@@ -57,6 +59,7 @@ public class Log4jInitServlet extends HttpServlet{
 		Logger logger=Logger.getLogger(this.getClass());
 		logger.info("log4j init finished !");
 		//继续servlet初始化
+		init();
 		super.init(config);
 	}	
 	
@@ -88,5 +91,12 @@ public class Log4jInitServlet extends HttpServlet{
 		}catch (Exception e) {
 			throw new AppException("Log4j 初始化异常",e);
 		}
+	}
+	
+	public void init(){
+		Logger logger=Logger.getLogger(Log4jInitServlet.class);
+		logger.info("加载初始化任务!");
+        EasyToken.setPrivateKey(ConfigUtil.get("easyTokenKey"));
+        logger.info("初始化任务完成!");
 	}
 }

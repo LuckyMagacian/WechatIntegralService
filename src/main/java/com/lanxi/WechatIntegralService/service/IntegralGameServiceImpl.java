@@ -103,6 +103,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			logger.info("奖励等级(null为未中奖):"+prizeLevel);
 			
 			IntegralGame integralGame=new IntegralGame();
+			integralGame.setSerialId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
 			integralGame.setGame(game);
 			integralGame.setOpenId(userId);
 			integralGame.setPlateformSerialId(((ReduceResBody)returnMessage.getObj()).getSerialNo());

@@ -10,7 +10,7 @@ public class RandomUtil {
 	 * @return
 	 */
 	public static char getRandomChar(){
-		return (char) (random.nextInt(27)+'a');
+		return (char) (random.nextInt(26)+'a');
 	}
 	/**
 	 * 生成随机数字
