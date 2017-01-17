@@ -21,6 +21,12 @@ public class ElectronicCoupon {
 	private String overTime;
 	/**电子券状态*/
 	private String status;
+	/**电子券价值*/
+	private Double  price;
+	/**描述*/
+	private String  description;
+	/**备用*/
+	private String  beiy;
 	public String getId() {
 		return id;
 	}
@@ -63,10 +69,33 @@ public class ElectronicCoupon {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public Double getPrice() {
+		return price;
+	}
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getBeiy() {
+		return beiy;
+	}
+	public void setBeiy(String beiy) {
+		this.beiy = beiy;
+	}
+	public void setOverTime(String overTime) {
+		this.overTime = overTime;
+	}
 	@Override
 	public String toString() {
 		return "ElectronicCoupon [id=" + id + ", code=" + code + ", imageCode=" + imageCode + ", openId=" + openId
-				+ ", startTime=" + startTime + ", ovetTime=" + overTime + ", status=" + status + "]";
+				+ ", startTime=" + startTime + ", overTime=" + overTime + ", status=" + status + ", price=" + price
+				+ ", desc=" + description + ", beiy=" + beiy + "]";
 	}
 	
 }

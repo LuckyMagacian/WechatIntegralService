@@ -231,6 +231,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 					coupon.setOpenId(account.getOpenId());
 					coupon.setStartTime(TimeUtil.getDateTime());
 					coupon.setOvetTime(doc.selectSingleNode("EndTime").getText());
+					coupon.setPrice(eleGift.getPrice());
 					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
 					dao.addElectronicCoupon(coupon);
 					logger.info("电子券信息入库:"+coupon);

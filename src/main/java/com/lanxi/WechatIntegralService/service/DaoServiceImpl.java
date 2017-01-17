@@ -441,6 +441,13 @@ public class DaoServiceImpl implements DaoService {
 		List<ElectronicCoupon> result=selectElectronicCoupon(coupon);
 		return result.isEmpty()?null:result;
 	}
+
+	@Override
+	public void deleteElectronicCoupon(String id) {
+		ElectronicCoupon coupon=new ElectronicCoupon();
+		coupon.setId(id);
+		couponDao.deleteElectronicCoupon(coupon);
+	}
 	
 	
 }

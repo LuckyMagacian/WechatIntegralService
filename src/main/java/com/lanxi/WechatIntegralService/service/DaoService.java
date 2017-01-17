@@ -102,4 +102,5 @@ public interface DaoService {
 	public List<ElectronicCoupon> selectElectronicCoupon(ElectronicCoupon electronicCoupon);
 	public ElectronicCoupon getElectronicCoupon(String id);
 	public List<ElectronicCoupon> getElectronicCoupons(String openId);
+	public void deleteElectronicCoupon(String id);
 }
