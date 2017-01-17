@@ -73,7 +73,7 @@ function ajaxPost(url, dataJson, successFunc) {
 					case '9797':
 						falseAlert('登录超时', '未登录或登录超时,将跳转至首页')
 						setTimeout(function() {
-							location.href = '/index.html';
+							location.href = 'index.html';
 						}, 1000);
 						break;
 					case '9999':
