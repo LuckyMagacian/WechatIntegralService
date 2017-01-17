@@ -135,6 +135,7 @@ public class TestController {
 		String timestamp=req.getParameter("timestamp");
 		String url=req.getParameter("url");
 		JSSign sign=TokenManager.getJsSign(nonce, timestamp, url);
+		System.err.println(sign);
 		ReturnMessage message=new ReturnMessage();
 		message.setRetCode("0000");
 		message.setRetMsg("6666");

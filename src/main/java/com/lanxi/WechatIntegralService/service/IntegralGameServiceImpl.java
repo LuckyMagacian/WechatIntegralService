@@ -75,9 +75,18 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			
 			Integer point=(int)Double.parseDouble(((QueryResBody)returnMessage.getObj()).getTotalPoints());
 			Game   game =dao.getGame(gameId);
+			if(game==null){
+				returnMessage.setRetCode("9997");
+				returnMessage.setRetMsg("游戏不存在!");
+				returnMessage.setObj("游戏不存在!");
+				logger.info("游戏不存在!");
+				returnMessage.setToken(token.toToken());
+				return returnMessage.toJson();
+			}
 			logger.info("游戏信息:"+game);
 			
 			if(game.getIntegral()>point){
+				returnMessage.setRetCode("9997");
 				returnMessage.setRetMsg("积分不足!");
 				returnMessage.setObj("积分不足!");
 				logger.info("积分不足!");
@@ -125,15 +134,28 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				returnMessage=IntegralService.addIntegral(account.getIntegralAccount(), pointPrize+"");
 				integralGame.setBeiy(((AddResBody)returnMessage.getObj()).getSerialNo());
 				logger.info("积分增加结果"+returnMessage);
-				returnMessage.setRetCode("0000");
-				returnMessage.setRetMsg("获得了"+gift.getIntegralValue()+"积分!");
-				returnMessage.setObj(gift.getPrizeLevel());
+				if(returnMessage.getRetCode().equals("0000")){
+					returnMessage.setRetCode("0000");
+					returnMessage.setRetMsg("获得了"+gift.getIntegralValue()+"积分!");
+					returnMessage.setObj(gift.getPrizeLevel());
+				}else{
+					returnMessage.setRetCode("0000");
+					returnMessage.setRetMsg("未中奖");
+					returnMessage.setObj(null);
+					integralGame.setRemark("加分失败,修正中奖结果为未中奖!");
+				}
 				returnMessage.setToken(token.toToken());
 //				return returnMessage.toJson();
 			}else{
 				returnMessage=dealEleGift(gift,account);
-				returnMessage.setRetMsg("获得了"+gift.getName());
-				returnMessage.setObj(gift.getPrizeLevel());
+				if(!returnMessage.getRetCode().equals("0000")){
+					returnMessage.setRetMsg("获得了"+gift.getName());
+					returnMessage.setObj(gift.getPrizeLevel());
+				}else{
+					returnMessage.setRetMsg("未中奖!");
+					returnMessage.setObj(null);
+					integralGame.setRemark("电子券下单失败,修正中奖结果为未中奖!");
+				}
 			}
 			dao.addIntegralGame(integralGame);
 			logger.info("增加游戏记录:"+integralGame);
