@@ -13,6 +13,5 @@ function getInfo(){
 		$("#username").text(name);
 		$("#userPoints").text(integralValue);
 		$("#userPic").css('background-image','url('+headimgUrl+')');
-		setCookie('token',token);
 	});
 }
