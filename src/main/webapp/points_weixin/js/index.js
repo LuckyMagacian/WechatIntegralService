@@ -12,7 +12,7 @@ function getInfo(){
 			token=jsonStr.token;
 		$("#username").text(name);
 		$("#userPoints").text(integralValue);
-		$("#userPic").attr('background','url('+headimgUrl+') no-repeat center center');
+		$("#userPic").css('background-image','url('+headimgUrl+')');
 		setCookie('token',token);
 	});
 }
