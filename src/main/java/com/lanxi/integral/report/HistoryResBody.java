@@ -128,7 +128,7 @@ public class HistoryResBody extends Body{
 			return element;
 		}
 		public Item fromElement(Element element) {
-			setFrontSerialNo(element.elementText("serialNo"));
+			setSerialNo(element.elementText("serialNo"));
 			setOccurDate(element.elementText("occurDate"));
 			setOccurTime(element.elementText("occurTime"));
 			setOrgNo(element.elementText("orgNo"));
@@ -157,9 +157,12 @@ public class HistoryResBody extends Body{
 	}
 	@Override
 	public Body fromElement(Element element) {
-		for(Object each:element.element("serialList").elements()){
+		Element list=element.element("serialList");
+		for(Object each:list.elements()){
 			Element one=(Element) each;
-			serialList.add(new Item().fromElement(one));
+			Item item=new Item();
+			item.fromElement(one);
+			serialList.add(item);
 		}
 		return this;
 	}
