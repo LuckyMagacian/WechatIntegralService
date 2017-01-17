@@ -54,7 +54,7 @@ public class IntegralManagerServiceImpl {
             String tokenStr = req.getParameter("token");
             logger.info("token==" + tokenStr);
             //检测是否第一次进入
-            if (tokenStr == null||tokenStr.equals("")) {
+            if (tokenStr == null || tokenStr.equals("")) {
                 String code = req.getParameter("code");
                 logger.info("code==" + code);
                 //通过code获得token
@@ -71,7 +71,8 @@ public class IntegralManagerServiceImpl {
                 logger.info("count===" + count);
                 if (count > 0) {
                     //根据openid得到取出用户详情
-                    WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+                    WebUserInfo webUserInfo = new WebUserInfo();
+                    webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
                     String headimgUrl = webUserInfo.getHeadImgUrl();
                     //通过openid取出积分账户
                     String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
@@ -103,7 +104,8 @@ public class IntegralManagerServiceImpl {
             EasyToken easyToken2 = EasyToken.verifyTokenRenew(tokenStr);
             String openId = easyToken2.getInfo();
             //根据openid得到取出用户详情
-            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            WebUserInfo webUserInfo = new WebUserInfo();
+            webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
             String headimgUrl = webUserInfo.getHeadImgUrl();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
@@ -148,7 +150,8 @@ public class IntegralManagerServiceImpl {
             }
             String openId = token.getInfo();
             //根据openid得到取出用户详情
-            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            WebUserInfo webUserInfo = new WebUserInfo();
+            webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
             String headimgUrl = webUserInfo.getHeadImgUrl();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
@@ -199,8 +202,9 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             String openId = token.getInfo();
-            //取出用户详情
-            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            //根据openid得到取出用户详情
+            WebUserInfo webUserInfo = new WebUserInfo();
+            webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
             String nickname = webUserInfo.getNickName();
             //根据微信号取出身份证号和手机号
             AccountBinding accountBinding = bindingService.getMessage(openId);
@@ -358,14 +362,10 @@ public class IntegralManagerServiceImpl {
                 return map;
             }
             String openId = token.getInfo();
-//            //取出用户详情
-//            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
-//            String nickname = webUserInfo.getNickName();
             //根据微信号取出身份证号和积分账号
             AccountBinding accountBinding = bindingService.getMessage(openId);
             String integralAccount = accountBinding.getIntegralAccount();
-//            String idCard = integralAccount.substring(3, integralAccount.length());
-            logger.info( "积分账户" + integralAccount);
+            logger.info("积分账户" + integralAccount);
             String phone = req.getParameter("phone");
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
@@ -403,9 +403,6 @@ public class IntegralManagerServiceImpl {
                 //修改绑定表中的手机号
                 bindingService.updatePhone(phone, openId);
                 logger.info("修改结果" + message);
-//                map.put("nickName", nickname);
-//                map.put("phone", phone);
-//                map.put("idCard", idCard);
                 map.put("retCode", "0000");
                 map.put("retMsg", "更改手机号校验验证码成功");
                 logger.info("修改手机号码成功");
@@ -483,7 +480,9 @@ public class IntegralManagerServiceImpl {
             }
             String openId = token.getInfo();
             logger.info("token" + tokenStr + "微信号" + openId);
-            WebUserInfo webUserInfo = JSONObject.parseObject(UserManager.getWebUserInfo(openId), WebUserInfo.class);
+            //根据openid得到取出用户详情
+            WebUserInfo webUserInfo = new WebUserInfo();
+            webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
             //头像
             String headimgUrl = webUserInfo.getHeadImgUrl();
             String phone = req.getParameter("phone");
@@ -553,9 +552,6 @@ public class IntegralManagerServiceImpl {
                 QueryResBody queryResBody = (QueryResBody) returnMessage.getObj();
                 String integralValue = queryResBody.getTotalPoints();
                 logger.info("积分值" + integralValue);
-//                map.put("headimgUrl", headimgUrl);
-//                map.put("name", name);
-//                map.put("integralValue", integralValue);
                 map.put("retCode", "0000");
                 map.put("retMsg", "绑定积分账户校验验证码成功");
                 logger.info("绑定积分账户校验验证码成功");
