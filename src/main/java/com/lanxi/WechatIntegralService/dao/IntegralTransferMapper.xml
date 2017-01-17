@@ -66,7 +66,7 @@ from wechat_integral_service_integral_transfer
 
 <insert id="insert">
     INSERT INTO wechat_integral_service_integral_transfer(serial_id,giver_open_id,receiver_id_card,transfer_time,integral)
-    VALUES(#{giverOpenId},#{receiverIdCard},#{transferTime},#{integral},#{serialId})
+    VALUES(#{serialId},#{giverOpenId},#{receiverIdCard},#{transferTime},#{integral})
 </insert>
 
 <resultMap id="integralTransferMap" type="com.lanxi.WechatIntegralService.entity.IntegralTransfer">
