@@ -151,7 +151,9 @@ public class IntegralManagerServiceImpl {
             String openId = token.getInfo();
             //根据openid得到取出用户详情
             WebUserInfo webUserInfo = new WebUserInfo();
-            webUserInfo.fromStr(UserManager.getWebUserInfo(openId));
+            String infoStr=UserManager.getWebUserInfo(openId);
+            logger.info("获取到的用户信息:"+infoStr);
+            webUserInfo.fromStr(infoStr);
             String headimgUrl = webUserInfo.getHeadImgUrl();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();

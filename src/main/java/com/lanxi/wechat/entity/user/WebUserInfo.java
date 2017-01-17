@@ -1,8 +1,10 @@
 package com.lanxi.wechat.entity.user;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 /**
  * 网页获取用户信息
@@ -91,7 +93,11 @@ public class WebUserInfo {
 		setProvince(jobj.getString("province"));
 		setCountry(jobj.getString("country"));
 		setHeadImgUrl(jobj.getString("headimgurl"));
-		setPrivilege(Arrays.asList((String[])jobj.getJSONArray("privilege").toArray()));
+		JSONArray jaArray=jobj.getJSONArray("privilege");
+		if(jaArray!=null && jaArray.size()>0){
+			String[] strs=new String[jaArray.size()];
+			setPrivilege(Arrays.asList(jaArray.toArray(strs)));
+		}
 		setUnionid(jobj.getString("unionid"));
 	}
 	@Override

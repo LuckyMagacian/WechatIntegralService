@@ -14,6 +14,6 @@ public class TestUser {
 	}
 	@Test
 	public void testGetInfo(){
-		System.out.println(UserManager.getUserInfo("o5uSlw3veETF28qOR7bqqzJpHa44"));
+		System.out.println(UserManager.getUserInfo("o5uSlw5jx0yXBgm4guipwhV3BCTM"));
 	}
 }
