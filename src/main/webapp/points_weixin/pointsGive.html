@@ -19,7 +19,7 @@
             <label class="mui-icon-extra mui-icon-extra-gift"></label>
           </div>
           <div class="weui-cell__bd mui-input-row">
-            <input type="number" placeholder="请输入转赠积分值" maxlength="8" class="weui-input mui-input-clear">
+            <input id="points" type="number" placeholder="请输入转赠积分值" maxlength="8" class="weui-input mui-input-clear">
           </div>
         </div>
       </div>
@@ -29,7 +29,7 @@
             <label class="rice-icon-idcard"></label>
           </div>
           <div class="weui-cell__bd mui-input-row">
-            <input type="text" placeholder="请输入受赠人身份证号" maxlength="18" class="weui-input mui-input-clear">
+            <input id="idcard" type="text" placeholder="请输入受赠人身份证号" maxlength="18" class="weui-input mui-input-clear">
           </div>
         </div>
       </div>
@@ -39,15 +39,34 @@
             <label style="font-weight: bold;" class="mui-icon mui-icon-locked"></label>
           </div>
           <div class="weui-cell__bd mui-input-row">
-            <input type="text" placeholder="6位验证码" maxlength="6" class="weui-input mui-input-clear">
+            <input id="code" type="text" placeholder="6位验证码" maxlength="6" class="weui-input mui-input-clear">
           </div>
-          <div class="weui-cell__ft"><a id="msgWord" href="javascript:sendMsg();" class="weui-vcode-btn">获取验证码</a></div>
+          <div class="weui-cell__ft"><a id="msgWord" href="javascript:sendGiveMsg();" class="weui-vcode-btn">获取验证码</a></div>
         </div>
       </div>
-      <div style="padding:15px 5px"><a class="weui-btn weui-btn_primary">确认转赠</a></div>
+      <div class="weui-cells">
+        <div style="padding: 6px 10px;" class="weui-cell weui-cell_switch">
+          <div class="weui-cell__bd rice-color-777">是否发送短信提醒受赠人</div>
+          <div class="weui-cell__ft">
+            <input id="giveMsgCheck" type="checkbox" onchange="toggleGivePhone(this.checked)" class="weui-switch">
+          </div>
+        </div>
+      </div>
+      <div id="givePhoneCells" class="weui-cells hidden">
+        <div class="weui-cell">
+          <div class="weui-cell__hd">
+            <label style="font-weight: 600;" class="mui-icon mui-icon-phone"></label>
+          </div>
+          <div class="weui-cell__bd mui-input-row">
+            <input id="givePhone" type="text" placeholder="请输入受赠人手机号" maxlength="11" class="weui-input mui-input-clear">
+          </div>
+        </div>
+      </div>
+      <div style="padding:15px 5px"><a href="javascript:sureGive();" class="weui-btn weui-btn_primary">确认转赠</a></div>
     </div>
     <script src="js/mui.js"></script>
     <script src="js/jquery.2.2.4.min.js"></script>
+    <script src="js/jquery.cookie.min.js"></script>
     <script src="js/jweixin-1.0.0.js"></script>
     <script src="js/public.js"></script>
     <script src="js/pointsGive.js"></script>
