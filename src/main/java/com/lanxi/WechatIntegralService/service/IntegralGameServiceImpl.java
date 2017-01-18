@@ -170,18 +170,6 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}		
 	}
 
-	@Override
-	public void getGameResult(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getGameReward(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
 		ReturnMessage message=new ReturnMessage();
 		try {
@@ -285,6 +273,41 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			returnMessage.setRetCode("9999");
 			returnMessage.setRetMsg("获取游戏奖品异常!");
 			throw new AppException("获取游戏奖品异常!",e);
+		}finally{
+			return returnMessage.toJson();
+		}
+	}
+
+	@Override
+	public String getGiftInfo(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
+		try{
+			req.setCharacterEncoding("utf-8");
+			String giftId=req.getParameter("giftId");
+			String tokenStr =req.getParameter("token");
+			logger.info("查询游戏奖励:giftId="+giftId+",token="+tokenStr);
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			if(token==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("token过期!");
+				returnMessage.setObj("token过期!");
+				logger.info("token过期!");
+				return returnMessage.toJson();
+			}
+			Gift gift=dao.getGift(giftId); 
+			logger.info("游戏奖品信息:"+gift);
+			logger.info("隐藏商户商品编号,积分值,奖励等级!");
+			gift.setMerchantId(null);
+			gift.setIntegralValue(null);
+			gift.setPrizeLevel(null);
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg("查询奖品信息成功!");
+			returnMessage.setObj(gift);
+			return returnMessage.toJson();
+		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("查询奖品信息异常!");
+			throw new AppException("查询奖品信息异常!",e);
 		}finally{
 			return returnMessage.toJson();
 		}

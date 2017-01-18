@@ -24,4 +24,9 @@ public class GameController {
 	public String getGifts(HttpServletRequest req){
 		return gameService.getGifts(req);
 	}
+	@RequestMapping(value = "/giftInfo.do" , produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String getGiftInfo(HttpServletRequest req){
+		return gameService.getGiftInfo(req);
+	}
 }
