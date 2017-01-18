@@ -264,6 +264,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				return returnMessage.toJson();
 			}
 			List<Gift> gifts=dao.getGifts(gameId);
+			if(gifts==null){
+				returnMessage.setRetCode("9995");
+				returnMessage.setRetMsg("游戏无奖品!");
+				returnMessage.setObj(null);
+				return returnMessage.toJson();
+			}
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg("获取游戏奖品成功!");
 			returnMessage.setObj(gifts);
@@ -295,6 +301,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				return returnMessage.toJson();
 			}
 			Gift gift=dao.getGift(giftId); 
+			if(gift==null){
+				returnMessage.setRetCode("9994");
+				returnMessage.setRetMsg("奖品不存在!");
+				returnMessage.setObj(null);
+				return returnMessage.toJson();
+			}
 			logger.info("游戏奖品信息:"+gift);
 			logger.info("隐藏商户商品编号,积分值,奖励等级!");
 			gift.setMerchantId(null);
