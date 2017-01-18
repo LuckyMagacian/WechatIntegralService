@@ -26,11 +26,9 @@ public class HistoryReqBody extends Body {
 	public void setIdNo(String idNo) {
 		this.idNo = idNo;
 	}
-
 	public String getStartDate() {
 		return startDate;
 	}
-
 	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}

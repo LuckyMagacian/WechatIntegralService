@@ -199,7 +199,7 @@ public class TimeUtil {
 		defTimeFormat=new SimpleDateFormat(format);
 	}
 	/**
-	 * 得到num月前的今天的日期
+	 * 得到num月后的今天的日期
 	 * @return
 	 */
 	public static String getBeforeDate(int num){

@@ -96,6 +96,7 @@ public class IntegralManagerServiceImpl {
                     logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
                     return map;
                 } else {
+                    map.put("token", easyToken.toToken());
                     map.put("retCode", "9999");
                     map.put("retMsg", "未绑定积分账户");
                     logger.info("未绑定积分账户");
@@ -114,6 +115,7 @@ public class IntegralManagerServiceImpl {
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
+                map.put("token",tokenStr);
                 map.put("retCode", message.getRetCode());
                 map.put("retMsg", message.getRetMsg());
                 return map;
@@ -121,6 +123,7 @@ public class IntegralManagerServiceImpl {
             QueryResBody queryResBody = (QueryResBody) message.getObj();
             String name = queryResBody.getCustName();
             String integralValue = queryResBody.getTotalPoints();
+            map.put("token",tokenStr);
             map.put("headimgUrl", headimgUrl);
             map.put("name", name);
             map.put("integralValue", integralValue);
@@ -128,6 +131,8 @@ public class IntegralManagerServiceImpl {
             map.put("retMsg", "进入积分账户成功");
             logger.info("头像==" + headimgUrl + "姓名==" + name + "积分账户==" + integralAccount);
         } catch (Exception e) {
+            map.put("retCode", "9999");
+            map.put("retMsg", "进入积分账户异常");
             throw new AppException("进入积分管理异常", e);
         }
         return map;
@@ -138,17 +143,18 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> getInfoByToken(HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        logger.info("token==" + tokenStr);
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token",tokenStr);
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            logger.info("token==" + tokenStr);
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             logger.info("微信号" + openId);
             //根据openid得到取出用户详情
@@ -164,6 +170,7 @@ public class IntegralManagerServiceImpl {
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
+                map.put("token", token.toToken());
                 map.put("retCode", message.getRetCode());
                 map.put("retMsg", message.getRetMsg());
                 return map;
@@ -171,6 +178,7 @@ public class IntegralManagerServiceImpl {
             QueryResBody queryResBody = (QueryResBody) message.getObj();
             String name = queryResBody.getCustName();
             String integralValue = queryResBody.getTotalPoints();
+            map.put("token", token.toToken());
             map.put("headimgUrl", headimgUrl);
             map.put("name", name);
             map.put("integralValue", integralValue);
@@ -178,6 +186,7 @@ public class IntegralManagerServiceImpl {
             map.put("retMsg", "根据token获取用户信息成功");
             logger.info("姓名==" + name + "积分值==" + integralValue);
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "根据token获取用户信息失败");
             throw new AppException("根据token获取用户信息失败", e);
@@ -194,18 +203,18 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> getUserInfo(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        logger.info("token==" + tokenStr);
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token",tokenStr);
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            req.setCharacterEncoding("utf-8");
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            logger.info("token==" + tokenStr);
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //根据openid得到取出用户详情
             WebUserInfo webUserInfo = new WebUserInfo();
@@ -216,6 +225,7 @@ public class IntegralManagerServiceImpl {
             String integralAccount = accountBinding.getIntegralAccount();
             String idCrad = integralAccount.substring(3, integralAccount.length());
             String phone = accountBinding.getBindingPhone();
+            map.put("token", token.toToken());
             map.put("idCard", idCrad);
             map.put("phone", phone);
             map.put("nickname", nickname);
@@ -223,6 +233,7 @@ public class IntegralManagerServiceImpl {
             map.put("retMsg", "进入账户资料页面成功");
             logger.info("进入账户资料页面成功，身份证==" + idCrad + "微信名==" + nickname + "手机号" + phone);
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "进入账户资料页面失败");
             throw new AppException("用户资料页面出错", e);
@@ -238,23 +249,26 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> cancelBindings(HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        String tokenStr = req.getParameter("token");
+        logger.info("token==" + tokenStr);
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            map.put("token", token.toToken());
+            logger.info("token过期");
+            return map;
+        }
         try {
-            String tokenStr = req.getParameter("token");
-            logger.info("token==" + tokenStr);
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //根据微信号删除记录
             bindingService.cancelBindings(openId);
+            map.put("token", token.toToken());
             map.put("retCode", "0000");
             map.put("retMsg", "取消绑定成功");
             logger.info("取消绑定成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "取消绑定失败");
             logger.error("取消绑定失败");
@@ -272,26 +286,28 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> phone(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        String tokenStr = req.getParameter("token");
+        logger.info("token==" + tokenStr);
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            String tokenStr = req.getParameter("token");
-            logger.info("token==" + tokenStr);
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //根据微信号取出手机号
             AccountBinding accountBinding = bindingService.getMessage(openId);
             String bindingPhone = accountBinding.getBindingPhone();
+            map.put("token", token.toToken());
             map.put("local", "China");
             map.put("phone", bindingPhone);
             map.put("retCode", "0000");
             map.put("retMsg", "进入更换手机号码页面成功");
             logger.info("进入更改手机号码页面成功手机号" + bindingPhone + "微信号" + openId);
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "进入更换手机号码页面失败");
             logger.error("进入更换手机号码页面失败");
@@ -309,15 +325,16 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> updatephone(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        logger.info("用户发送短信验证码!~");
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+        }
         try {
-            logger.info("用户发送短信验证码!~");
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-            }
             String openId = token.getInfo();
             //根据微信号取出原手机号
             AccountBinding accountBinding = bindingService.getMessage(openId);
@@ -327,6 +344,7 @@ public class IntegralManagerServiceImpl {
             logger.info("新手机号" + phone);
             //判断手机号是否与原手机号相同
             if (phone.equals(bindingPhone)) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "手机号与原手机号相同");
                 logger.info("手机号码与原来的相同");
@@ -335,15 +353,18 @@ public class IntegralManagerServiceImpl {
             //发送短信验证码
             ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
+                map.put("token", token.toToken());
                 map.put("retMsg", "发送短信失败");
                 map.put("retCode", "9999");
                 logger.info("发送短信验证码失败");
                 return map;
             }
+            map.put("token", token.toToken());
             map.put("retCode", "0000");
             map.put("retMsg", "更换手机号码发送验证码操作成功");
             logger.info("发送验证码成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "更改手机号发送验证码失败");
             logger.error("更改手机号发送验证码失败");
@@ -361,16 +382,17 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> updatePhoneOper(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //根据微信号取出身份证号和积分账号
             AccountBinding accountBinding = bindingService.getMessage(openId);
@@ -381,6 +403,7 @@ public class IntegralManagerServiceImpl {
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "该验证码已失效");
                 logger.info("验证码失效");
@@ -396,6 +419,7 @@ public class IntegralManagerServiceImpl {
                 //检测该手机号是否绑定了其他的积分账户
                 int count = bindingService.getCountByPhone(phone);
                 if (count > 0) {
+                    map.put("token", token.toToken());
                     map.put("retCode", "9999");
                     map.put("retMsg", "该手机号已经绑定其他积分账户");
                     logger.info("该手机号已经绑定其他积分账户");
@@ -407,6 +431,7 @@ public class IntegralManagerServiceImpl {
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("修改积分系统手机号失败");
+                    map.put("token", token.toToken());
                     map.put("retCode", message.getRetCode());
                     map.put("retMsg", message.getRetMsg());
                     return map;
@@ -414,15 +439,18 @@ public class IntegralManagerServiceImpl {
                 //修改绑定表中的手机号
                 bindingService.updatePhone(phone, openId);
                 logger.info("修改结果" + message);
+                map.put("token", token.toToken());
                 map.put("retCode", "0000");
                 map.put("retMsg", "更改手机号校验验证码成功");
                 logger.info("修改手机号码成功");
             } else {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "验证码错误");
                 logger.info("验证码错误");
             }
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "更改手机号校验验证码失败");
             logger.error("更改手机号校验验证码失败");
@@ -440,19 +468,20 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> bindingsJf(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String phone = req.getParameter("phone");
             //验证手机号是否符合标准
             if (null == phone || phone.equals("") || !phone.matches("^(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$")) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "手机号不符合标准");
                 logger.info("手机号不符合标准");
@@ -460,14 +489,17 @@ public class IntegralManagerServiceImpl {
             }
             ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
+                map.put("token", token.toToken());
                 map.put("retMsg", "发送短信失败");
                 map.put("retCode", "9999");
                 return map;
             }
+            map.put("token", token.toToken());
             map.put("retCode", "0000");
             map.put("retMsg", "绑定积分页面发送验证码成功");
             logger.info("绑定积分页面发送验证码成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "绑定积分页面发送验证码失败");
             logger.info("绑定积分页面发送验证码失败");
@@ -479,16 +511,16 @@ public class IntegralManagerServiceImpl {
     //绑定积分账户操作(校验验证码)
     public Map<String, Object> bindingsJfOper(HttpServletRequest req, HttpServletResponse rep) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             logger.info("token" + tokenStr + "微信号" + openId);
             //根据openid得到取出用户详情
@@ -504,6 +536,7 @@ public class IntegralManagerServiceImpl {
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "该验证码已失效");
                 logger.info("该验证码已失效");
@@ -520,6 +553,7 @@ public class IntegralManagerServiceImpl {
                 int phoneCount = bindingService.getCountByPhone(phone);
                 logger.info("phoneCount==" + phoneCount);
                 if (phoneCount > 0) {
+                    map.put("token", token.toToken());
                     map.put("retCode", "9999");
                     map.put("retMsg", "该手机号已经绑定其他积分账号");
                     logger.info("该手机号已经绑定其他积分账号");
@@ -529,6 +563,7 @@ public class IntegralManagerServiceImpl {
                 ReturnMessage message2 = IntegralService.queryIntegral(integralAccount);
                 if (!message2.getRetCode().equals("0000")) {
                     logger.error("该身份证号没有对应的积分账户");
+                    map.put("token", token.toToken());
                     map.put("retCode", message2.getRetCode());
                     map.put("retMsg", "该身份证号没有对应的积分账户");
                     return map;
@@ -537,6 +572,7 @@ public class IntegralManagerServiceImpl {
                 ReturnMessage message = IntegralService.modifyPhone(integralAccount, phone);
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("手机号入到积分系统失败");
+                    map.put("token", token.toToken());
                     map.put("retCode", message.getRetCode());
                     map.put("retMsg", message.getRetMsg());
                     return map;
@@ -551,15 +587,19 @@ public class IntegralManagerServiceImpl {
                 bindingService.insert(accountBinding);
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
+                map.put("token", token.toToken());
                 map.put("retCode", "0000");
                 map.put("retMsg", "绑定积分账户校验验证码成功");
                 logger.info("绑定积分账户校验验证码成功");
             } else {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "绑定积分账户校验验证码失败");
                 logger.info("绑定积分账户校验验证码失败");
             }
         } catch (Exception e) {
+            map.put("retCode", "9999");
+            map.put("retMsg", "绑定积分账户校验验证码异常");
             throw new AppException("绑定积分账户校验验证码出错", e);
         }
         return map;
@@ -575,18 +615,19 @@ public class IntegralManagerServiceImpl {
     public Map<String, Object> integralQuery(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
         List<Map> mapList = new ArrayList<>();
+        List<Map> integralList = new ArrayList<>();
         int addPoint = 0;
         int deadlinePoint = 0;
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
             //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
@@ -601,6 +642,7 @@ public class IntegralManagerServiceImpl {
             ReturnMessage message = IntegralService.historyIntegral(integralAccount, startDate);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("查询积分明细失败");
+                map.put("token", token.toToken());
                 map.put("retCode", message.getRetCode());
                 map.put("retMsg", message.getRetMsg());
                 return map;
@@ -619,10 +661,11 @@ public class IntegralManagerServiceImpl {
                 String pointType = typeMap.get(type);
                 //得到近期增加的积分
                 if (type.substring(0, 1).equals("0")) {
-                    int date=Integer.parseInt(TimeUtil.getBeforeDate(-1));
-                    int occurDates=Integer.parseInt(occurDate);
+                    //得到一个月前的日期
+                    int date = Integer.parseInt(TimeUtil.getBeforeDate(-1));
+                    int occurDates = Integer.parseInt(occurDate);
                     int points = Integer.parseInt(pointsVal);
-                    if (occurDates>date){
+                    if (occurDates > date) {
                         addPoint = addPoint + points;
                     }
                 }
@@ -631,26 +674,66 @@ public class IntegralManagerServiceImpl {
                 itemMap.put("pointType", pointType);
                 mapList.add(itemMap);
             }
+            //分页显示
+            String page = req.getParameter("page");
+            logger.info("当前页数" + page);
+            int currentPage = Integer.parseInt(page);
+            int pageSize = 10;
+            //总记录数
+            int size = mapList.size();
+            //总页数
+            int totalPage = size / pageSize;
+            int num = size % pageSize;
+            if (num > 0) {
+                totalPage++;
+            }
+            if (currentPage > totalPage) {
+                logger.error("页数超标");
+                map.put("token", token.toToken());
+                map.put("retCode", "9999");
+                map.put("retMsg", "页数超标");
+                return map;
+            }
+            //当前页开始位置
+            int begin = (currentPage - 1) * pageSize;
+            //当前页结束位置
+            int end = currentPage * pageSize - 1;
+            logger.info("记录数" + size + "当前页开始位置" + begin + "当前页结束位置" + end);
+            int endLine = end > size ? size : end;
+            for (int i = begin; i <= endLine; i++) {
+                integralList.add(mapList.get(i));
+            }
             //得到即将过期的积分
-            QueryResBody queryResBody1 = (QueryResBody) IntegralService.queryIntegral(integralAccount).getObj();
+            ReturnMessage returnMessage1 = IntegralService.queryIntegral(integralAccount);
+            if (!returnMessage1.getRetCode().equals("0000")) {
+                logger.error("查询积分失败");
+                map.put("retCode", message.getRetCode());
+                map.put("retMsg", message.getRetMsg());
+                return map;
+            }
+            QueryResBody queryResBody1 = (QueryResBody) returnMessage1.getObj();
             List<QueryResBody.PointsItem> list1 = queryResBody1.getDetailList();
             for (QueryResBody.PointsItem item : list1) {
-                int deadline =Integer.parseInt(item.getDeadline());
-                int date=Integer.parseInt(TimeUtil.getBeforeDate(1));
-                if (deadline<date) {
-                    int points=Integer.parseInt(item.getPoints());
-                    deadlinePoint = deadlinePoint +points;
+                int deadline = Integer.parseInt(item.getDeadline());
+                int date = Integer.parseInt(TimeUtil.getBeforeDate(1));
+                if (deadline < date) {
+                    int points = Integer.parseInt(item.getPoints());
+                    deadlinePoint = deadlinePoint + points;
                 }
             }
-            logger.info("积分明细" + mapList);
-            map.put("deadLinePoint",deadlinePoint);
+            logger.info("积分明细" + integralList);
+            map.put("token", token.toToken());
+            map.put("deadLinePoint", deadlinePoint);
             map.put("addPoint", addPoint);
             map.put("totalPoints", totalPoints);
-            map.put("message", mapList);
+            map.put("totalPage", totalPage);
+            map.put("size", size);
+            map.put("message", integralList);
             map.put("retCode", "0000");
             map.put("retMsg", "查询积分明细成功");
             logger.info("查询积分明细成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "查询积分明细失败");
             logger.info("查询积分明细失败");
@@ -668,16 +751,17 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> deliveryIntegral(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //积分转增值
             String integral = req.getParameter("integral");
@@ -687,6 +771,7 @@ public class IntegralManagerServiceImpl {
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
             if (integralAccount.equals("101" + receiverIdCard)) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "不能转增给自己");
                 logger.info("不能转增给自己");
@@ -696,6 +781,7 @@ public class IntegralManagerServiceImpl {
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
+                map.put("token", token.toToken());
                 map.put("retCode", message.getRetCode());
                 map.put("retMsg", message.getRetMsg());
                 return map;
@@ -706,6 +792,7 @@ public class IntegralManagerServiceImpl {
             int integral2 = Integer.parseInt(integral);
             int integralValue1 = Integer.parseInt(integralValue);
             if (integral2 > integralValue1) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "您的积分余额不足");
                 logger.info("您的积分余额不足");
@@ -715,6 +802,7 @@ public class IntegralManagerServiceImpl {
             String integralAccount2 = "101" + receiverIdCard;
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
             if (!message1.getObj().equals("0000")) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "该身份证号没有匹配的积分账号");
                 logger.info("该身份证号没有匹配的积分账号");
@@ -725,15 +813,18 @@ public class IntegralManagerServiceImpl {
             //发送验证码
             ReturnMessage returnMessage = sendCode(phone);
             if (!returnMessage.getRetCode().equals("0000")) {
+                map.put("token", token.toToken());
                 map.put("retMsg", "发送验证码失败");
                 map.put("retCode", "9999");
                 logger.info("发送短信验证码失败");
                 return map;
             }
+            map.put("token", token.toToken());
             map.put("retCode", "0000");
             map.put("retMsg", "积分转增发送验证码成功");
             logger.info("积分转增发送验证码成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "积分转增发送验证码失败");
             logger.info("积分转增发送验证码失败");
@@ -751,16 +842,17 @@ public class IntegralManagerServiceImpl {
      */
     public Map<String, Object> deliveryIntegralOper(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //得到绑定的手机号
             String phone = bindingService.getMessage(openId).getBindingPhone();
@@ -768,6 +860,7 @@ public class IntegralManagerServiceImpl {
             String status = dao.getStatusByPhone(phone);
             logger.info("绑定的手机号" + phone + "验证码状态" + status);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
+                map.put("token", token.toToken());
                 map.put("retCode", "9999");
                 map.put("retMsg", "该验证码已失效");
                 logger.info("验证码失效");
@@ -796,6 +889,7 @@ public class IntegralManagerServiceImpl {
                 ReturnMessage message = IntegralService.transferIntegral(integralAccount, integralAccount2, integral);
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("积分系统转增失败");
+                    map.put("token", token.toToken());
                     map.put("retCode", message.getRetCode());
                     map.put("retMsg", message.getRetMsg());
                     return map;
@@ -810,15 +904,20 @@ public class IntegralManagerServiceImpl {
                 dao.addIntegralTransfer(integralTransfer);
                 //修改短信验证码状态为已使用
                 dao.updateStatusByPhone(phone);
+                map.put("token", token.toToken());
                 map.put("retMsg", "转增校验验证码成功");
                 map.put("retCode", "0000");
                 logger.info("转增成功");
             } else {
+                map.put("token", token.toToken());
                 map.put("retMsg", "转增校验验证码失败");
                 map.put("retCode", "9999");
                 logger.info("转增失败");
             }
         } catch (Exception e) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9999");
+            map.put("retMsg", "校验验证码出错");
             throw new AppException("积分转增->校验验证码出错", e);
         }
         return map;
@@ -834,16 +933,17 @@ public class IntegralManagerServiceImpl {
     @SuppressWarnings("finally")
     public Map<String, Object> sendMessage(HttpServletResponse rep, HttpServletRequest req) {
         Map<String, Object> map = new HashMap<String, Object>();
+        //得到openid
+        String tokenStr = req.getParameter("token");
+        EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
+        if (token == null) {
+            map.put("token", token.toToken());
+            map.put("retCode", "9797");
+            map.put("retMsg", "用户需要重新登录");
+            logger.info("token过期");
+            return map;
+        }
         try {
-            //得到openid
-            String tokenStr = req.getParameter("token");
-            EasyToken token = EasyToken.verifyTokenRenew(tokenStr);
-            if (token == null) {
-                map.put("retCode", "9797");
-                map.put("retMsg", "用户需要重新登录");
-                logger.info("token过期");
-                return map;
-            }
             String openId = token.getInfo();
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
@@ -852,6 +952,7 @@ public class IntegralManagerServiceImpl {
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
+                map.put("token", token.toToken());
                 map.put("retCode", message.getRetCode());
                 map.put("retMsg", message.getRetMsg());
                 return map;
@@ -861,20 +962,23 @@ public class IntegralManagerServiceImpl {
             //被赠送方手机号
             String phone = req.getParameter("phone");
             //短信内容
-            String content = "您的好友" + name + "向您赠送了积分，点此查看xxx（微信积分服务平台连接）";
+            String content = "您的好友" + name + "向您赠送了积分，点此查看" + ConfigUtil.get("IntegrationPlatformUrl");
             logger.info("姓名" + name + "被赠送方手机号" + phone + "短信内容" + content);
             //发送短信
             String result = SendMessageUtil.sendMessage(content, phone);
             ReturnMessage returnMessage = JSONObject.parseObject(result, ReturnMessage.class);
             if (!returnMessage.getRetCode().equals("0000")) {
+                map.put("token", token.toToken());
                 map.put("retMsg", "发送短信失败");
                 map.put("retCode", "9999");
                 return map;
             }
+            map.put("token", token.toToken());
             map.put("retMsg", "积分转增发送短信成功");
             map.put("retCode", "0000");
             logger.info("发送短信成功");
         } catch (Exception e) {
+            map.put("token", token.toToken());
             map.put("retCode", "9999");
             map.put("retMsg", "积分转增发送短信失败");
             logger.info("发送短信失败");

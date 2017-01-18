@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
+import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
 import com.lanxi.token.SignUtil;
 import com.lanxi.wechat.entity.automessage.VoiceAutoMessage;
@@ -93,13 +94,13 @@ public class TestOther {
 	
 	@Test
 	public void testEat(){
-		String string="CC0wVOr04h4m7mj9NuuoLnc0UT5WcUoCTfSGyqnzM0d69lzGyzW7XbQq62TmGJ9+n+UsBU5JzesbeoDyS/9uwM/nCvk+4JL1tZpXSFK9mBsLst3CPMfCQ9lfsqjWxv6s.ada588a17157f56d50cb28aca9831798";
+		String string="y8KcKMpmRnSJh6kJ92gn95tr05FZPzLiQm9fccMS9BUtVD8AbxZYDDOiLkrjEIZk6wmoo14bu2sQJdKmufkZhihwP3HAHelXMDMhsA2SBpHyUCUScnlx+G/G9E83ru7N.5abb0c555759918f8ff5d644b07a8219";
 		System.out.println(EasyToken.flipToken(string));
 		string="1485276806518";
 		System.out.println(new Date(Long.parseLong(string)));
 	}
 	@Test
-	public void testKey(){
-		System.out.println(RandomUtil.getRandomChar(64));
+	public void testKey() throws Exception{
+		System.out.println(IntegralService.historyIntegral("101331082199311236217", 20170101+""));
 	}
 }

@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.test;
 
+import com.lanxi.integral.report.HistoryResBody;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
 import org.junit.Before;
@@ -15,6 +16,8 @@ import com.lanxi.WechatIntegralService.service.IntegralManagerServiceImpl;
 import com.lanxi.WechatIntegralService.service.IntegralRedPacketService;
 import com.lanxi.WechatIntegralService.service.QuartzService;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
+
+import java.util.List;
 
 public class TestDao {
 	
@@ -38,19 +41,42 @@ public class TestDao {
 	
 	@Test
 	public void testDaoService(){
-		String a="12345";
-		String b=a.substring(0,1);
+//		for(int i=1;i<=10;i++){
+//			System.out.println(i);
+//		}
+		int end=2;
+		int size=4;
+		int endLine=end>size?size:end;
+//		System.out.println(endLine);
+		int a=size/end;
+		System.out.println(a);
+		int b=size%end;
+		if(b>0){
+			a++;
+		}
+		System.out.println(a);
 		System.out.println(b);
+		String c="abc";
+		String d=c.substring(0,1);
+		System.out.println(d);
+
 	}
 	@Test
 	public void testService(){
 		ReturnMessage returnMessage= null;
 		try {
-			returnMessage = IntegralService.queryIntegral("101330326199412256115");
+			returnMessage = IntegralService.historyIntegral("101330326199412256115","20161225");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		System.out.println("数据"+returnMessage.getObj());
+		HistoryResBody historyResBody =(HistoryResBody)returnMessage.getObj();
+		List<HistoryResBody.Item> list = historyResBody.getSerialList();
+		HistoryResBody.Item item=list.get(0);
+		HistoryResBody.Item item2=list.get(1);
 		System.out.println(returnMessage.getRetCode());
+		System.out.println(item.getPointsVal());
+		System.out.println(item2.getPointsVal());
+
 	}
 }

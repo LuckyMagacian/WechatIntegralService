@@ -70,10 +70,13 @@ public class Game {
 	public Integer getPrize(Double prize){
 		if(prize<specialPrize)
 			return 0;
+		prize+=specialPrize;
 		if(prize<firstPrize)
 			return 1;
+		prize+=firstPrize;
 		if(prize<secondPrize)
 			return 2;
+		prize+=secondPrize;
 		if(prize<thirdPrize)
 			return 3;
 			return null;
