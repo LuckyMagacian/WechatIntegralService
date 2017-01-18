@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -230,8 +231,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 					coupon.setImageCode(eleGift.getImageCode());
 					coupon.setOpenId(account.getOpenId());
 					coupon.setStartTime(TimeUtil.getDateTime());
-					coupon.setOvetTime(doc.selectSingleNode("EndTime").getText());
+					//2017-03-18 23:59:59
+					String overTime=doc.selectSingleNode("EndTime").getText();
+					Date date=TimeUtil.parse("yyyy-MM-dd HH:mm:ss",overTime);
+					coupon.setOverTime(TimeUtil.formatDateTime(date));
 					coupon.setPrice(eleGift.getPrice());
+					coupon.setDescription(eleGift.getDescription());
 					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
 					dao.addElectronicCoupon(coupon);
 					logger.info("电子券信息入库:"+coupon);

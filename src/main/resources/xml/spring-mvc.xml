@@ -82,6 +82,20 @@
 		</property>
 	</bean>
 	
+	<bean id="couponOverTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="couponOverTimeJob"/> 
+		<property name="cronExpression">
+			<value>0 0 * * * ?</value><!-- 每小时执行一次点触发 -->
+		</property>
+	</bean>
+	<!-- 任务 -->
+	<bean id="couponOverTimeJob"  class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="quartzService"/>
+		<property name="targetMethod">
+			<value>couponOverTime</value>
+		</property>
+	</bean>
+	
 	<bean id="updateExpiredTaskTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail">
             <ref bean="updateExpiredJob" />

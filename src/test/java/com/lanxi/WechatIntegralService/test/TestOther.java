@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
+import com.lanxi.WechatIntegralService.util.TimeUtil;
 import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
 import com.lanxi.token.SignUtil;
@@ -94,10 +95,9 @@ public class TestOther {
 	
 	@Test
 	public void testEat(){
-		String string="y8KcKMpmRnSJh6kJ92gn95tr05FZPzLiQm9fccMS9BUtVD8AbxZYDDOiLkrjEIZk6wmoo14bu2sQJdKmufkZhihwP3HAHelXMDMhsA2SBpHyUCUScnlx+G/G9E83ru7N.5abb0c555759918f8ff5d644b07a8219";
-		System.out.println(EasyToken.flipToken(string));
-		string="1485276806518";
-		System.out.println(new Date(Long.parseLong(string)));
+		String overTime="2017-03-18 23:59:59";
+		Date date=TimeUtil.parse("yyyy-MM-dd HH:mm:ss",overTime);
+		System.out.println(TimeUtil.formatDateTime(date));
 	}
 	@Test
 	public void testKey() throws Exception{
