@@ -36,6 +36,7 @@ public interface DaoService {
 	public List<Gift>selectGift(Gift gift);
 	public List<Gift>getGifts(String gameId);
 	public Gift getGift(String gameId,Integer level);
+	public Gift getGift(String giftId);
 	// TODO----------------------------integralGame---------------------------------------------------
 	public void addIntegralGame(IntegralGame integralGame);
 	public void addIntegralGameDefault(IntegralGame integralGame);
@@ -102,4 +103,5 @@ public interface DaoService {
 	public List<ElectronicCoupon> selectElectronicCoupon(ElectronicCoupon electronicCoupon);
 	public ElectronicCoupon getElectronicCoupon(String id);
 	public List<ElectronicCoupon> getElectronicCoupons(String openId);
+	public void deleteElectronicCoupon(String id);
 }

@@ -93,4 +93,42 @@ public class ElectronicCouponServiceImpl implements ElectronicCouponService {
 		}
 	}
 
+	@SuppressWarnings("finally")
+	@Override
+	public String deleteElectronicCoupon(HttpServletRequest req, HttpServletResponse res) {
+		ReturnMessage message=new ReturnMessage();
+		try {
+			req.setCharacterEncoding("utf-8");
+			String tokenStr =req.getParameter("token");
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr); 
+			if(token==null){
+				message.setRetCode("9998");
+				message.setRetMsg("token过期!");
+				message.setObj("token过期!");
+				logger.info("token过期!");
+				return message.toJson();
+			}
+			String couponId=req.getParameter("couponId");
+			logger.info("用户尝试删除电子券:couponId="+couponId+",token="+tokenStr+",userId="+token.getInfo());
+			ElectronicCoupon coupon=dao.getElectronicCoupon(couponId);
+			if(coupon==null){
+				message.setRetCode("9998");
+				message.setRetMsg("电子券不存在!");
+			}else{
+				dao.deleteElectronicCoupon(coupon);
+				message.setRetCode("0000");
+				message.setRetMsg("删除成功!");
+				message.setObj(coupon);
+				logger.info("电子券信息删除成功:"+coupon);
+			}
+		} catch (Exception e) {
+			message.setRetCode("9999");
+			message.setRetMsg("删除电子券异常!");
+			throw new AppException("删除电子券详情异常!",e);
+		}
+		finally {
+			return message.toJson();
+		}
+	}
+
 }

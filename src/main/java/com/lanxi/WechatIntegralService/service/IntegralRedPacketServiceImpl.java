@@ -45,6 +45,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 				returnMessage.setRetCode("9998");
 				returnMessage.setRetMsg("token过期!");
 				returnMessage.setObj("token过期!");
+				//TODO 删除此处token生成
 				token=new EasyToken();
 				token.setInfo("o5uSlw3veETF28qOR7bqqzJpHa44");
 				token.setValidTo(token.getValidFrom() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime"))*1000);
@@ -271,10 +272,17 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 				returnMessage.setRetCode("9998");
 				returnMessage.setRetMsg("红包不存在!");
 				returnMessage.setObj("红包不存在!");
-				logger.info("不存在!");
+				logger.info("红包不存在!");
 				return returnMessage.toJson();
 			}
 			RedPacketReceive receive=dao.getReceiveRecord(redPacketId, userId);
+			if(receive==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("用户未领取过该红包不允许查询!");
+				returnMessage.setObj(null);
+				logger.info("用户未领取过该红包不允许查询!");
+				return returnMessage.toJson();
+			}
 			logger.info("发起查询用户记录"+receive);
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg(receive.getIntegral()+"");

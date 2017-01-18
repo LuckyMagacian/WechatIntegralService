@@ -5,7 +5,8 @@ $(function(){
 	var flag=1,//刮奖标记
 		timeFlag=0,//刮奖多次标记
 		time=$("#number").val(),//今日刮刮乐刮奖次数
-		integral=$("#integral").text();//获取积分
+		integral=getInfo(),
+		token=getCookie('tookie');//获取积分
 	window.onresize = function() {
 		setHeight();
 	};
@@ -23,7 +24,7 @@ $(function(){
         	}
         	else if(timeFlag==0){
         		timeFlag=1;
-        		$.ajax({
+/*        		$.ajax({
         			type:"post",
         			url:"../happyScratch/getWinningResult.do",
         			async:true,
@@ -49,8 +50,10 @@ $(function(){
         			error:function(){
         				alert("请求超时，请刷新后重试！");
         			}
+        		});*/
+        		ajaxPost('../game.do',{'token':token,'gameId':'1002'},function(jsonStr){
+        			
         		});
-        		
         	}}
         	else if (percent > 35) {
         		$("canvas").fadeOut();
@@ -224,4 +227,16 @@ function clearDialog() {
 	$("#prizePhone").removeClass("inputSussess");
 }
 
-
+/* 获取用户信息 */
+function getInfo() {
+	var uri = '../getInfoByToken.do';
+	ajaxPost(uri, {
+		'token': getCookie('token')
+	}, function(jsonStr) {
+		var name = jsonStr.name,
+			integralValue = jsonStr.integralValue;
+		$("#nickname").text(name);
+		$("#integral").text(integralValue);
+		return integralValue;
+	});
+}

@@ -24,4 +24,9 @@ public class ElectronicCouponController {
 	public String getElectronicCoupons(HttpServletResponse res, HttpServletRequest req){
 		return service.getElectronicCouponInfos(req, res);
 	}
+	@RequestMapping(value = "/deleteCoupon.do", produces = {"application/json;charset=UTF-8"})
+	@ResponseBody
+	public String deleteElectronicCoupon(HttpServletResponse res, HttpServletRequest req){
+		return service.deleteElectronicCoupon(req, res);
+	}
 }

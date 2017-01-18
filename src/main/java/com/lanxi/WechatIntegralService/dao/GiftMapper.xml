@@ -3,15 +3,15 @@
 <mapper namespace="com.lanxi.WechatIntegralService.dao.GiftDao">
 <insert id="addGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
 insert into wechat_integral_service_gift 
-(id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code)
+(id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code,description,beiy)
 values
-(#{id},#{merchantId},#{name},#{gameId},#{prizeLevel},#{integralValue},#{price},#{count},#{imageCode})
+(#{id},#{merchantId},#{name},#{gameId},#{prizeLevel},#{integralValue},#{price},#{count},#{imageCode},#{description},#{beiy})
 </insert>
 <insert id="addGiftDefault" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
 insert into wechat_integral_service_gift 
-(id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code)
+(id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code,description,beiy)
 values
-(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
 </insert>
 <delete id="deleteGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
 delete from wechat_integral_service_gift
@@ -25,6 +25,8 @@ delete from wechat_integral_service_gift
 <if test="price != null"> and price = #{price}  </if>  
 <if test="count != null"> and count = #{count}  </if>  
 <if test="imageCode != null"> and image_code = #{imageCode}  </if>  
+<if test="description != null"> and description = #{description}  </if>  
+<if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
 </delete>
 <update id="updateGift" parameterType="com.lanxi.WechatIntegralService.entity.Gift">
@@ -39,6 +41,8 @@ update wechat_integral_service_gift
 <if test="price != null">price = #{price},</if>  
 <if test="count != null">count = #{count},</if>  
 <if test="imageCode != null">image_code = #{imageCode},</if>  
+<if test="description != null">description = #{description},</if>  
+<if test="beiy != null">beiy = #{beiy},</if>  
 </set>
 <where>
 <if test="id != null"> and id = #{id}  </if>  
@@ -46,7 +50,7 @@ update wechat_integral_service_gift
 </update>
 <select id="selectGift" resultMap="giftMap" parameterType="com.lanxi.WechatIntegralService.entity.Gift" resultType="com.lanxi.WechatIntegralService.entity.Gift">
 select
-id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code
+id,merchant_id,name,game_id,prize_level,integral_value,price,count,image_code,description,beiy
 from wechat_integral_service_gift
 <where> 
 <if test="id != null"> and id = #{id}  </if>  
@@ -58,6 +62,8 @@ from wechat_integral_service_gift
 <if test="price != null"> and price = #{price}  </if>  
 <if test="count != null"> and count = #{count}  </if>  
 <if test="imageCode != null"> and image_code = #{imageCode}  </if>  
+<if test="description != null"> and description = #{description}  </if>  
+<if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
 </select>
 <resultMap id="giftMap" type="com.lanxi.WechatIntegralService.entity.Gift">
@@ -70,5 +76,7 @@ from wechat_integral_service_gift
 <result property="price" 			column="price"></result>
 <result property="count" 			column="count"></result>
 <result property="imageCode" 			column="image_code"></result>
+<result property="description" 			column="description"></result>
+<result property="beiy" 			column="beiy"></result>
 </resultMap>
 </mapper>

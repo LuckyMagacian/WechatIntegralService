@@ -19,6 +19,10 @@ public class Gift {
 	private Integer count;
 	/**卡券类商品图片代码*/
 	private String  imageCode;
+	/**描述*/
+	private String  description;
+	/**备用*/
+	private String  beiy;
 	public String getId() {
 		return id;
 	}
@@ -75,11 +79,23 @@ public class Gift {
 		this.imageCode = imageCode;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getBeiy() {
+		return beiy;
+	}
+	public void setBeiy(String beiy) {
+		this.beiy = beiy;
+	}
 	@Override
 	public String toString() {
 		return "Gift [id=" + id + ", merchantId=" + merchantId + ", name=" + name + ", gameId=" + gameId
 				+ ", prizeLevel=" + prizeLevel + ", integralValue=" + integralValue + ", price=" + price + ", count="
-				+ count + ", imageCode=" + imageCode + "]";
+				+ count + ", imageCode=" + imageCode + ", description=" + description + ", beiy=" + beiy + "]";
 	}
 	
 }

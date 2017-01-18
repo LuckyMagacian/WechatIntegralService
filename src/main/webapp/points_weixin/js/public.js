@@ -70,12 +70,12 @@ function ajaxPost(url, dataJson, successFunc) {
 				}
 			} else {
 				switch(jsonStr.retCode) {
-					case '9797':
+					/*case '9797':
 						falseAlert('登录超时', '未登录或登录超时,将跳转至首页')
 						setTimeout(function() {
 							location.href = 'index.html';
 						}, 1000);
-						break;
+						break;*/
 					case '9999':
 						falseAlert("系统错误", jsonStr.retMsg);
 						break;

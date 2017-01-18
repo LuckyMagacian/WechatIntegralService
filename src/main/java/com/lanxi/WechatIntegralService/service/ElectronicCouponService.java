@@ -6,4 +6,5 @@ import javax.servlet.http.HttpServletResponse;
 public interface ElectronicCouponService {
 	public String getElectronicCouponInfo(HttpServletRequest req,HttpServletResponse res);
 	public String getElectronicCouponInfos(HttpServletRequest req,HttpServletResponse res);
+	public String deleteElectronicCoupon(HttpServletRequest req,HttpServletResponse res);
 }

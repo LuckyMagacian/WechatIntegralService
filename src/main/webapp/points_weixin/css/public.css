@@ -97,7 +97,7 @@ span.mui-icon-clear {
 .weui-icon-warn {
 	font-size: 24px;
 }
-.weui-cell_warn .mui-icon{
+.weui-cell_warn .mui-icon,.weui-cell_warn .mui-icon-extra{
 	color: #e64340;
 }
 .weui-toast{

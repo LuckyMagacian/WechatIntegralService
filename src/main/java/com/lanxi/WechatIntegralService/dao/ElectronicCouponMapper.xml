@@ -3,15 +3,15 @@
 <mapper namespace="com.lanxi.WechatIntegralService.dao.ElectronicCouponDao">
 <insert id="addElectronicCoupon" parameterType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
 insert into wechat_integral_service_electronic_coupon 
-(id,code,image_code,open_id,start_time,over_time,status)
+(id,code,image_code,open_id,start_time,over_time,status,price,description,beiy)
 values
-(#{id},#{code},#{imageCode},#{openId},#{startTime},#{overTime},#{status})
+(#{id},#{code},#{imageCode},#{openId},#{startTime},#{overTime},#{status},#{price},#{description},#{beiy})
 </insert>
 <insert id="addElectronicCouponDefault" parameterType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
 insert into wechat_integral_service_electronic_coupon 
-(id,code,image_code,open_id,start_time,over_time,status)
+(id,code,image_code,open_id,start_time,over_time,status,price,description,beiy)
 values
-(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
 </insert>
 <delete id="deleteElectronicCoupon" parameterType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
 delete from wechat_integral_service_electronic_coupon
@@ -23,6 +23,9 @@ delete from wechat_integral_service_electronic_coupon
 <if test="startTime != null"> and start_time = #{startTime}  </if>  
 <if test="overTime != null"> and over_time = #{overTime}  </if>  
 <if test="status != null"> and status = #{status}  </if>  
+<if test="price != null"> and price = #{price}  </if>  
+<if test="description != null"> and description = #{description}  </if>  
+<if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
 </delete>
 <update id="updateElectronicCoupon" parameterType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
@@ -35,6 +38,9 @@ update wechat_integral_service_electronic_coupon
 <if test="startTime != null">start_time = #{startTime},</if>  
 <if test="overTime != null">over_time = #{overTime},</if>  
 <if test="status != null">status = #{status},</if>  
+<if test="price != null">price = #{price},</if>  
+<if test="description != null">description = #{description},</if>  
+<if test="beiy != null">beiy = #{beiy},</if>  
 </set>
 <where>
 <if test="id != null"> and id = #{id}  </if>  
@@ -42,7 +48,7 @@ update wechat_integral_service_electronic_coupon
 </update>
 <select id="selectElectronicCoupon" resultMap="electronicCouponMap" parameterType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon" resultType="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
 select
-id,code,image_code,open_id,start_time,over_time,status
+id,code,image_code,open_id,start_time,over_time,status,price,description,beiy
 from wechat_integral_service_electronic_coupon
 <where> 
 <if test="id != null"> and id = #{id}  </if>  
@@ -52,6 +58,9 @@ from wechat_integral_service_electronic_coupon
 <if test="startTime != null"> and start_time = #{startTime}  </if>  
 <if test="overTime != null"> and over_time = #{overTime}  </if>  
 <if test="status != null"> and status = #{status}  </if>  
+<if test="price != null"> and price = #{price}  </if>  
+<if test="description != null"> and description = #{description}  </if>  
+<if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
 </select>
 <resultMap id="electronicCouponMap" type="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
@@ -62,5 +71,8 @@ from wechat_integral_service_electronic_coupon
 <result property="startTime" 			column="start_time"></result>
 <result property="overTime" 			column="over_time"></result>
 <result property="status" 			column="status"></result>
+<result property="price" 			column="price"></result>
+<result property="description" 			column="description"></result>
+<result property="beiy" 			column="beiy"></result>
 </resultMap>
 </mapper>

@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -169,18 +170,6 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}		
 	}
 
-	@Override
-	public void getGameResult(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void getGameReward(HttpServletRequest req) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	private ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
 		ReturnMessage message=new ReturnMessage();
 		try {
@@ -230,7 +219,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 					coupon.setImageCode(eleGift.getImageCode());
 					coupon.setOpenId(account.getOpenId());
 					coupon.setStartTime(TimeUtil.getDateTime());
-					coupon.setOvetTime(doc.selectSingleNode("EndTime").getText());
+					//2017-03-18 23:59:59
+					String overTime=doc.selectSingleNode("EndTime").getText();
+					Date date=TimeUtil.parse("yyyy-MM-dd HH:mm:ss",overTime);
+					coupon.setOverTime(TimeUtil.formatDateTime(date));
+					coupon.setPrice(eleGift.getPrice());
+					coupon.setDescription(eleGift.getDescription());
 					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
 					dao.addElectronicCoupon(coupon);
 					logger.info("电子券信息入库:"+coupon);
@@ -270,6 +264,12 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				return returnMessage.toJson();
 			}
 			List<Gift> gifts=dao.getGifts(gameId);
+			if(gifts==null){
+				returnMessage.setRetCode("9995");
+				returnMessage.setRetMsg("游戏无奖品!");
+				returnMessage.setObj(null);
+				return returnMessage.toJson();
+			}
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg("获取游戏奖品成功!");
 			returnMessage.setObj(gifts);
@@ -279,6 +279,47 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			returnMessage.setRetCode("9999");
 			returnMessage.setRetMsg("获取游戏奖品异常!");
 			throw new AppException("获取游戏奖品异常!",e);
+		}finally{
+			return returnMessage.toJson();
+		}
+	}
+
+	@Override
+	public String getGiftInfo(HttpServletRequest req) {
+		ReturnMessage returnMessage=new ReturnMessage();
+		try{
+			req.setCharacterEncoding("utf-8");
+			String giftId=req.getParameter("giftId");
+			String tokenStr =req.getParameter("token");
+			logger.info("查询游戏奖励:giftId="+giftId+",token="+tokenStr);
+			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			if(token==null){
+				returnMessage.setRetCode("9998");
+				returnMessage.setRetMsg("token过期!");
+				returnMessage.setObj("token过期!");
+				logger.info("token过期!");
+				return returnMessage.toJson();
+			}
+			Gift gift=dao.getGift(giftId); 
+			if(gift==null){
+				returnMessage.setRetCode("9994");
+				returnMessage.setRetMsg("奖品不存在!");
+				returnMessage.setObj(null);
+				return returnMessage.toJson();
+			}
+			logger.info("游戏奖品信息:"+gift);
+			logger.info("隐藏商户商品编号,积分值,奖励等级!");
+			gift.setMerchantId(null);
+			gift.setIntegralValue(null);
+			gift.setPrizeLevel(null);
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg("查询奖品信息成功!");
+			returnMessage.setObj(gift);
+			return returnMessage.toJson();
+		}catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setRetMsg("查询奖品信息异常!");
+			throw new AppException("查询奖品信息异常!",e);
 		}finally{
 			return returnMessage.toJson();
 		}
