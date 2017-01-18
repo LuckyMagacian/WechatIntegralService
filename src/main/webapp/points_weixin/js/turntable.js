@@ -6,6 +6,30 @@ $(function() {
 				var prizeNum = "0", //默认奖品（谢谢参与）
 					angle = prize(prizeNum); //默认旋转至谢谢参与
 				_this = this;
+				/*$.ajax({
+					type: "get",
+					url: "../turnTable/getWinningResult.do",
+					cache: false,
+					dataType: 'json',
+					contentType: 'application/x-www-form-urlencoded',
+					success: function(jsonStr) {
+						if (jsonStr.result == "-1") {
+							getDialog(jsonStr);
+						} else {
+							if (jsonStr.result != "") {
+								prizeNum = jsonStr.result;
+							}
+							if (prize(prizeNum) !== false) {
+								angle = prize(prizeNum);
+							}
+							rotateAngle(angle, getDialog, jsonStr);
+						}
+					},
+					error: function() {
+						alert("请求提交失败！请重试");
+						$("#pointer").bind("click",clickFun);//添加监听
+					}
+				});*/
 				var token = getCookie('token');
 				ajaxPost('../game.do', {
 					'token': token,

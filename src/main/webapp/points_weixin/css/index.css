@@ -135,7 +135,9 @@
 #pointsGiveForm .weui-cell__hd label {
 	vertical-align: middle;
 }
-
+#giveMsgCheck{
+	vertical-align: middle;
+}
 
 /* 积分游戏 */
 

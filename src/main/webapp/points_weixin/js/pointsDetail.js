@@ -8,4 +8,10 @@
 			}
 		}]
 	});
+	getPointsDetail();
+	
 })(mui);
+
+function getPointsDetail(){
+	
+}

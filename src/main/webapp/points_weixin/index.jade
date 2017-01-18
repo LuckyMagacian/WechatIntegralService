@@ -7,7 +7,7 @@ block content
   #indexheader
     #userPic(onclick="hrefTo('userInfo')")
     p#username(onclick="hrefTo('userInfo')") username
-    p 积分:
+    p(onclick="hrefTo('pointsDetail')") 积分:
       label#userPoints 1000
   #content
     #bgIndexAdd
@@ -22,4 +22,4 @@ block content
     span.weui-footer__text Copyright &copy; 2015-2017 #{allTitle}
 block JS
   script(src="js/public.js")
-  script(src="js/index.js") 
+  script(src="js/index.js")
