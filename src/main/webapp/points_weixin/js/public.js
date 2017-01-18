@@ -71,10 +71,7 @@ function ajaxPost(url, dataJson, successFunc) {
 			} else {
 				switch(jsonStr.retCode) {
 					case '0001':
-						falseAlert('登录超时', '未登录或登录超时,')
-						setTimeout(function() {
-							location.href = 'index.html';
-						}, 1000);
+						falseAlert('登录超时', '未登录或登录超时,请从公众号菜单栏重新进入')
 						break;
 					case '9999':
 						falseAlert("系统错误", jsonStr.retMsg);
