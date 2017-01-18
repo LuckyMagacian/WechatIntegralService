@@ -27,7 +27,7 @@ function editPhone() {
 }
 
 function getPhone() {
-	var uri = '/phone.do';
+	var uri = '../phone.do';
 	ajaxPost(uri, {}, function(jsonStr) {
 		var phone = jsonStr.phone;
 		$("#phoneNumber").text(phone);
