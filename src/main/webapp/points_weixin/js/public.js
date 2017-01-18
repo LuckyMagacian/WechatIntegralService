@@ -70,12 +70,9 @@ function ajaxPost(url, dataJson, successFunc) {
 				}
 			} else {
 				switch(jsonStr.retCode) {
-					/*case '9797':
-						falseAlert('登录超时', '未登录或登录超时,将跳转至首页')
-						setTimeout(function() {
-							location.href = 'index.html';
-						}, 1000);
-						break;*/
+					case '0001':
+						falseAlert('登录超时', '未登录或登录超时,请从公众号菜单栏重新进入')
+						break;
 					case '9999':
 						falseAlert("系统错误", jsonStr.retMsg);
 						break;
@@ -274,4 +271,22 @@ function valiIdcard(value) {
 	} else { //匹配正确
 		return true;
 	}
+}
+
+/** 
+ * 时间字符串格式化
+ * 20160505->2016-05-05
+ */
+function datetimeSkyle(str){
+	var length=str.length,
+		newStr=null;
+	if(length==8){//yyyymmdd
+		newStr=str.substr(0,4)+'-'+str.substr(4,2)+'-'+str.substr(6,2);
+	}else if(length==14){//yyyymmddhhmmss
+		newStr=str.substr(0,4)+'-'+str.substr(4,2)+'-'+str.substr(6,2);
+		newStr+=' '+str.substr(8,2)+':'+str.substr(10,2)+':'+str.substr(12,2);
+	}else{
+		return str;
+	}
+	return newStr;
 }
