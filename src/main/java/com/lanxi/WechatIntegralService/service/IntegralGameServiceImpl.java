@@ -44,15 +44,17 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 	@Override
 	public String startGame(HttpServletRequest req) {
 		ReturnMessage returnMessage=new ReturnMessage();
+		EasyToken token=null;
 		try{
 			req.setCharacterEncoding("utf-8");
 			String gameId=req.getParameter("gameId");
 			String tokenStr =req.getParameter("token");
-			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			token=EasyToken.verifyTokenRenew(tokenStr);
 			if(token==null){
-				returnMessage.setRetCode("9998");
+				returnMessage.setRetCode("0001");
 				returnMessage.setRetMsg("token过期!");
-				returnMessage.setObj("token过期!");
+				returnMessage.setObj(null);
+				returnMessage.setToken(null);
 				logger.info("token过期!");
 				return returnMessage.toJson();
 			}
@@ -67,31 +69,32 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			logger.info("积分查询结果:"+returnMessage);
 			
 			if(!returnMessage.getRetCode().trim().equals("0000")){
+				returnMessage.setRetCode("3202");
 				returnMessage.setRetMsg("积分查询失败!");
-				returnMessage.setObj("积分查询失败!");
-				logger.info("积分查询异常!");
+				returnMessage.setObj(null);
 				returnMessage.setToken(token.toToken());
+				logger.info("积分查询异常!");
 				return returnMessage.toJson();
 			}
 			
 			Integer point=(int)Double.parseDouble(((QueryResBody)returnMessage.getObj()).getTotalPoints());
 			Game   game =dao.getGame(gameId);
 			if(game==null){
-				returnMessage.setRetCode("9997");
+				returnMessage.setRetCode("3201");
 				returnMessage.setRetMsg("游戏不存在!");
-				returnMessage.setObj("游戏不存在!");
-				logger.info("游戏不存在!");
+				returnMessage.setObj(null);
 				returnMessage.setToken(token.toToken());
+				logger.info("游戏不存在!");
 				return returnMessage.toJson();
 			}
 			logger.info("游戏信息:"+game);
 			
 			if(game.getIntegral()>point){
-				returnMessage.setRetCode("9997");
+				returnMessage.setRetCode("3203");
 				returnMessage.setRetMsg("积分不足!");
-				returnMessage.setObj("积分不足!");
-				logger.info("积分不足!");
+				returnMessage.setObj(null);
 				returnMessage.setToken(token.toToken());
+				logger.info("用户积分不足!");
 				return returnMessage.toJson();
 			}
 			logger.info("请求扣除积分-"+game.getIntegral());
@@ -99,10 +102,11 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			logger.info("积分扣除结果:"+returnMessage);
 			
 			if(!returnMessage.getRetCode().trim().equals("0000")){
+				returnMessage.setRetCode("3204");
 				returnMessage.setRetMsg("积分扣除失败!");
-				returnMessage.setObj("积分扣除失败!");
-				logger.info("积分扣除失败!");
+				returnMessage.setObj(null);
 				returnMessage.setToken(token.toToken());
+				logger.info("积分扣除失败!");
 				return returnMessage.toJson();
 			}
 				
@@ -120,8 +124,9 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			
 			
 			if(prizeLevel==null){
+				returnMessage.setRetCode("0000");
 				returnMessage.setRetMsg("未中奖!");
-				returnMessage.setObj("未中奖!");
+				returnMessage.setObj(null);
 				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
@@ -139,22 +144,28 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 					returnMessage.setRetCode("0000");
 					returnMessage.setRetMsg("获得了"+gift.getIntegralValue()+"积分!");
 					returnMessage.setObj(gift.getPrizeLevel());
+					returnMessage.setToken(token.toToken());
 				}else{
 					returnMessage.setRetCode("0000");
 					returnMessage.setRetMsg("未中奖");
 					returnMessage.setObj(null);
+					returnMessage.setToken(token.toToken());
 					integralGame.setRemark("加分失败,修正中奖结果为未中奖!");
 				}
 				returnMessage.setToken(token.toToken());
 //				return returnMessage.toJson();
 			}else{
 				returnMessage=dealEleGift(gift,account);
-				if(!returnMessage.getRetCode().equals("0000")){
+				if(returnMessage.getRetCode().equals("0000")){
+					returnMessage.setRetCode("0000");
 					returnMessage.setRetMsg("获得了"+gift.getName());
 					returnMessage.setObj(gift.getPrizeLevel());
+					returnMessage.setToken(token.toToken());
 				}else{
+					returnMessage.setRetCode("0000");
 					returnMessage.setRetMsg("未中奖!");
 					returnMessage.setObj(null);
+					returnMessage.setToken(token.toToken());
 					integralGame.setRemark("电子券下单失败,修正中奖结果为未中奖!");
 				}
 			}
