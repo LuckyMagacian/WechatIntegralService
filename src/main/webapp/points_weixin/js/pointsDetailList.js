@@ -49,7 +49,7 @@ function getPointsList(page) {
 				}
 			});
 			if(page == 1) {//第一页
-				$("#pointsDetailTr").append(temp);
+				$("#pointsDetailTr").after(temp);
 				mui('#pullRefresh').pullRefresh().endPulldownToRefresh();
 			} else {
 				$("#pointsDetailTable").append(temp);
