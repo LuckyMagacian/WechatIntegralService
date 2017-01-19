@@ -579,6 +579,7 @@ public class IntegralManagerServiceImpl {
                 }
                 logger.info("手机号入表结果" + message);
                 AccountBinding accountBinding = new AccountBinding();
+                accountBinding.setBindingTime(TimeUtil.getDate());
                 accountBinding.setOpenId(openId);
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
@@ -822,6 +823,7 @@ public class IntegralManagerServiceImpl {
             String integralAccount2 = "101" + receiverIdCard;
             logger.info("接收方积分账户"+integralAccount2);
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
+            logger.info(message1);
             if (!message1.getRetCode().equals("0000")) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3419");
@@ -943,6 +945,7 @@ public class IntegralManagerServiceImpl {
         }
         return map;
     }
+
 
     /**
      * 积分转增发送短信通知
