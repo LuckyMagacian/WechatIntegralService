@@ -808,8 +808,8 @@ public class IntegralManagerServiceImpl {
             QueryResBody queryResBody = (QueryResBody) message.getObj();
             String integralValue = queryResBody.getTotalPoints();
             logger.info("积分账户" + integralAccount + "" + "现有积分值" + integralValue);
-            double integral2 =Double.parseDouble(integral);
-            double integralValue1 =Double.parseDouble(integralValue);
+            double integral2 =Double.parseDouble(integral.trim());
+            double integralValue1 =Double.parseDouble(integralValue.trim());
             if (integral2 > integralValue1) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3418");
