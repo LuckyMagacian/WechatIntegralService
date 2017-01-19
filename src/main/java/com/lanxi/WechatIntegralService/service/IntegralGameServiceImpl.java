@@ -181,18 +181,18 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}		
 	}
 
-	private ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
+	public ReturnMessage dealEleGift(Gift eleGift,AccountBinding account){
 		ReturnMessage message=new ReturnMessage();
 		try {
 			logger.info("开始处理电子券!");
 			ReqHead head=new ReqHead();
-			head.setMsgId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
-			head.setMsgNo(head.getMsgId().substring(0,14));
+			head.setMsgId(TimeUtil.getDate().substring(4)+RandomUtil.getRandomNumber(4));
 			head.setReserve("");
 			ReqMsg  body=new ReqMsg();
 			body.setPhone(account.getBindingPhone());
 			body.setSkuCode(eleGift.getMerchantId());
 			body.setCount(eleGift.getCount()+"");
+			body.setType(body.getSkuCode().substring(0,2));
 			BaoWen baoWen=new BaoWen();
 			baoWen.setHead(head);
 			baoWen.setMsg(body);
@@ -219,37 +219,39 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				message.setRetCode("3207");
 				message.setRetMsg("电子券奖品处理失败!");
 				message.setObj(null);
-			}else{
-				StringBuffer codes=new StringBuffer("");
-				@SuppressWarnings("unchecked")
-				List<Node> nodes=doc.selectNodes("//Code");
-				if(nodes!=null&&!nodes.isEmpty())
-				for(Node each:nodes){
-					ElectronicCoupon coupon=new ElectronicCoupon();
-					coupon.setId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
-					coupon.setCode(each.getText());
-					coupon.setImageCode(eleGift.getImageCode());
-					coupon.setOpenId(account.getOpenId());
-					coupon.setStartTime(TimeUtil.getDateTime());
-					//2017-03-18 23:59:59
-					String overTime=doc.selectSingleNode("EndTime").getText();
-					Date date=TimeUtil.parse("yyyy-MM-dd HH:mm:ss",overTime);
-					coupon.setOverTime(TimeUtil.formatDateTime(date));
-					coupon.setPrice(eleGift.getPrice());
-					coupon.setDescription(eleGift.getDescription());
-					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
-					coupon.setBeiy(eleGift.getBeiy());
-					dao.addElectronicCoupon(coupon);
-					logger.info("电子券信息入库:"+coupon);
-					codes.append(codes.length()==0?each.getText():","+each.getText());
+			}else {
+				if(doc.selectSingleNode("//Code").getText()!=null||!doc.selectSingleNode("//Code").getText().trim().equals("")){
+					StringBuffer codes=new StringBuffer("");
+					@SuppressWarnings("unchecked")
+					List<Node> nodes=doc.selectNodes("//Code");
+					if(nodes!=null&&!nodes.isEmpty())
+					for(Node each:nodes){
+						ElectronicCoupon coupon=new ElectronicCoupon();
+						coupon.setId(TimeUtil.getDateTime()+RandomUtil.getRandomNumber(6));
+						coupon.setCode(each.getText());
+						coupon.setImageCode(eleGift.getImageCode());
+						coupon.setOpenId(account.getOpenId());
+						coupon.setStartTime(TimeUtil.getDate());
+						//2017-03-18 23:59:59
+						coupon.setOverTime(doc.selectSingleNode("//EndTime").getText());
+						coupon.setPrice(eleGift.getPrice());
+						coupon.setDescription(eleGift.getDescription());
+						coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
+						coupon.setBeiy(eleGift.getBeiy());
+						dao.addElectronicCoupon(coupon);
+						logger.info("电子券信息入库:"+coupon);
+						codes.append(codes.length()==0?each.getText():","+each.getText());
+						order.setMoreInfo(codes.toString());
+						order.setStatus(GiftOrder.ORDER_STATUS_SUCCESS);
+						dao.updateGiftOrder(order);
+						logger.info("更新电子券订单信息:"+order);
+						logger.info("电子券购买成功!"+codes.toString());
+						message.setRetCode("0000");
+						message.setRetMsg("电子券奖品处理完成!");
+					}
+				}else{
+					logger.info("流量话费充值成功!");
 				}
-				order.setMoreInfo(codes.toString());
-				order.setStatus(GiftOrder.ORDER_STATUS_SUCCESS);
-				dao.updateGiftOrder(order);
-				logger.info("更新电子券订单信息:"+order);
-				logger.info("电子券购买成功!"+codes.toString());
-				message.setRetCode("0000");
-				message.setRetMsg("电子券奖品处理完成!");
 			}
 		} catch (Exception e) {
 			message.setRetCode("9999");

@@ -98,7 +98,7 @@ public class BaoWen {
 		Map<String, String> params=BeanUtil.getParamMap(head);
 		params.putAll(BeanUtil.getParamMap(msg));
 		params.remove("sign");
-		String tempSign=SignUtil.md5LowerCase(SignUtil.mapToValueString(params)+ConfigUtil.get("giftKey"),ConfigUtil.get("charset"));
+		String tempSign=SignUtil.md5LowerCase(SignUtil.mapToValueString(params)+ConfigUtil.get("giftKey"),"GBK");
 		head.setSign(tempSign);
 		return head.getSign();
 	}
