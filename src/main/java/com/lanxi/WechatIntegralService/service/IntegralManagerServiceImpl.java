@@ -788,7 +788,6 @@ public class IntegralManagerServiceImpl {
             logger.info("积分转增值" + integral + "接收方身份证号" + receiverIdCard);
             //通过openid取出积分账户
             String integralAccount = bindingService.getMessage(openId).getIntegralAccount();
-
             if (integralAccount.equals("101" + receiverIdCard)) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3416");
@@ -801,15 +800,15 @@ public class IntegralManagerServiceImpl {
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
                 map.put("token", token.toToken());
-                map.put("retCode","3417");
+                map.put("retCode", "3417");
                 map.put("retMsg", message.getRetMsg());
                 return map;
             }
             QueryResBody queryResBody = (QueryResBody) message.getObj();
             String integralValue = queryResBody.getTotalPoints();
             logger.info("积分账户" + integralAccount + "" + "现有积分值" + integralValue);
-            double integral2 =Double.parseDouble(integral);
-            double integralValue1 =Double.parseDouble(integralValue);
+            double integral2 =Double.parseDouble(integral.trim());
+            double integralValue1 =Double.parseDouble(integralValue.trim());
             if (integral2 > integralValue1) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3418");
@@ -819,10 +818,8 @@ public class IntegralManagerServiceImpl {
             }
             //接收方积分账户
             String integralAccount2 = "101" + receiverIdCard;
-            logger.info("接收方积分账户"+integralAccount2);
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
-            logger.info(message1);
-            if (!message1.getRetCode().equals("0000")) {
+            if (!message1.getObj().equals("0000")) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3419");
                 map.put("retMsg", "该身份证号没有匹配的积分账号");
@@ -911,7 +908,7 @@ public class IntegralManagerServiceImpl {
                 if (!message.getRetCode().equals("0000")) {
                     logger.error("积分系统转增失败");
                     map.put("token", token.toToken());
-                    map.put("retCode","3420");
+                    map.put("retCode", "3420");
                     map.put("retMsg", message.getRetMsg());
                     return map;
                 }
@@ -943,7 +940,6 @@ public class IntegralManagerServiceImpl {
         }
         return map;
     }
-
 
     /**
      * 积分转增发送短信通知

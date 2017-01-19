@@ -65,7 +65,7 @@ public class TestDao {
 	public void testService(){
 		ReturnMessage returnMessage= null;
 		try {
-			returnMessage = IntegralService.historyIntegral("101330326199412256115","20161225");
+			returnMessage = IntegralService.historyIntegral("101331082199311236217","20161225");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
