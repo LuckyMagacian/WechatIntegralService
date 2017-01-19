@@ -26,7 +26,7 @@ public class IntegralController {
             Map<String, Object> map = integralService.intoJf(req, rep);
             if (map.get("retCode").equals("0000"))
                 rep.sendRedirect("points_weixin/index.html?token=" + map.get("token"));
-            else if (map.get("retCode").equals("9999"))
+            else if (map.get("retCode").equals("3402"))
                 rep.sendRedirect("points_weixin/binding.html?token=" + map.get("token"));
             else
                 rep.sendRedirect("points_weixin/404.html");
