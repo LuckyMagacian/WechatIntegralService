@@ -1,5 +1,5 @@
 $(function() {
-	getJsSign();
+	//getJsSign();
 });
 
 /* 获取js签名 */
@@ -63,7 +63,7 @@ function sendPacket() {
 		ajaxPost(uri, $json, function(jsonStr) {
 			var obj = jsonStr.obj;
 			var redPacketUrl = obj.redPacketUrl;
-			infoAlert('红包已生成','红包地址:'+redPacketUrl+'\n复制红包地址发给好友或使用右上角分享按钮分享给好友红包');
+			showDialog('dialog-packet');
 		});
 	}
 

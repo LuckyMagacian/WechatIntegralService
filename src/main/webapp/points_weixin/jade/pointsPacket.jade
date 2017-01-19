@@ -34,6 +34,15 @@ block content
         span#totalPoints 0
         label 积分
     a.weui-btn.weui-btn_warn(href="javascript:sendPacket()") 发红包
+    #dialog-packet.hidden
+      .weui-mask
+      .weui-dialog
+        .weui-dialog__hd
+          strong.weui-dialog__title 红包已生成
+        .weui-dialog__bd 复制红包链接发送给好友
+        .weui-dialog__ft
+          input#copyLink(type="hidden")
+          a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:copyLink()") 复制链接
 block JS
   script(src="js/public.js")
   script(src="js/pointsPacket.js")
