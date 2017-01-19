@@ -59,7 +59,7 @@ function getPointsList(page) {
 					mui('#pullRefresh').pullRefresh().endPullupToRefresh(false);
 				}
 			}
-			$("#page").val(page);
+			$("#page").val(page+1);
 		}
 	});
 }
