@@ -216,8 +216,9 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				dao.updateGiftOrder(order);
 				logger.info("更新电子券订单信息:"+order);
 				logger.info("电子券购买失败!");
-				message.setRetCode("9998");
+				message.setRetCode("3207");
 				message.setRetMsg("电子券奖品处理失败!");
+				message.setObj(null);
 			}else{
 				StringBuffer codes=new StringBuffer("");
 				@SuppressWarnings("unchecked")
@@ -261,29 +262,33 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 	@Override
 	public String getGifts(HttpServletRequest req) {
 		ReturnMessage returnMessage=new ReturnMessage();
+		EasyToken token=null;
 		try{
 			req.setCharacterEncoding("utf-8");
 			String gameId=req.getParameter("gameId");
 			String tokenStr =req.getParameter("token");
 			logger.info("查询游戏奖励:gameId="+gameId+",token="+tokenStr);
-			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			token=EasyToken.verifyTokenRenew(tokenStr);
 			if(token==null){
-				returnMessage.setRetCode("9998");
+				returnMessage.setRetCode("0001");
 				returnMessage.setRetMsg("token过期!");
-				returnMessage.setObj("token过期!");
+				returnMessage.setObj(null);
+				returnMessage.setToken(null);
 				logger.info("token过期!");
 				return returnMessage.toJson();
 			}
 			List<Gift> gifts=dao.getGifts(gameId);
 			if(gifts==null){
-				returnMessage.setRetCode("9995");
+				returnMessage.setRetCode("3208");
 				returnMessage.setRetMsg("游戏无奖品!");
 				returnMessage.setObj(null);
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg("获取游戏奖品成功!");
 			returnMessage.setObj(gifts);
+			returnMessage.setToken(token.toToken());
 			logger.info("游戏奖品:"+gifts);
 			return returnMessage.toJson();
 		}catch (Exception e) {
@@ -295,27 +300,31 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}
 	}
 
+	@SuppressWarnings("finally")
 	@Override
 	public String getGiftInfo(HttpServletRequest req) {
 		ReturnMessage returnMessage=new ReturnMessage();
+		EasyToken token=null;
 		try{
 			req.setCharacterEncoding("utf-8");
 			String giftId=req.getParameter("giftId");
 			String tokenStr =req.getParameter("token");
 			logger.info("查询游戏奖励:giftId="+giftId+",token="+tokenStr);
-			EasyToken token=EasyToken.verifyTokenRenew(tokenStr);
+			token=EasyToken.verifyTokenRenew(tokenStr);
 			if(token==null){
-				returnMessage.setRetCode("9998");
+				returnMessage.setRetCode("0001");
 				returnMessage.setRetMsg("token过期!");
-				returnMessage.setObj("token过期!");
+				returnMessage.setObj(null);
+				returnMessage.setToken(null);
 				logger.info("token过期!");
 				return returnMessage.toJson();
 			}
 			Gift gift=dao.getGift(giftId); 
 			if(gift==null){
-				returnMessage.setRetCode("9994");
+				returnMessage.setRetCode("3209");
 				returnMessage.setRetMsg("奖品不存在!");
 				returnMessage.setObj(null);
+				returnMessage.setToken(token.toToken());
 				return returnMessage.toJson();
 			}
 			logger.info("游戏奖品信息:"+gift);
@@ -326,10 +335,13 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg("查询奖品信息成功!");
 			returnMessage.setObj(gift);
+			returnMessage.setToken(token.toToken());
 			return returnMessage.toJson();
 		}catch (Exception e) {
 			returnMessage.setRetCode("9999");
 			returnMessage.setRetMsg("查询奖品信息异常!");
+			returnMessage.setObj(null);
+			returnMessage.setToken(token.toToken());
 			throw new AppException("查询奖品信息异常!",e);
 		}finally{
 			return returnMessage.toJson();
