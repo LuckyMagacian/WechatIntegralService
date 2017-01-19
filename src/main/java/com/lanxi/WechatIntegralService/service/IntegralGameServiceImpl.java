@@ -238,6 +238,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 					coupon.setPrice(eleGift.getPrice());
 					coupon.setDescription(eleGift.getDescription());
 					coupon.setStatus(ElectronicCoupon.ELECTRONIC_COUPON_STATUS_NORMAL);
+					coupon.setBeiy(eleGift.getBeiy());
 					dao.addElectronicCoupon(coupon);
 					logger.info("电子券信息入库:"+coupon);
 					codes.append(codes.length()==0?each.getText():","+each.getText());
