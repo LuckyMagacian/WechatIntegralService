@@ -1,13 +1,23 @@
-$(function() {
-	//getJsSign();
-});
+(function() {
+/*	//getJsSign();
+	$("#copyLink").attr('data-clipboard-text','2312312312312');
+	var client = new ZeroClipboard(document.getElementById("copyLink"));
+	client.on("ready", function(readyEvent) {
+		alert(1);
+		client.on("aftercopy", function(event) {
+			event.target.style.display = "none";
+			alert("Copied text to clipboard: " + event.data["text/plain"]);
+		});
+	});*/
+})();
 
 /* 获取js签名 */
-function getJsSign(){
-	ajaxPost('../getJsSign.do',{},function(jsonStr){
+function getJsSign() {
+	ajaxPost('../getJsSign.do', {}, function(jsonStr) {
 		wxApi(jsonStr);
 	});
 }
+
 function wxApi(jsonStr) {
 	wx.config({
 		debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
@@ -20,7 +30,7 @@ function wxApi(jsonStr) {
 	wx.ready(function() {
 		console.log('config信息验证通过');
 	});
-	wx.error(function(res){
+	wx.error(function(res) {
 		console.log(res);
 	});
 	wx.onMenuShareAppMessage({
@@ -63,8 +73,16 @@ function sendPacket() {
 		ajaxPost(uri, $json, function(jsonStr) {
 			var obj = jsonStr.obj;
 			var redPacketUrl = obj.redPacketUrl;
-			showDialog('dialog-packet');
+			showDialog('packet');
 		});
 	}
+}
 
+/* 复制红包链接 */
+function copyLink() {
+	var txt = $("#copyLink").val();
+	//showSuccess('复制成功');
+	setTimeout(function() {
+		closeDialog('packet');
+	}, 1800);
 }

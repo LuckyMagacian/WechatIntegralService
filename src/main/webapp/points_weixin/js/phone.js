@@ -5,24 +5,14 @@ $(function() {
 function editPhone() {
 	var newPhone = $("#newPhone").val(),
 		validateCode = $('#phone-code').val();
-	var $json = {
-			'phone': newPhone,
-			'validateCode': validateCode
-		},
-		uri = "../updatePhoneOper.do";
-	if(valiPhone(newPhone)) {
+	if(!valiPhone(newPhone)) {
 		showInfo('手机号码格式有误');
 		warnInfo('newPhone');
-	} else if(valiMsgNum(validateCode)) {
+	} else if(!valiMsgNum(validateCode)) {
 		showInfo('验证码必须为6位数字');
 		warnInfo('phone-code');
 	} else {
-		ajaxPost(uri, $json, function(jsonStr) {
-			showSuccess('手机号修改成功!');
-			setTimeout(function(){
-				location.href='userInfo.html';
-			},1800);
-		});
+		showDialog('editPhone');
 	}
 }
 
@@ -59,4 +49,20 @@ function sendPhoneMsg() {
 		showInfo('手机号码格式有误');
 		warnInfo('newPhone');
 	}
+}
+
+function sendEditPhone() {
+	var newPhone = $("#newPhone").val(),
+		validateCode = $('#phone-code').val();
+	var $json = {
+			'phone': newPhone,
+			'validateCode': validateCode
+		},
+		uri = "../updatePhoneOper.do";
+	ajaxPost(uri, $json, function(jsonStr) {
+		showSuccess('手机号修改成功!');
+		setTimeout(function() {
+			location.href = 'userInfo.html';
+		}, 1800);
+	});
 }

@@ -38,17 +38,17 @@
     </div>
     <div style="margin-top:44px" class="weui-cells">
       <div style="text-align:center" class="weui-cell">
-        <div onclick="showDialog('editphone')" class="weui-cell__bd">
+        <div onclick="editPhone()" class="weui-cell__bd">
           <label>确认更改</label>
         </div>
       </div>
     </div>
-    <div id="dialog-editphone" class="hidden">
+    <div id="dialog-editPhone" class="hidden">
       <div class="weui-mask"></div>
       <div class="weui-dialog">
         <div class="weui-dialog__hd"><strong class="weui-dialog__title">更改确认</strong></div>
         <div class="weui-dialog__bd"><span>修改手机号为</span><span id="dialogPhone">XXXXXX</span><span>?</span></div>
-        <div class="weui-dialog__ft"><a href="javascript:closeDialog('editphone')" class="weui-dialog__btn weui-dialog__btn_default">取消</a><a href="javascript:editphone()" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div>
+        <div class="weui-dialog__ft"><a href="javascript:closeDialog('editPhone')" class="weui-dialog__btn weui-dialog__btn_default">取消</a><a href="javascript:sendEditPhone()" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div>
       </div>
     </div>
     <script src="js/mui.js"></script>
