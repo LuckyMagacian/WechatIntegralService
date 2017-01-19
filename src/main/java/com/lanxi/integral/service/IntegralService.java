@@ -29,7 +29,9 @@ import com.lanxi.integral.report.ReduceResBody;
 import com.lanxi.integral.report.ReqHead;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.report.ReversalReqBody;
+import com.lanxi.integral.report.ReversalResBody;
 import com.lanxi.integral.report.TransferReqBody;
+import com.lanxi.integral.report.TransferResBody;
 public class IntegralService {
 	private static JFBaoWen baoWen=new JFBaoWen();
 	private static Original original=new Original();
@@ -149,7 +151,7 @@ public class IntegralService {
 		body.setToIdNo(receiveAccount);
 		body.setTransferPoints(transferPoints);
 		String res=postReq(body, ConfigUtil.get("transferUrl"));
-		return makeMessage(new HistoryResBody(), res);
+		return makeMessage(new TransferResBody(), res);
 	}
 	/**
 	 * 积分冲正
@@ -161,7 +163,7 @@ public class IntegralService {
 		ReversalReqBody body=new ReversalReqBody();
 		body.setSerialNo(serialNo);
 		String res=postReq(body, ConfigUtil.get("reversalUrl"));
-		return makeMessage(new HistoryResBody(), res);
+		return makeMessage(new ReversalResBody(), res);
 	}
 	/**
 	 * 积分增加

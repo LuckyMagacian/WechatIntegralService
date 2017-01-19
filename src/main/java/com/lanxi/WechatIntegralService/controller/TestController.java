@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lanxi.WechatIntegralService.service.QuartzService;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
@@ -39,6 +40,22 @@ public class TestController {
 	}
 	@Resource
 	private ValidServerService test;
+	
+	
+	@Resource
+	private QuartzService quartz;
+	
+	@RequestMapping("/redPacketOverTime.do")
+	public void redpacketOvertime(){
+		System.out.println("红包过期任务");
+		quartz.redPacketOverTime();
+	}
+	@RequestMapping("/couponOverTime.do")
+	public void couponOverTime(){
+		System.out.println("卡券过期任务");
+		quartz.couponOverTime();
+	}
+	
 	@RequestMapping("/validService.do")
 	@ResponseBody
 	public String validService(HttpServletRequest req,HttpServletResponse res){
