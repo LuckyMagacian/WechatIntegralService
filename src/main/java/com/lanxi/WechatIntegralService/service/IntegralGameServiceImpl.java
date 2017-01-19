@@ -294,6 +294,8 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 		}catch (Exception e) {
 			returnMessage.setRetCode("9999");
 			returnMessage.setRetMsg("获取游戏奖品异常!");
+			returnMessage.setObj(null);
+			returnMessage.setToken(token.toToken());
 			throw new AppException("获取游戏奖品异常!",e);
 		}finally{
 			return returnMessage.toJson();

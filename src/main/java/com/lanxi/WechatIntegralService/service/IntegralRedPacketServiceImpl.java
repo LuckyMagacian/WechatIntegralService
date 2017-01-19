@@ -302,6 +302,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			returnMessage.setRetCode("0000");
 			returnMessage.setRetMsg(receive.getIntegral()+"");
 			returnMessage.setObj(receives);
+			returnMessage.setToken(token.toToken());
 		}catch (Exception e) {
 			returnMessage.setRetCode("9999");
 			returnMessage.setRetMsg("查看红包领取详情异常");

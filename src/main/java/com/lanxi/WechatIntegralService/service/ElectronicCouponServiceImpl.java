@@ -138,7 +138,7 @@ public class ElectronicCouponServiceImpl implements ElectronicCouponService {
 				dao.deleteElectronicCoupon(coupon);
 				message.setRetCode("0000");
 				message.setRetMsg("删除成功!");
-				message.setObj(coupon);
+				message.setObj(null);
 				message.setToken(token.toToken());
 				logger.info("卡券信息删除成功:"+coupon);
 			}
