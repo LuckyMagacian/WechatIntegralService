@@ -84,8 +84,8 @@ values
         DELETE FROM wechat_integral_service_account_binding WHERE open_id=#{openId}
     </delete>
     <insert id="insert">
-        INSERT INTO wechat_integral_service_account_binding(open_id,headimg_url,integral_account,binding_phone)
-        VALUES(#{openId},#{headimgUrl},#{integralAccount},#{bindingPhone})
+        INSERT INTO wechat_integral_service_account_binding(open_id,headimg_url,integral_account,binding_phone,binding_time)
+        VALUES(#{openId},#{headimgUrl},#{integralAccount},#{bindingPhone},#{bindingTime})
     </insert>
     <update id="updatePhone">
         UPDATE wechat_integral_service_account_binding SET binding_phone=#{phone} WHERE openId=#{openId}
