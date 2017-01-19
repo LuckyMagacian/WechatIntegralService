@@ -88,6 +88,7 @@ public class TokenManager {
 	 * @return
 	 */
 	public static String getWebAccessToken(String userId){
+//		System.err.println(getWebAccessTokenMetadata(userId));
 		return getWebAccessTokenMetadata(userId).getAccessToken();
 	}
 	/**

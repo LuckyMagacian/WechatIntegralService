@@ -799,6 +799,7 @@ public class IntegralManagerServiceImpl {
             }
             //通过积分账户取得积分值
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
                 map.put("token", token.toToken());
@@ -822,7 +823,6 @@ public class IntegralManagerServiceImpl {
             String integralAccount2 = "101" + receiverIdCard;
             logger.info("接收方积分账户"+integralAccount2);
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
-            logger.info(message1);
             if (!message1.getRetCode().equals("0000")) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3419");
