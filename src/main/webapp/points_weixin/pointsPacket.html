@@ -19,7 +19,7 @@
             <label>数量</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input id="redPacketCount" type="number" placeholder="红包个数" maxlength="6" class="weui-input mui-text-right">
+          <input id="redPacketCount" type="text" placeholder="红包个数" maxlength="6" class="weui-input mui-text-right">
           <div style="color:black;margin-right: 5px;" class="weui-cell__ft">
             <label>个</label>
           </div>
@@ -31,7 +31,7 @@
             <label>积分</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input id="redPacketIntegral" type="number" placeholder="积分值" maxlength="8" onkeyup="$('#totalPoints').text(this.value==''?0:this.value)" class="weui-input mui-text-right">
+          <input id="redPacketIntegral" type="text" placeholder="积分值" maxlength="8" onkeyup="$('#totalPoints').text(this.value==''?0:this.value)" class="weui-input mui-text-right">
         </div>
       </div>
       <div class="rice-info">每人可领1个,积分随机</div>
@@ -41,7 +41,7 @@
             <label>留言</label>
           </div>
           <div class="weui-cell__bd"></div>
-          <input id="redPacketName" type="number" placeholder="积分红包,速来领取" maxlength="30" class="weui-input mui-text-right">
+          <input id="redPacketName" type="text" placeholder="积分红包,速来领取" maxlength="30" class="weui-input mui-text-right">
         </div>
       </div>
       <div id="totalPacketPoints">
@@ -49,6 +49,14 @@
           <label>积分</label>
         </p>
       </div><a href="javascript:sendPacket()" class="weui-btn weui-btn_warn">发红包</a>
+      <div id="dialog-packet" class="hidden">
+        <div class="weui-mask"></div>
+        <div class="weui-dialog">
+          <div class="weui-dialog__hd"><strong class="weui-dialog__title">红包已生成</strong></div>
+          <div class="weui-dialog__bd">复制红包链接发送给好友</div>
+          <div class="weui-dialog__ft"><a id="copyLink" class="weui-dialog__btn weui-dialog__btn_primary">复制链接</a></div>
+        </div>
+      </div>
     </div>
     <script src="js/mui.js"></script>
     <script src="js/jquery.2.2.4.min.js"></script>

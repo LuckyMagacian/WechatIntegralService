@@ -38,8 +38,8 @@ function sureGive() {
 	var token = getCookie('token'),
 		points = $("#points").val(),
 		idcard = $("#idcard").val(),
-		code = $("#code").val(),
-		checkedFlag = $("#giveMsgCheck")[0].checked;
+		code = $("#code").val();
+	checkedFlag = $("#giveMsgCheck")[0].checked;
 	givephone = $("#givePhone").val();
 	console.log(checkedFlag);
 	if(!vailPositiveIntegral(points)) {
@@ -61,9 +61,13 @@ function sureGive() {
 				},
 				uri = '../deliveryIntegralOper.do';
 			ajaxPost(uri, $json, function(jsonStr) {
-				ajaxPost('../sendMessage.do',{'token':getCookie('token'),'phone':givephone},function(jsonStr){
-					showSuccess('积分转赠成功!');
-				});
+				showSuccess('积分转赠成功!');
+				if(checkedFlag){
+					ajaxPost('../sendMessage.do',{'token':getCookie('token'),'phone':givephone},function(jsonStr){
+						showSuccess('发送短信成功!');
+					});
+				}
+				
 			});
 		} else {
 			showInfo('请输入受赠人手机号');

@@ -30,9 +30,9 @@ block content
         a.weui-vcode-btn#msgWord(href="javascript:sendPhoneMsg();") 获取验证码
   .weui-cells(style="margin-top:44px")
     .weui-cell(style="text-align:center")
-      .weui-cell__bd(onclick="showDialog('editphone')")
+      .weui-cell__bd(onclick="editPhone()")
         label 确认更改
-  #dialog-editphone.hidden
+  #dialog-editPhone.hidden
     .weui-mask
     .weui-dialog
       .weui-dialog__hd
@@ -42,8 +42,8 @@ block content
         span#dialogPhone XXXXXX
         span ?
       .weui-dialog__ft
-        a.weui-dialog__btn.weui-dialog__btn_default(href="javascript:closeDialog('editphone')") 取消
-        a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:editphone()") 确认
+        a.weui-dialog__btn.weui-dialog__btn_default(href="javascript:closeDialog('editPhone')") 取消
+        a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:sendEditPhone()") 确认
 block JS
   script(src="js/public.js")
   script(src="js/phone.js")
