@@ -1,5 +1,6 @@
 package com.lanxi.WechatIntegralService.test;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lanxi.integral.report.HistoryResBody;
 import com.lanxi.integral.report.QueryResBody;
 import com.lanxi.integral.report.ReturnMessage;
