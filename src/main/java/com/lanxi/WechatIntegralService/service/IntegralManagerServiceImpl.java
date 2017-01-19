@@ -797,6 +797,7 @@ public class IntegralManagerServiceImpl {
             }
             //通过积分账户取得积分值
             ReturnMessage message = IntegralService.queryIntegral(integralAccount);
+            
             if (!message.getRetCode().equals("0000")) {
                 logger.error("取积分值和姓名失败");
                 map.put("token", token.toToken());
@@ -819,7 +820,7 @@ public class IntegralManagerServiceImpl {
             //接收方积分账户
             String integralAccount2 = "101" + receiverIdCard;
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
-            if (!message1.getObj().equals("0000")) {
+            if (!message1.getRetCode().equals("0000")) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3419");
                 map.put("retMsg", "该身份证号没有匹配的积分账号");

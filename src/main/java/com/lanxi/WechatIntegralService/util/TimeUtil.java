@@ -211,8 +211,6 @@ public class TimeUtil {
 		Before = calendar.getTime();   //得到前6月的时间
 		String defaultStartDate = defDateFormat.format(Before);    //格式化前6月的时间
 		String defaultEndDate = defDateFormat.format(Now); //格式化当前时间
-		System.out.println("前6个月的时间是：" + defaultStartDate);
-		System.out.println("生成的时间是：" + defaultEndDate);
 		return defaultStartDate;
 	}
 	
@@ -230,8 +228,6 @@ public class TimeUtil {
 		Before = calendar.getTime();   //两小时后时间
 		String defaultStartDate = defFormat.format(Before);//格式化两小时后的时间
 		String defaultEndDate = defFormat.format(Now); //格式化当前时间
-		System.out.println("两小时后时间是：" + defaultStartDate);
-		System.out.println("生成的时间是：" + defaultEndDate);
 		return defaultStartDate;
 	}
 
