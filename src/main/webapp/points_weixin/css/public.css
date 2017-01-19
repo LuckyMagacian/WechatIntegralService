@@ -43,6 +43,9 @@ p {
 .red {
 	color: #910e11;
 }
+.green{
+	color:green;
+}
 .rice-icon-idcard {
 	background: url(../img/idcard.png) no-repeat;
 	width: 27px;

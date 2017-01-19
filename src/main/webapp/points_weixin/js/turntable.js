@@ -1,49 +1,32 @@
 $(function() {
+	getGameInfo(); //获取游戏基本数据
+
 	$("#pointer").rotate({
 		bind: {
 			click: clickFun = function() {
-				$("#pointer").unbind("click", clickFun); //移除监听事件，并在转动结束后添加监听
-				var prizeNum = "0", //默认奖品（谢谢参与）
-					angle = prize(prizeNum); //默认旋转至谢谢参与
-				_this = this;
-				/*$.ajax({
-					type: "get",
-					url: "../turnTable/getWinningResult.do",
-					cache: false,
-					dataType: 'json',
-					contentType: 'application/x-www-form-urlencoded',
-					success: function(jsonStr) {
-						if (jsonStr.result == "-1") {
-							getDialog(jsonStr);
-						} else {
-							if (jsonStr.result != "") {
-								prizeNum = jsonStr.result;
-							}
-							if (prize(prizeNum) !== false) {
-								angle = prize(prizeNum);
-							}
-							rotateAngle(angle, getDialog, jsonStr);
+				var integral = $("#integral").val();
+				if(Number(integral) <= 10) {
+					falseAlert('积分不足', '您的账户积分少于10分,无法进行游戏');
+				} else {
+					$("#pointer").unbind("click", clickFun); //移除监听事件，并在转动结束后添加监听
+					var prizeNum = "0", //默认奖品（谢谢参与）
+						angle = prize(prizeNum); //默认旋转至谢谢参与
+					_this = this;
+					var token = getCookie('token');
+					ajaxPost('../game.do', {
+						'token': token,
+						'gameId': '1001'
+					}, function(jsonStr) {
+						if(jsonStr.obj != "") {
+							prizeNum = jsonStr.obj;
 						}
-					},
-					error: function() {
-						alert("请求提交失败！请重试");
-						$("#pointer").bind("click",clickFun);//添加监听
-					}
-				});*/
-				var token = getCookie('token');
-				ajaxPost('../game.do', {
-					'token': token,
-					'gameId': '1001'
-				}, function(jsonStr) {
-					if(jsonStr.obj != "") {
-						prizeNum = jsonStr.obj;
-					}
-					var tempAngle=prize(prizeNum);
-					if(tempAngle !== false) {
-						angle = tempAngle;
-					}
-					rotateAngle(angle, getDialog, jsonStr);
-				});
+						var tempAngle = prize(prizeNum);
+						if(tempAngle !== false) {
+							angle = tempAngle;
+						}
+						rotateAngle(angle, getDialog, jsonStr);
+					});
+				}
 			}
 		}
 	});
@@ -112,26 +95,24 @@ function randomNum(num) {
  *  9：特等奖 8：一等奖 7：二等奖 6：三等奖
  * */
 function getDialog(jsonStr) {
-	var code = jsonStr.result, //获奖代码
+	var code = Number(jsonStr.obj), //获奖代码
 		//code=jsonStr.retCode,
-		msg = "未中奖", //获奖提示
-		id = jsonStr.openId; //用户id
-	$("#openId").val(id);
-	if(code == "9" || code == "8" || code == "7" || code == "6") {
+		msg = "未中奖"; //获奖提示
+	if(code == 0 || code == 1 || code == 2 || code == 3) {
 		$("#prizeModel").removeClass("noPrize");
 		$(".sorry").addClass("hide");
 		$(".prost").removeClass("hide");
 		switch(code) {
-			case "9":
+			case 0:
 				msg = "特等奖";
 				break;
-			case "8":
+			case 1:
 				msg = "一等奖";
 				break;
-			case "7":
+			case 2:
 				msg = "二等奖";
 				break;
-			case "6":
+			case 3:
 				msg = "三等奖";
 				break;
 		}
@@ -147,7 +128,7 @@ function getDialog(jsonStr) {
 			msg = "谢谢参与";
 		else if(code == "-1")
 			msg = "您的积分不足";
-		else msg = "系统维护，请刷新后重试";
+		else msg = "谢谢参与";
 
 		$(".retMsg").text(msg);
 	}
@@ -168,17 +149,17 @@ function rotateAngle(angle, callback, jsonStr) {
 		callback: function() {
 			var integral = $("#integral").text(),
 				time = $("#turnTime").val();
-			if(time != "0") {
-				$("#integral").text(integral - 10); //转动一次扣10积分
-			}
+			/*			if(time != "0") {
+							$("#integral").text(integral - 10); //转动一次扣10积分
+						}*/
+			$("#integral").text(integral - 10); //转动一次扣10积分
 			$("#turnTime").val(parseInt(time) + 1); //转动次数加1
 			callback(jsonStr);
 		}
 	});
 }
 
-/** num代表特定的含义 -1:积分不足 0：谢谢参与 1：再来一次
- *  9：特等奖 8：一等奖 7：二等奖 6：三等奖
+/** num代表特定的含义 0:特等奖,1:一等奖,2:二等奖,3:三等奖
  *  prize函数调用了随机数函数，将转动至该奖项内的随机位置
  * */
 function prize(num) {
@@ -197,7 +178,7 @@ function prize(num) {
 		case "3": //三等奖 180~225
 			return randomAngle(180, 225);
 			break;
-		default://未中奖,谢谢参与 45~90 225~270 315~360
+		default: //未中奖,谢谢参与 45~90 225~270 315~360
 			seat = randomNum(2); //0,1,2
 			switch(seat) {
 				case 0:
@@ -319,7 +300,7 @@ function clearDialog() {
 function getGameInfo() {
 	var token = getCookie('token'),
 		uri = '../getGifts.do';
-	ajaxPost(uri, {
+	ajaxPost(uri, { //获取奖项
 		'token': token,
 		'gameId': '1001'
 	}, function(jsonStr) {
@@ -344,6 +325,7 @@ function getGameInfo() {
 					break;
 			}
 		});
+		getInfo();
 	});
 }
 /* 获取用户信息 */
