@@ -3,6 +3,7 @@ package com.lanxi.WechatIntegralService.test;
 import java.util.Arrays;
 import java.util.Date;
 
+import com.lanxi.integral.report.ReturnMessage;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.dom.DOMElement;
@@ -101,6 +102,12 @@ public class TestOther {
 	}
 	@Test
 	public void testKey() throws Exception{
-		System.out.println(IntegralService.historyIntegral("101331082199311236217", 20170101+""));
+		ReturnMessage returnMessage= null;
+		try {
+			returnMessage = IntegralService.historyIntegral("101330326199412256115","20161225");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("数据"+returnMessage.getObj());
 	}
 }

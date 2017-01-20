@@ -397,9 +397,9 @@ public class IntegralManagerServiceImpl {
             //根据微信号取出身份证号和积分账号
             AccountBinding accountBinding = bindingService.getMessage(openId);
             String integralAccount = accountBinding.getIntegralAccount();
-            logger.info("积分账户" + integralAccount);
+            logger.info("积分账户：" + integralAccount);
             String phone = req.getParameter("phone");
-            logger.info("新手机号" + phone);
+            logger.info("新手机号：" + phone);
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
