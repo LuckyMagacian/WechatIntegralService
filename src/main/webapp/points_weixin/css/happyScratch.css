@@ -7,31 +7,35 @@ body {
 a {
 	text-decoration: none;
 }
-.hide{
+
+.hide {
 	display: none !important;
 }
+
 #skySize {
 	margin: 0 auto;
 	max-width: 480px;
 }
+
 .button {
 	width: 63px;
-    height: 26px;
-    border-radius: 5px 5px;
-    font-size: 0.9em;
-    font-weight: bold;
-    text-align: center;
-    line-height: 27px;
-    display: inline-block;
-    text-decoration: none;
-    margin: 0 auto;
-    display: block;
-    margin-top: -18px;
-    position: relative;
+	height: 26px;
+	border-radius: 5px 5px;
+	font-size: 0.9em;
+	font-weight: bold;
+	text-align: center;
+	line-height: 27px;
+	display: inline-block;
+	text-decoration: none;
+	margin: 0 auto;
+	display: block;
+	margin-top: -18px;
+	position: relative;
 }
-.btn-orange{
+
+.btn-orange {
 	color: #fa6938;
-    border: 2px solid #fa6938;
+	border: 2px solid #fa6938;
 }
 
 
@@ -98,8 +102,8 @@ header {
 
 #activeInfo>p {
 	margin-top: 6px;
-    margin-bottom: 8px;
-    line-height: 1.2em;
+	margin-bottom: 8px;
+	line-height: 1.2em;
 }
 
 
@@ -117,7 +121,9 @@ header {
 	padding-bottom: 10px;
 }
 
+
 /* dialog */
+
 #prizeModel {
 	width: 400px;
 	height: auto;
@@ -206,19 +212,23 @@ header {
 	-webkit-opacity: 0.5;
 	opacity: 0.5;
 }
+
 #dialogHint {
 	font-size: 0.7em;
 	color: red;
 	text-align: center;
-    display: block;
+	display: block;
 }
+
 .inputSussess {
-	border:1px solid #3c763d !important;
+	border: 1px solid #3c763d !important;
 }
 
 .inputError {
-	border:1px solid #a94442 !important;
+	border: 1px solid #a94442 !important;
 }
+
+
 /*pc & paid >480=px*/
 
 @media only screen and (min-width:480px) {
@@ -244,11 +254,11 @@ header {
 		height: 400px;
 		background-size: 100%;
 	}
-	#text{
+	#text {
 		font-size: 0.8em;
 	}
-	#prizeModel{
-		width:85%;
+	#prizeModel {
+		width: 85%;
 	}
 }
 
@@ -264,6 +274,7 @@ header {
 		background-size: 100%;
 	}
 	#text {
+		width: 105px;
 		padding-top: 212px;
 		padding-left: 17px;
 		padding-right: 205px;
@@ -285,7 +296,7 @@ header {
 	#activeInfo>label {
 		font-size: 1.1em;
 	}
-	#prizeModel{
-		width:320px;
+	#prizeModel {
+		width: 320px;
 	}
 }

@@ -13,7 +13,7 @@
 				<div id="pointer"></div>
 			</div>
 			<div id="activeInfo">
-			<p>您还有<label id="integral">0</label>积分，消耗10积分可以再转一次。</p>
+			<p>您还有<label id="integral">0</label>积分，每10积分可以转一次。</p>
 			<input type="hidden" id="turnTime" value="0">
 			</div>
 		</div>
@@ -35,27 +35,6 @@
 			<img src="img/turntable/footer.jpg" id="footerBg"/>
 			<p class="copyright">copyright &copy; 2016 <a href="http://m.188lanxi.com"><strong>188lanxi.com</strong></a> @蓝喜微管家</p>
 		</footer>
-		
-		<!--//转盘结果&领取奖品弹出框-->
-		<div id="prizeModel" class="hide">
-			<div class="modelHeader">转盘结果</div>
-			<div class="center modelContent">
-				<input type="hidden" id="openId"/>
-				 <p class="sorry hide"><label class="retMsg"></label></p> 
-				<p class="prost">恭喜，<label id="nickname"></label><br>获得<label class="retMsg"></label></p>
-				<p class="prost"><label for="prizePhone" style="vertical-align: middle;">领奖手机号：</label>
-					<input type="text" id="prizePhone" name="prizePhone" maxlength="11" onblur="validatePhone(this.id);"/></p>
-				<!--<p class="prost"><label>身份证号码：</label><input type="text" id="prizeIdcard" name="prizeIdcard"/></p>-->
-				<label id="dialogHint">&nbsp;</label>
-				<p class="prost"><label id="prizeHint">请确认手机号正确填写，以免影响奖品兑换</label></p>
-			</div>
-			<div class="modelFooter">
-				<a class="modelBtn prost hide" onclick="getPrizeInfo()" style="color:#0BB20C;border-right:solid 1px #e8e8ea;">确认兑换</a>
-				<a class="modelBtn prost" onclick="closeModel('prizeModel')">放弃兑换</a>
-				<a class="modelBtn sorry" onclick="closeModel('prizeModel')" style="color:#0BB20C;">确定</a>
-			</div>
-		</div>
-		<div id="fullBlack" class="hide"></div>
 
 		<script type="text/javascript" src="js/jquery.2.2.4.min.js"></script>
 		<script src="js/jquery.cookie.min.js"></script>
