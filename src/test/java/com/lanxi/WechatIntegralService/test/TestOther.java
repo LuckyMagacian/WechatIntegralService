@@ -103,4 +103,11 @@ public class TestOther {
 	public void testKey() throws Exception{
 		System.out.println(IntegralService.historyIntegral("101331082199311236217", 20170101+""));
 	}
+	@Test
+	public void testHis() throws Exception{
+		System.out.println(IntegralService.historyIntegral("101331082199311236217",""));
+		System.err.println(IntegralService.transferIntegral("101331082199311236217","101330501199309081314", "8"));
+		System.out.println(IntegralService.historyIntegral("101331082199311236217",""));
+
+	}
 }

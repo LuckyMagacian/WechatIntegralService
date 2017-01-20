@@ -219,7 +219,7 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 				message.setRetMsg("电子券奖品处理失败!");
 				message.setObj(null);
 			}else {
-				if(doc.selectSingleNode("//Code").getText()!=null||!doc.selectSingleNode("//Code").getText().trim().equals("")){
+				if(doc.selectSingleNode("//Code").getText()!=null&&!doc.selectSingleNode("//Code").getText().trim().equals("")){
 					StringBuffer codes=new StringBuffer("");
 					@SuppressWarnings("unchecked")
 					List<Node> nodes=doc.selectNodes("//Code");
