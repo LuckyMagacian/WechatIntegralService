@@ -1,0 +1,50 @@
+extends template
+block CSS
+  title 账户绑定
+  link(rel="stylesheet" href="css/public.css")
+  link(rel="stylesheet" href="css/index.css")
+  style(type="text/css").
+    body{padding-top:5px}
+block content
+  .page__bd#binding
+    .weui-cells
+      .weui-cell.weui-cell_vcode
+        .weui-cell__hd
+          label.mui-icon.mui-icon-person
+        .weui-cell__bd.mui-input-row
+          input#binding-name.weui-input.mui-input-clear(type='text' placeholder='请输入您的姓名' maxlength='10')
+        .weui-cell__ft
+          i.weui-icon-warn.hidden
+      .weui-cell.weui-cell_vcode
+        .weui-cell__hd
+          label.rice-icon-idcard
+        .weui-cell__bd.mui-input-row
+          input#binding-idcard.weui-input.mui-input-clear(type='text' placeholder='请输入您的身份证号码' maxlength='18')
+        .weui-cell__ft
+          i.weui-icon-warn.hidden
+      .weui-cell.weui-cell_vcode
+        .weui-cell__hd
+          label.mui-icon.mui-icon-phone
+        .weui-cell__bd.mui-input-row
+          input#binding-phone.weui-input.mui-input-clear(type='text' placeholder='请输入您的手机号码' maxlength='11')
+        .weui-cell__ft
+          i.weui-icon-warn.hidden
+      .weui-cell.weui-cell_vcode
+        .weui-cell__hd
+          label.mui-icon.mui-icon-locked
+        .weui-cell__bd.mui-input-row
+          input#binding-code.weui-input.mui-input-clear(type='tel' placeholder='6位验证码' maxlength='6')
+        .weui-cell__ft
+          a.weui-vcode-btn#msgWord(href="javascript:sendBindMsg();") 获取验证码
+    a.weui-btn.weui-btn_primary(style="margin:25px 15px" href="javascript:binding()") 确认绑定
+    #dialog-binding.hidden
+      .weui-mask
+      .weui-dialog
+        .weui-dialog__hd
+          strong.weui-dialog__title 短信发送成功
+        .weui-dialog__bd 已将短信发送至尾号为7341的手机中,请注意查收
+        .weui-dialog__ft
+          a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:closeDialog('binding');resetMsg('msgWord');") 确认
+block JS
+  script(src="js/public.js")
+  script(src="js/binding.js")

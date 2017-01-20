@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.lanxi.WechatIntegralService.dao.IntegralGameDao">
+<insert id="addIntegralGame" parameterType="com.lanxi.WechatIntegralService.entity.IntegralGame">
+insert into wechat_integral_service_integral_game 
+(serial_id,open_id,plateform_serial_id,game_name,game_id,game_time,integral,result,order_id,remark,beiy)
+values
+(#{serialId},#{openId},#{plateformSerialId},#{gameName},#{gameId},#{gameTime},#{integral},#{result},#{orderId},#{remark},#{beiy})
+</insert>
+<insert id="addIntegralGameDefault" parameterType="com.lanxi.WechatIntegralService.entity.IntegralGame">
+insert into wechat_integral_service_integral_game 
+(serial_id,open_id,plateform_serial_id,game_name,game_id,game_time,integral,result,order_id,remark,beiy)
+values
+(DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT,DEFAULT)
+</insert>
+<delete id="deleteIntegralGame" parameterType="com.lanxi.WechatIntegralService.entity.IntegralGame">
+delete from wechat_integral_service_integral_game
+<where>
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
+<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
+<if test="gameName != null and gameName!=''"> and game_name = #{gameName}  </if>  
+<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
+<if test="gameTime != null and gameTime!=''"> and game_time = #{gameTime}  </if>  
+<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
+<if test="result != null and result!=''"> and result = #{result}  </if>  
+<if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</delete>
+<update id="updateIntegralGame" parameterType="com.lanxi.WechatIntegralService.entity.IntegralGame">
+update wechat_integral_service_integral_game
+<set> 
+<if test="serialId != null and serialId!=''">serial_id = #{serialId},</if>  
+<if test="openId != null and openId!=''">open_id = #{openId},</if>  
+<if test="plateformSerialId != null and plateformSerialId!=''">plateform_serial_id = #{plateformSerialId},</if>  
+<if test="gameName != null and gameName!=''">game_name = #{gameName},</if>  
+<if test="gameId != null and gameId!=''">game_id = #{gameId},</if>  
+<if test="gameTime != null and gameTime!=''">game_time = #{gameTime},</if>  
+<if test="integral != null and integral!=''">integral = #{integral},</if>  
+<if test="result != null and result!=''">result = #{result},</if>  
+<if test="orderId != null and orderId!=''">order_id = #{orderId},</if>  
+<if test="remark != null and remark!=''">remark = #{remark},</if>  
+<if test="beiy != null and beiy!=''">beiy = #{beiy},</if>  
+</set>
+<where>
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+</where>
+</update>
+<select id="selectIntegralGame" resultMap="integralGameMap" parameterType="com.lanxi.WechatIntegralService.entity.IntegralGame" resultType="com.lanxi.WechatIntegralService.entity.IntegralGame">
+select
+serial_id,open_id,plateform_serial_id,game_name,game_id,game_time,integral,result,order_id,remark,beiy
+from wechat_integral_service_integral_game
+<where> 
+<if test="serialId != null and serialId!=''"> and serial_id = #{serialId}  </if>  
+<if test="openId != null and openId!=''"> and open_id = #{openId}  </if>  
+<if test="plateformSerialId != null and plateformSerialId!=''"> and plateform_serial_id = #{plateformSerialId}  </if>  
+<if test="gameName != null and gameName!=''"> and game_name = #{gameName}  </if>  
+<if test="gameId != null and gameId!=''"> and game_id = #{gameId}  </if>  
+<if test="gameTime != null and gameTime!=''"> and game_time = #{gameTime}  </if>  
+<if test="integral != null and integral!=''"> and integral = #{integral}  </if>  
+<if test="result != null and result!=''"> and result = #{result}  </if>  
+<if test="orderId != null and orderId!=''"> and order_id = #{orderId}  </if>  
+<if test="remark != null and remark!=''"> and remark = #{remark}  </if>  
+<if test="beiy != null and beiy!=''"> and beiy = #{beiy}  </if>  
+</where>
+</select>
+<resultMap id="integralGameMap" type="com.lanxi.WechatIntegralService.entity.IntegralGame">
+<result property="serialId" 			column="serial_id"></result>
+<result property="openId" 			column="open_id"></result>
+<result property="plateformSerialId" 			column="plateform_serial_id"></result>
+<result property="gameName" 			column="game_name"></result>
+<result property="gameId" 			column="game_id"></result>
+<result property="gameTime" 			column="game_time"></result>
+<result property="integral" 			column="integral"></result>
+<result property="result" 			column="result"></result>
+<result property="orderId" 			column="order_id"></result>
+<result property="remark" 			column="remark"></result>
+<result property="beiy" 			column="beiy"></result>
+</resultMap>
+</mapper>

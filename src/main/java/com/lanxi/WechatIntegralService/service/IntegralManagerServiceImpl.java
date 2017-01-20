@@ -579,6 +579,7 @@ public class IntegralManagerServiceImpl {
                 }
                 logger.info("手机号入表结果" + message);
                 AccountBinding accountBinding = new AccountBinding();
+                accountBinding.setBindingTime(TimeUtil.getDate());
                 accountBinding.setOpenId(openId);
                 accountBinding.setBindingPhone(phone);
                 accountBinding.setHeadimgUrl(headimgUrl);
@@ -639,7 +640,7 @@ public class IntegralManagerServiceImpl {
             String totalPoints = queryResBody.getTotalPoints();
             //得到六个月前的日期
             String startDate = TimeUtil.getBeforeDate(-6);
-            logger.info("积分账户==" + integralAccount + "六个月前的日期" + startDate);
+            logger.info("积分账户==" + integralAccount + "六个月前的日期==" + startDate);
 
             String selectDate = req.getParameter("selectDate");
             //查询明细
@@ -721,7 +722,6 @@ public class IntegralManagerServiceImpl {
                     integralList.add(mapList.get(i));
                 }
             }
-
             //得到即将过期的积分
             ReturnMessage returnMessage1 = IntegralService.queryIntegral(integralAccount);
             if (!returnMessage1.getRetCode().equals("0000")) {
@@ -823,6 +823,7 @@ public class IntegralManagerServiceImpl {
             String integralAccount2 = "101" + receiverIdCard;
             logger.info("接收方积分账户"+integralAccount2);
             ReturnMessage message1 = IntegralService.queryIntegral(integralAccount2);
+            logger.info(message1);
             if (!message1.getRetCode().equals("0000")) {
                 map.put("token", token.toToken());
                 map.put("retCode", "3419");
@@ -944,6 +945,7 @@ public class IntegralManagerServiceImpl {
         }
         return map;
     }
+
 
     /**
      * 积分转增发送短信通知
