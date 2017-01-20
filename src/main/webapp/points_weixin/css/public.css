@@ -86,7 +86,7 @@ span.mui-icon-clear {
 	vertical-align: middle;
 }
 
-#infoToast .weui-icon_toast{
+.infoToast .weui-icon_toast{
 	font-size: 2.5em;
     color: white;
     margin-top: 24px;
