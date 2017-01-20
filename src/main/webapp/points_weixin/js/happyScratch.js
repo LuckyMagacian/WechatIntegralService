@@ -4,10 +4,8 @@ pic = new Array('1381977809.jpg', '1234434297.jpg', '1439236228.jpg', '134235458
 range = 4; //获奖等级
 $(function() {
 	var flag = 1, //刮奖标记
-		timeFlag = 0, //刮奖多次标记
-		time = $("#number").val(), //今日刮刮乐刮奖次数
 		token = getCookie('tookie'); //获取积分
-	integral = getInfo();
+	 getInfo();
 	window.onresize = function() {
 		setHeight();
 	};
@@ -19,18 +17,19 @@ $(function() {
 		'cursor': 'url("img/happyScratch/coin.png") 5 5, default',
 		scratchMove: function(e, percent) {
 			if(flag) {
-				if(integral < 10 && time != 0) {
-					alert("您的积分不足！");
-					location.reload();
-				} else if(timeFlag == 0) {
-					timeFlag = 1;
+				var integral=parseInt($("#integral").text());
+				if(integral < 10) {
+					falseAlert('刮奖失败','您的积分不足,系统将自动跳转至首页');
+					setTimeout(function(){
+						location.href="index.html";
+					},2000);
+				} else {
 					ajaxPost('../game.do', {
 						'token': token,
 						'gameId': '1002'
 					}, function(jsonStr) {
 						var result = parseInt(jsonStr.obj); //刮刮乐结果代码
-						range = result;
-						$("#integral").text(parseInt(integral) - 10);
+						getInfo();
 						if(result > -1 && result < 4) {
 							$("#scratch").css("background-image", "url('img/happyScratch/" + pic[result] + "')");
 							flag = 0;
@@ -47,12 +46,7 @@ $(function() {
 				if(flag) { //未正常的刮开（未向后台请求数据）
 					$("#scratch").css("background-image", "url('img/happyScratch/default.jpg')");
 				} else {
-					if(range > -1) {
-						$("#reload").addClass("hide");
-					} else {
 						$("#reload").removeClass("hide");
-					}
-
 				}
 			}
 

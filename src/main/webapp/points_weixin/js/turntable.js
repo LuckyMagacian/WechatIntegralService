@@ -5,11 +5,11 @@ $(function() {
 		bind: {
 			click: clickFun = function() {
 				var integral = $("#integral").text();
-				if(Number(integral) <= 10) {
+				if(parseInt(integral) <= 10) {
 					falseAlert('积分不足', '您的账户积分少于10分,无法进行游戏');
 				} else {
 					$("#pointer").unbind("click", clickFun); //移除监听事件，并在转动结束后添加监听
-					var prizeNum = "0", //默认奖品（谢谢参与）
+					var prizeNum = "4", //默认奖品（谢谢参与）
 						angle = prize(prizeNum); //默认旋转至谢谢参与
 					_this = this;
 					var token = getCookie('token');
@@ -26,6 +26,7 @@ $(function() {
 						}
 						rotateAngle(angle, getDialog, jsonStr);
 					});
+					removeMsg('loadingToast');
 				}
 			}
 		}
@@ -95,8 +96,9 @@ function randomNum(num) {
  *  9：特等奖 8：一等奖 7：二等奖 6：三等奖
  * */
 function getDialog(jsonStr) {
-	var code = Number(jsonStr.obj), //获奖代码
-		msg = "未中奖"; //获奖提示
+	var code = parseInt(jsonStr.obj), //获奖代码
+		msg = "未中奖",//获奖提示
+		retMsg=''; 
 	if(code == 0 || code == 1 || code == 2 || code == 3) {
 		switch(code) {
 			case 0:
@@ -112,10 +114,12 @@ function getDialog(jsonStr) {
 				msg = "三等奖";
 				break;
 		}
+		retMsg=jsonStr.retMsg+"奖品已下发至卡券包,请至卡券包查看";
 	} else {
 			msg="谢谢参与";
+			retMsg=jsonStr.retMsg;
 	}
-	infoAlert(msg,jsonStr.retMsg+"奖品已下发至卡券包,请至卡券包查看");
+	infoAlert(msg,retMsg);
 	$("#pointer").bind("click", clickFun); //添加事件监听
 	return true;
 }
@@ -129,10 +133,7 @@ function rotateAngle(angle, callback, jsonStr) {
 		animateTo: 1440 + angle,
 		easing: $.easing.easeOutSine,
 		callback: function() {
-			var integral = $("#integral").text(),
-				time = $("#turnTime").val();
-			$("#integral").text(integral - 10); //转动一次扣10积分
-			$("#turnTime").val(parseInt(time) + 1); //转动次数加1
+			getInfo();
 			callback(jsonStr);
 		}
 	});
@@ -144,17 +145,18 @@ function rotateAngle(angle, callback, jsonStr) {
 function prize(num) {
 	var seat = 0, //默认位置
 		turnAngle = 20; //默认转动角度
+	num=parseInt(num);
 	switch(num) {
-		case "0": //特等奖 270~315
+		case 0: //特等奖 270~315
 			return randomAngle(270, 315);
 			break;
-		case "1": //一等奖 0~45
+		case 1: //一等奖 0~45
 			return randomAngle(0, 45);
 			break;
-		case "2": //二等奖 90~135
+		case 2: //二等奖 90~135
 			return randomAngle(90, 135);
 			break;
-		case "3": //三等奖 180~225
+		case 3: //三等奖 180~225
 			return randomAngle(180, 225);
 			break;
 		default: //未中奖,谢谢参与 45~90 225~270 315~360
