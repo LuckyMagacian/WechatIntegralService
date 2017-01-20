@@ -4,6 +4,7 @@ pic = new Array('1381977809.jpg', '1234434297.jpg', '1439236228.jpg', '134235458
 range = 4; //获奖等级
 $(function() {
 	var flag = 1, //刮奖标记
+		timeFlag=0,//刮奖多次标记
 		token = getCookie('tookie'); //获取积分
 	 getInfo();
 	window.onresize = function() {
@@ -23,7 +24,8 @@ $(function() {
 					setTimeout(function(){
 						location.href="index.html";
 					},2000);
-				} else {
+				} else if(timeFlag==0){
+        			timeFlag=1;
 					ajaxPost('../game.do', {
 						'token': token,
 						'gameId': '1002'
