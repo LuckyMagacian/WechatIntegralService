@@ -6,8 +6,8 @@ $(function() {
 	var flag = 1, //刮奖标记
 		timeFlag = 0, //刮奖多次标记
 		time = $("#number").val(), //今日刮刮乐刮奖次数
-		integral = getInfo(),
 		token = getCookie('tookie'); //获取积分
+	integral = getInfo();
 	window.onresize = function() {
 		setHeight();
 	};
@@ -30,7 +30,7 @@ $(function() {
 					}, function(jsonStr) {
 						var result = parseInt(jsonStr.obj); //刮刮乐结果代码
 						range = result;
-						$("#integral").text(integral - 10);
+						$("#integral").text(parseInt(integral) - 10);
 						if(result > -1 && result < 4) {
 							$("#scratch").css("background-image", "url('img/happyScratch/" + pic[result] + "')");
 							flag = 0;
@@ -115,107 +115,6 @@ function setHeight() {
 	}
 }
 
-function showDialog(id) {
-	$("#" + id).removeClass("hide");
-	$("#fullBlack").removeClass("hide");
-	$(".retMsg").text(prize[range]);
-}
-
-function closeModel(id) {
-	$("#" + id).addClass("hide");
-	$("#fullBlack").addClass("hide");
-	clearDialog();
-	location.reload();
-}
-
-/* 提交中奖数据 */
-/*function getPrizeInfo() {
-	var phoneResult = validatePhone('prizePhone'),
-		phone = $("#prizePhone").val();
-	if(phoneResult) {
-		$.ajax({
-			type: "post",
-			url: "../happyScratch/getPrize.do",
-			cache: false,
-			dataType: 'json',
-			data: {
-				"phone": phone
-			},
-			contentType: 'application/x-www-form-urlencoded',
-
-			success: function(jsonStr) {
-				var msg = jsonStr.retMsg,
-					code = jsonStr.retCode;
-				switch(code) {
-					case "0000": //兑换成功
-						alert("奖品已通过短信下发至您的手机中，请注意查收。");
-						break;
-					case "9001":
-						alert("兑奖失败！您未中奖。");
-						break;
-					case "9002":
-						alert("兑奖失败！您已领取过奖励。");
-						break;
-					case "9003":
-						alert("兑奖失败！您的奖项已过期。");
-						break;
-					case "9999":
-						alert("系统错误，请联系客服400-055-2797");
-						break;
-					default:
-						alert("系统维护中，请联系客服400-055-2797");
-						break;
-				}
-				closeModel("prizeModel");
-			},
-			error: function() {
-				$("#dialogHint").text("兑换请求提交失败，请重试！");
-
-			}
-		});
-	}
-}*/
-
-/** 通用验证函数 
-    regStr:正则式
-    vailStr:待验证字符串
-    id:效果显示在该id上
-*/
-function pubValidate(regStr, valiStr) {
-	var flag = 0;
-	if(!regStr.test(valiStr)) flag = 1; //test()方法搜索字符串指定的值，根据结果并返回真或假。
-	else flag = 0;
-	if(flag) //匹配不正确
-		return false;
-	else //匹配正确
-		return true;
-}
-
-/** 手机号码验证 */
-function validatePhone(id) {
-	var regStr = /^(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/, //匹配手机号
-		idObj = $("#" + id),
-		valiStr = idObj.val(),
-		result = pubValidate(regStr, valiStr);
-	if(result) {
-		idObj.removeClass("inputError");
-		idObj.addClass("inputSussess");
-	} else {
-		idObj.removeClass("inputSussess");
-		idObj.addClass("inputError");
-		$("#dialogHint").text("您输入的手机号码有误！");
-	}
-	return result;
-}
-
-/* 清除用户输入痕迹 */
-function clearDialog() {
-	$("#prizePhone").val("");
-	$("#dialogHint").html("&nbsp;");
-	$("#prizePhone").removeClass("inputError");
-	$("#prizePhone").removeClass("inputSussess");
-}
-
 /* 获取用户信息 */
 function getInfo() {
 	var uri = '../getInfoByToken.do';
@@ -225,7 +124,7 @@ function getInfo() {
 		var name = jsonStr.name,
 			integralValue = jsonStr.integralValue;
 		$("#nickname").text(name);
-		$("#integral").text(integralValue);
+		$("#integral").text(parseInt(integralValue));
 		return integralValue;
 	});
 }

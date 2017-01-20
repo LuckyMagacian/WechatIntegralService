@@ -21,7 +21,7 @@ $(function() {
 							prizeNum = jsonStr.obj;
 						}
 						var tempAngle = prize(prizeNum);
-						if(tempAngle !== false) {
+						if(tempAngle != false) {
 							angle = tempAngle;
 						}
 						rotateAngle(angle, getDialog, jsonStr);
@@ -96,12 +96,8 @@ function randomNum(num) {
  * */
 function getDialog(jsonStr) {
 	var code = Number(jsonStr.obj), //获奖代码
-		//code=jsonStr.retCode,
 		msg = "未中奖"; //获奖提示
 	if(code == 0 || code == 1 || code == 2 || code == 3) {
-		$("#prizeModel").removeClass("noPrize");
-		$(".sorry").addClass("hide");
-		$(".prost").removeClass("hide");
 		switch(code) {
 			case 0:
 				msg = "特等奖";
@@ -116,25 +112,11 @@ function getDialog(jsonStr) {
 				msg = "三等奖";
 				break;
 		}
-		$(".retMsg").text(msg);
 	} else {
-		$("#prizeModel").addClass("noPrize");
-		$(".prost").addClass("hide");
-		$(".sorry").removeClass("hide");
-		if(code == "1") {
-			msg = "获得再来一次！";
-			$("#turnTime").val(0);
-		} else if(code == "0")
-			msg = "谢谢参与";
-		else if(code == "-1")
-			msg = "您的积分不足";
-		else msg = "谢谢参与";
-
-		$(".retMsg").text(msg);
+			msg="谢谢参与";
 	}
+	infoAlert(msg,jsonStr.retMsg+"奖品已下发至卡券包,请至卡券包查看");
 	$("#pointer").bind("click", clickFun); //添加事件监听
-	$("#prizeModel").removeClass("hide");
-	$("#fullBlack").removeClass("hide");
 	return true;
 }
 /** 转盘转动
@@ -149,9 +131,6 @@ function rotateAngle(angle, callback, jsonStr) {
 		callback: function() {
 			var integral = $("#integral").text(),
 				time = $("#turnTime").val();
-			/*			if(time != "0") {
-							$("#integral").text(integral - 10); //转动一次扣10积分
-						}*/
 			$("#integral").text(integral - 10); //转动一次扣10积分
 			$("#turnTime").val(parseInt(time) + 1); //转动次数加1
 			callback(jsonStr);
@@ -197,102 +176,7 @@ function prize(num) {
 			}
 			break;
 	}
-}
-
-function closeModel(id) {
-	$("#" + id).addClass("hide");
-	$("#fullBlack").addClass("hide");
-	clearDialog();
-}
-
-/* 提交中奖数据 */
-function getPrizeInfo() {
-	var phoneResult = validatePhone('prizePhone'),
-		phone = $("#prizePhone").val(),
-		openId = $("#openId").val();
-	if(phoneResult) {
-		$.ajax({
-			type: "post",
-			url: "../turnTable/getPrize.do",
-			cache: false,
-			dataType: 'json',
-			data: {
-				"openId": openId,
-				"phone": phone
-			},
-			contentType: 'application/x-www-form-urlencoded',
-			success: function(jsonStr) {
-				var msg = jsonStr.retMsg,
-					code = jsonStr.retCode;
-				switch(code) {
-					case "0000": //兑换成功
-						alert("奖品已通过短信下发至您的手机中，请注意查收。");
-						break;
-					case "9001":
-						alert("兑奖失败！您未中奖。");
-						break;
-					case "9002":
-						alert("兑奖失败！您已领取过奖励。");
-						break;
-					case "9003":
-						alert("兑奖失败！您的奖项已过期。");
-						break;
-					case "9999":
-						alert("系统错误，请联系客服400-055-2797");
-						break;
-					default:
-						alert("系统维护中，请联系客服400-055-2797");
-						break;
-				}
-				closeModel("prizeModel");
-			},
-			error: function() {
-				$("#dialogHint").text("兑换请求提交失败，请重试！");
-
-			}
-		});
-	}
-}
-
-/** 通用验证函数 
-    regStr:正则式
-    vailStr:待验证字符串
-    id:效果显示在该id上
-*/
-function pubValidate(regStr, valiStr) {
-	var flag = 0;
-	if(!regStr.test(valiStr)) flag = 1; //test()方法搜索字符串指定的值，根据结果并返回真或假。
-	else flag = 0;
-	if(flag) //匹配不正确
-		return false;
-	else //匹配正确
-		return true;
-}
-
-/** 手机号码验证 */
-function validatePhone(id) {
-	var regStr = /^(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/, //匹配手机号
-		idObj = $("#" + id),
-		valiStr = idObj.val(),
-		result = pubValidate(regStr, valiStr);
-	if(result) {
-		idObj.removeClass("inputError");
-		idObj.addClass("inputSussess");
-		$("#dialogHint").html("&nbsp;");
-	} else {
-		idObj.removeClass("inputSussess");
-		idObj.addClass("inputError");
-		$("#dialogHint").text("您输入的手机号码有误！");
-	}
-	return result;
-}
-
-/* 清除用户输入痕迹 */
-function clearDialog() {
-	$("#prizePhone").val("");
-	$("#dialogHint").html("&nbsp;");
-	$("#prizePhone").removeClass("inputError");
-	$("#prizePhone").removeClass("inputSussess");
+	return false;
 }
 
 /* POINTS-WEIXIN 新增 */
