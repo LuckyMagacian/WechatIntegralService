@@ -1,0 +1,26 @@
+extends template
+block CSS
+  title 积分明细
+  link(rel="stylesheet" href="css/public.css")
+  link(rel="stylesheet" href="css/index.css")
+block content
+  #intDetailHeader
+    p 总积分
+    p#totalPoints 28000
+    .weui-flex
+      .weui-flex__item(style="border-right:1px solid #ebebeb;")
+        label 近期新增积分
+        br
+        span 12312
+      .weui-flex__item
+        label 即将到期积分
+        br
+        span 2450
+  #intDetailContent
+    label 积分明细
+    label.pull-right#intDetailDate 全部
+      span.mui-icon-extra.mui-icon-extra-calendar
+
+block JS
+  script(src="js/public.js")
+  script(src="js/pointsDetail.js")

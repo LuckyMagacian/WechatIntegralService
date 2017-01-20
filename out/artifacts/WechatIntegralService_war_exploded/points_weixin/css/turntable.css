@@ -1,0 +1,288 @@
+@charset "utf-8";
+html,
+body {
+	font-family:Helvetica, YouYuan;
+	width: 100%;
+	height: auto;
+	margin: 0 auto;
+}
+a{
+	text-decoration: none;
+}
+.hide {
+	display: none !important;
+}
+
+.center {
+	text-align: center;
+	margin: 0 auto;
+	vertical-align: middle;
+}
+
+#lottery {
+	background: url(../img/turntable/bg.jpg) no-repeat;
+}
+
+#turntable {
+	margin: auto;
+}
+
+#pointer {
+	background: url(../img/turntable/point.png) no-repeat;
+	cursor: pointer;
+	margin: auto;
+	vertical-align: middle;
+	background-position: center;
+}
+
+#activeInfo {
+	color: white;
+	margin-left: 10px;
+	position: relative;
+	top: -10px;
+}
+
+#activeInfo>label {
+	font-size: 1.15em;
+	font-weight: bold;
+}
+
+#activeInfo>p {
+	margin: 3px auto;
+	vertical-align: middle;
+}
+
+#prizeInfo {
+	color: black;
+	/* font-weight: bold; */
+	padding: 10px;
+	background-color: #feebd4;
+}
+
+#prizeInfo>label {
+	font-size: 1.15em;
+	font-weight: bold;
+}
+
+#prizeInfo>p {
+	margin: 11px 0px 0px 0px;
+}
+
+#residueTime {
+	color: #e90000;
+	font-weight: bold;
+}
+
+#integral {
+	color: red;
+	font-size: 1.1em;
+	vertical-align: middle;
+	/*font-weight: bold;*/
+}
+
+
+/* footer */
+
+footer {
+	margin: 0 auto;
+}
+
+#footerBg {
+	width: 100%;
+	height: auto;
+}
+
+
+/* dialog */
+
+#prizeModel {
+	height: auto;
+	top: 140px;
+	border-radius: 5px;
+	position: absolute;
+	font-size: 20px;
+	background-color: #fafafc;
+	z-index: 1002;
+	left: 0;
+	right: 0;
+	margin: auto;
+	max-width:400px;
+}
+#prizeModel p>input {
+	height: 24px;
+	vertical-align: middle;
+	padding: 1px 3px;
+	font-size: .85em;
+	width: 180px;
+	border: 1px solid #ccc;
+}
+
+.noPrize {
+	width:80% !important;
+	max-width:330px;
+	min-width:230px;
+	height: 152px !important;
+	top: 0 !important;
+	bottom: 0;
+}
+
+.modelHeader {
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold;
+	text-align: center;
+	border-bottom: #e8e8ea solid 1px;
+	color: #303031;
+}
+
+.modelContent>p {
+	margin: 12px 0px 0px 0px;
+}
+
+.modelFooter {
+	height: 42px;
+	line-height: 37px;
+	border-top: #e8e8ea solid 1px;
+	text-align: center;
+}
+
+.modelBtn {
+	height: 38px;
+	margin-bottom:2px;
+	font-size: 15px;
+	/* font-weight: bold; */
+	color: #333;
+	cursor: pointer;
+	text-align: center;
+	display: inline-block;
+	width: 49%;
+}
+
+.modelBtn:hover {
+	background-color: #eee;
+}
+
+#prizeHint {
+	font-size: 0.75em;
+	color: #e50a0a;
+}
+
+#fullBlack {
+	z-index: 1001;
+	background-color: black;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	filter: alpha(opacity=50);
+	-moz-opacity: 0.5;
+	-khtml-opacity: 0.5;
+	-webkit-opacity: 0.5;
+	opacity: 0.5;
+}
+
+#dialogHint {
+	font-size: 0.7em;
+	color: red;
+}
+
+.inputSussess {
+	border:1px solid #3c763d !important;
+}
+
+.inputError {
+	border:1px solid #a94442 !important;
+}
+
+/* footer */
+.copyright{
+	text-align: center;
+	color:gray;
+	font-size:0.8em;
+	margin: 5px auto 8px auto;
+}
+
+/*pc & >480Px */
+
+@media only screen and (min-width:481px) {
+	#lottery {
+		background-position: center;
+		height: 672px;
+	}
+	#turntable {
+		height: 354px;
+		width: 354px;
+		padding-top: 249px;
+	}
+	#pointer {
+		height: 354px;
+		width: 90px;
+		line-height: 354px;
+	}
+	#activeInfo {
+		top: 20px;
+		width: 440px;
+		margin: auto;
+		left: 14px;
+	}
+	#prizeInfo {
+		width: 440px;
+		margin: auto;
+		padding-left: 30px;
+	}
+	footer {
+		width: 480px;
+	}
+}
+
+
+/* 321px~ 480px */
+
+@media only screen and (min-width:321px) and (max-width:480px) {
+	#lottery {
+		background-size: 100%;
+		min-height: 448px;
+	}
+	#pointer {
+		background-size: 100%;
+	}
+	#activeInfo {
+		top: 13px;
+	}
+	#prizeModel{
+		width:95%;
+	}
+}
+
+
+/* < 321px */
+
+@media only screen and (max-width: 320px) {
+	#lottery {
+		background-size: 100%;
+		width: 320px;
+		height: 448px;
+	}
+	#turntable {
+		height: 236px;
+		width: 236px;
+		padding-top: 166px;
+	}
+	#pointer {
+		background-size: 100%;
+		height: 236px;
+		width: 60px;
+		line-height: 236px;
+	}
+	#activeInfo {
+		top: 16px;
+		font-size: 0.8em;
+	}
+	#prizeModel{
+		width:96%;
+	}
+	.modelBtn{
+		width:45% !important;
+	}
+}

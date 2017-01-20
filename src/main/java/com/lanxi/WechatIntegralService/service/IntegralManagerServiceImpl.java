@@ -639,7 +639,7 @@ public class IntegralManagerServiceImpl {
             String totalPoints = queryResBody.getTotalPoints();
             //得到六个月前的日期
             String startDate = TimeUtil.getBeforeDate(-6);
-            logger.info("积分账户==" + integralAccount + "六个月前的日期" + startDate);
+            logger.info("积分账户==" + integralAccount + "六个月前的日期==" + startDate);
 
             String selectDate = req.getParameter("selectDate");
             //查询明细
@@ -721,7 +721,6 @@ public class IntegralManagerServiceImpl {
                     integralList.add(mapList.get(i));
                 }
             }
-
             //得到即将过期的积分
             ReturnMessage returnMessage1 = IntegralService.queryIntegral(integralAccount);
             if (!returnMessage1.getRetCode().equals("0000")) {
