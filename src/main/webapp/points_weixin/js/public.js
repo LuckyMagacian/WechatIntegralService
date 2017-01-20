@@ -102,7 +102,7 @@ function setCookie(cookieName, val) {
 
 /* 显示loading界面 */
 function showLoading() {
-	$('body').append('<div id="loadingToast">' +
+	$('body').append('<div class="loadingToast">' +
 		'<div class="weui-mask_transparent"></div>' +
 		'<div class="weui-toast">' +
 		'<i class="weui-loading weui-icon_toast"></i>' +
@@ -111,7 +111,7 @@ function showLoading() {
 
 /* 显示info界面 */
 function showInfo(msg) {
-	$('body').append('<div id="infoToast">' +
+	$('body').append('<div class="infoToast">' +
 		'<div class="weui-mask_transparent"></div>' +
 		'<div class="weui-toast">' +
 		'<i class="weui-icon-info-circle weui-icon_toast"></i>' +
@@ -123,7 +123,7 @@ function showInfo(msg) {
 
 /* 显示成功界面 */
 function showSuccess(msg) {
-	$('body').append('<div id="successToast">' +
+	$('body').append('<div class="successToast">' +
 		'<div class="weui-mask_transparent"></div>' +
 		'<div class="weui-toast">' +
 		'<i class="weui-icon-success-no-circle weui-icon_toast"></i>' +
@@ -140,22 +140,22 @@ function toFalsePage() {
 
 /* 失败提示 */
 function falseAlert(msgTitle, msg) {
-	$('body').append('<div id="falseAlert"><div class="weui-mask"></div>' +
+	$('body').append('<div class="falseAlert"><div class="weui-mask"></div>' +
 		'<div class="weui-dialog"><div class="weui-dialog__hd"><strong class="weui-dialog__title">' + msgTitle +
 		'</strong></div><div class="weui-dialog__bd">' + msg +
 		'</div><div class="weui-dialog__ft"><a href="javascript:removeMsg(\'falseAlert\');" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div></div></div>');
 }
 /* 信息提示 */
 function infoAlert(msgTitle, msg) {
-	$('body').append('<div id="infoAlert"><div class="weui-mask"></div>' +
+	$('body').append('<div class="infoAlert"><div class="weui-mask"></div>' +
 		'<div class="weui-dialog"><div class="weui-dialog__hd"><strong class="weui-dialog__title">' + msgTitle +
 		'</strong></div><div class="weui-dialog__bd">' + msg +
 		'</div><div class="weui-dialog__ft"><a href="javascript:removeMsg(\'infoAlert\');" class="weui-dialog__btn weui-dialog__btn_primary">确认</a></div></div></div>');
 }
 /* 去除弹出信息 */
 function removeMsg(id) {
-	$("#" + id).fadeOut('1000', function() {
-		$("#" + id).remove();
+	$("." + id).fadeOut('1000', function() {
+		$("." + id).remove();
 	});
 
 }

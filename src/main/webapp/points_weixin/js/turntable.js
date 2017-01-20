@@ -4,7 +4,7 @@ $(function() {
 	$("#pointer").rotate({
 		bind: {
 			click: clickFun = function() {
-				var integral = $("#integral").val();
+				var integral = $("#integral").text();
 				if(Number(integral) <= 10) {
 					falseAlert('积分不足', '您的账户积分少于10分,无法进行游戏');
 				} else {
@@ -338,5 +338,6 @@ function getInfo() {
 			integralValue = jsonStr.integralValue;
 		$("#nickname").text(name);
 		$("#integral").text(integralValue);
+		$('.loadingToast').remove();
 	});
 }
