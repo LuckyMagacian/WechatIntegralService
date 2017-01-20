@@ -68,27 +68,8 @@ public class TestDao {
 
     }
 
-    @Test
-    public void testService() {
-        ReturnMessage returnMessage = null;
-        try {
-            returnMessage = IntegralService.historyIntegral("101330326199412256115", "20161225");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("数据" + returnMessage.getObj());
-        HistoryResBody historyResBody = (HistoryResBody) returnMessage.getObj();
-        List<HistoryResBody.Item> list = historyResBody.getSerialList();
-        HistoryResBody.Item item = list.get(0);
-        HistoryResBody.Item item2 = list.get(1);
-        System.out.println(returnMessage.getRetCode());
-        System.out.println(item.getPointsVal());
-        System.out.println(Double.parseDouble(item.getPointsVal()));
-        System.out.println(TimeUtil.getBeforeDate(1));
-    }
+   
 
-<<<<<<< 6f53066ced1156f868a02d919969ac8a76305313
-	}
 	@Test
 	public void testService(){
 		ReturnMessage returnMessage= null;
@@ -105,13 +86,6 @@ public class TestDao {
 		System.out.println(returnMessage.getRetCode());
 		System.out.println(item.getPointsVal());
 		System.out.println(item2.getPointsVal());
-=======
-    @Test
-    public void testDao() {
-        ReturnMessage returnMessage = IntegralService.queryIntegral("101330326199412256115");
-        QueryResBody queryResBody=(QueryResBody)returnMessage.getObj();
-        System.out.println(queryResBody.getDetailList().get(1).getDeadline());
->>>>>>> 没有修改
 
     }
 }

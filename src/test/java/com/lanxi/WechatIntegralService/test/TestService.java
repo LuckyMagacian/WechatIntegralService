@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import com.lanxi.WechatIntegralService.entity.Game;
 import com.lanxi.WechatIntegralService.entity.Gift;
 import com.lanxi.WechatIntegralService.service.DaoService;
 import com.lanxi.WechatIntegralService.service.ElectronicCouponService;
@@ -43,5 +44,19 @@ public class TestService {
 		System.out.println(gift);
 		System.out.println(account);
 		System.out.println(game.dealEleGift(gift, account));
+	}
+	@Test 
+	public void testGame(){
+		Game game=dao.getGame("1002");
+		System.out.println(game.getPrize(0.0001));
+		System.out.println(game.getPrize(0.1));
+		System.out.println(game.getPrize(0.2));
+		System.out.println(game.getPrize(0.3));
+		System.out.println(game.getPrize(0.4));
+		System.out.println(game.getPrize(0.5));
+		System.out.println(game.getPrize(0.6));
+		System.out.println(game.getPrize(0.7));
+		System.out.println(game.getPrize(0.8));
+		System.out.println(game.getPrize(0.9));
 	}
 }
