@@ -249,6 +249,8 @@ public class IntegralGameServiceImpl implements IntegralGameService {
 						message.setRetMsg("电子券奖品处理完成!");
 					}
 				}else{
+					message.setRetCode("0000");
+					message.setRetMsg("电子券奖品处理完成!");
 					logger.info("流量话费充值成功!");
 				}
 			}
