@@ -68,16 +68,17 @@ public class Game {
 	}
 	
 	public Integer getPrize(Double prize){
-		if(prize<specialPrize)
+		Double temp=specialPrize;
+		if(prize<temp)
 			return 0;
-		prize+=specialPrize;
-		if(prize<firstPrize)
+		temp+=firstPrize;
+		if(prize<temp)
 			return 1;
-		prize+=firstPrize;
-		if(prize<secondPrize)
+		temp+=secondPrize;
+		if(prize<temp)
 			return 2;
-		prize+=secondPrize;
-		if(prize<thirdPrize)
+		temp+=secondPrize;
+		if(prize<temp)
 			return 3;
 			return null;
 	}
