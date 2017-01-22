@@ -36,7 +36,7 @@ function getCardList() {
 			var temp = '<li class="mui-table-view-cell" id=' + row.id + '><div class="mui-slider-right mui-disabled"><a class="mui-btn mui-btn-red">删除</a></div>' +
 				'<a class="weui-media-box weui-media-box_appmsg mui-slider-handle" href="javascript:cardDetail(\'' + row.id + '\')"><div class="weui-media-box__hd"><img class="weui-media-box__thumb" src="img/' + row.imageCode + '"/></div>' +
 				'<div class="weui-media-box__bd"><label>' + row.beiy + '</label><p class="cardConent"><span class="red">' + row.price + '元</span>代金券</p></div>' +
-				'<div class="cardDeadline"><span>有效期至:<label>' + datetimeSkyle(row.startTime) + '</label></span></div></a></li>';
+				'<div class="cardDeadline"><span>有效期至:<label>' + datetimeSkyle(row.overTime) + '</label></span></div></a></li>';
 			$("#cardSwipe").append(temp);
 		});
 	});
@@ -54,7 +54,7 @@ function cardDetail(id) {
 			type = obj.beiy; //'肯德基','哈根达斯'....
 		var cardDetailInfo = cardInfo[type];
 		$("#cardDetailCode").text(code);
-		if(typeof(cardDetailInfo) == "object") {
+		if(typeof(cardDetailInfo) != "undefined") {
 			$.each(cardDetailInfo, function(i) {
 				temp += '<p>' + (i + 1) + '、' + this + '</p>';
 			});
