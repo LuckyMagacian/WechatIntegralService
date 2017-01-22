@@ -986,7 +986,7 @@ public class IntegralManagerServiceImpl {
             //被赠送方手机号
             String phone = req.getParameter("phone");
             //短信内容
-            String content = "您的好友" + name + "向您赠送了积分，点此查看" + ConfigUtil.get("IntegrationPlatformUrl");
+            String content = "您的好友" + name + "向您赠送了积分,请登录微信公众号的“积分账户”查看。";
             logger.info("姓名" + name + "被赠送方手机号" + phone + "短信内容" + content);
             //发送短信
             String result = SendMessageUtil.sendMessage(content, phone);
