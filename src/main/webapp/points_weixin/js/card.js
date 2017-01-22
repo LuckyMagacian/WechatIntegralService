@@ -2,7 +2,7 @@
 toDelLi = null;
 
 $(function() {
-	//getCardList();
+	getCardList();
 
 	$('#cardSwipe').on('slideleft', '.mui-table-view-cell', function(event) {
 		var elem = this;
