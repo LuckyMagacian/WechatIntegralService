@@ -529,10 +529,10 @@ public class IntegralManagerServiceImpl {
             //头像
             String headimgUrl = webUserInfo.getHeadImgUrl();
             String phone = req.getParameter("phone");
-            String name = req.getParameter("name");
+            String nickName = req.getParameter("name");
             String idCard = req.getParameter("idcard");
             String integralAccount = "101" + idCard;
-            logger.info("手机号" + phone + "姓名" + name + "身份证号" + idCard);
+            logger.info("手机号" + phone + "姓名" + nickName + "身份证号" + idCard);
             //得到验证码状态
             String status = dao.getStatusByPhone(phone);
             if (status.equals(ValidCode.VALID_CODE_STATUS_OVERTIME) || status.equals(ValidCode.VALID_CODE_STATUS_USED)) {
@@ -585,6 +585,7 @@ public class IntegralManagerServiceImpl {
                 accountBinding.setHeadimgUrl(headimgUrl);
                 accountBinding.setIntegralAccount(integralAccount);
                 accountBinding.setBindingTime(TimeUtil.getDate());
+                accountBinding.setNickName(nickName);
                 //绑定账号插入绑定表中
                 bindingService.insert(accountBinding);
                 //修改短信验证码状态为已使用
