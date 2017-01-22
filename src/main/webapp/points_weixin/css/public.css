@@ -91,6 +91,20 @@ span.mui-icon-clear {
     color: white;
     margin-top: 24px;
 }
+.fullBlack {
+	z-index: 1001;
+	background-color: black;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	filter: alpha(opacity=60);
+	-moz-opacity: 0.6;
+	-khtml-opacity: 0.6;
+	-webkit-opacity: 0.6;
+	opacity: 0.6;
+}
 /* weui修正 */
 
 .weui-label {
