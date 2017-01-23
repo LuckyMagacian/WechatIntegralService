@@ -1,6 +1,6 @@
 (function() {
-/*	//getJsSign();
-	$("#copyLink").attr('data-clipboard-text','2312312312312');
+	getJsSign();
+/*	$("#copyLink").attr('data-clipboard-text','2312312312312');
 	var client = new ZeroClipboard(document.getElementById("copyLink"));
 	client.on("ready", function(readyEvent) {
 		alert(1);
@@ -13,7 +13,9 @@
 
 /* 获取js签名 */
 function getJsSign() {
-	ajaxPost('../getJsSign.do', {}, function(jsonStr) {
+	var urlLink=location.href;
+	console.log(urlLink);
+	ajaxPost('../getJsSign.do', {'url':urlLink}, function(jsonStr) {
 		wxApi(jsonStr);
 	});
 }
@@ -24,7 +26,7 @@ function wxApi(jsonStr) {
 		appId: 'wxf235257ae41bb440', // 必填，公众号的唯一标识
 		timestamp: jsonStr.timeStamp, // 必填，生成签名的时间戳
 		nonceStr: jsonStr.nonce, // 必填，生成签名的随机串
-		signature: jsonStr.sign, // 必填，签名，见附录1
+		signature:jsonStr.sign , // 必填，签名，见附录1
 		jsApiList: ['onMenuShareAppMessage'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
 	});
 	wx.ready(function() {

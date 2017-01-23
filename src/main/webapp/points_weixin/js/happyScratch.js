@@ -36,7 +36,7 @@ $(function() {
 						if(result > -1 && result < 4) {
 							$("#scratch").css("background-image", "url('img/happyScratch/" + pic[result] + "')");
 							timeFlag = 0;
-							showInfo('相应奖励已下发,积分下发至账户/卡券请至卡券包查看');
+							infoAlert('中奖了!','相应奖励已下发,积分下发至账户/卡券请至卡券包查看');
 							$("#reload").removeClass("hide");
 						} else {
 							$("#scratch").css("background-image", "url('img/happyScratch/" + pic[4] + "')");
