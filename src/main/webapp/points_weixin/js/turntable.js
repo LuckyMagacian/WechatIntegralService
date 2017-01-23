@@ -114,7 +114,7 @@ function getDialog(jsonStr) {
 				msg = "三等奖";
 				break;
 		}
-		retMsg=jsonStr.retMsg+"积分下发至账户/卡券请至卡券包查看";
+		retMsg=jsonStr.retMsg+"(注:积分下发至账户/卡券请至卡券包查看)";
 	} else {
 			msg="谢谢参与";
 			retMsg=jsonStr.retMsg;
