@@ -1040,7 +1040,7 @@ public class IntegralManagerServiceImpl {
             //将短信入库
             dao.insert(validCode);
         }
-        String codeMessage = "【蓝喜微管家】您的验证码为：" + code + "，请尽快输入，不要泄露。";
+        String codeMessage = "您的验证码为：" + code + "，请尽快输入，不要泄露。";
         //发送短信
         String result = SendMessageUtil.sendMessage(codeMessage, phone);
         ReturnMessage returnMessage = JSONObject.parseObject(result, ReturnMessage.class);

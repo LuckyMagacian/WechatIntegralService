@@ -14,9 +14,8 @@ import java.util.Map;
 public class SendMessageUtil {
     private static Logger logger=Logger.getLogger(SendMessageUtil.class);
     public static void main(String[] args) {
-//        SendMessageUtil sendMessageUtil=new SendMessageUtil();
-//        sendMessageUtil.sendMessage("6666","18368093686");
-        RandomUtil.getRandomNumber(6);
+        SendMessageUtil sendMessageUtil=new SendMessageUtil();
+        sendMessageUtil.sendMessage("6666","18368093686");
     }
     public static String sendMessage(String content,String phone){
         String result=null;
@@ -29,10 +28,10 @@ public class SendMessageUtil {
             map.put("mchtId","10");
             map.put("orderId","10"+TimeUtil.getDateTime()+"0000");
             map.put("mobile",phone);
-            map.put("content",content);
+            map.put("content","【蓝喜微管家】"+content);
             map.put("tradeDate",date);
             map.put("tradeTime",time);
-            map.put("tdId","1");
+            map.put("tdId","2");
             String signStr= SignUtil.mapSortToStringNoSign(map)+key;
             map.put("sign", SignUtil.md5LowerCase(signStr, "utf-8"));
             result=HttpUtil.getJsonByPost(url, map, "utf-8");
