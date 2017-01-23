@@ -7,6 +7,7 @@ oldSelectDate = '';
 			down: {
 				callback: function() {
 					getPointsList(1); //初次加载
+					mui('#pullRefresh').pullRefresh().endPulldownToRefresh();
 				}
 			},
 			up: {

@@ -272,6 +272,7 @@
 	left: 0;
 	right: 0;
 	margin-top: -8px;
+	background-size: contain;
 }
 
 #packetContent>p {
@@ -299,8 +300,18 @@
 	font-size: 2.6em;
 	padding: 20px 4px 10px 4px;
 }
-
-
+#redPacketDetailList .weui-cell .weui-cell__hd{
+	margin-right: 10px;
+}
+#redPacketDetailList .weui-cell .weui-cell__hd img{
+	width: 50px;
+	height:50px;
+	display: block;
+}
+#redPacketDetailList .weui-cell .weui-cell__bd p+p{
+	font-size: 13px;
+	color: #888888;
+}
 /* 账户绑定 */
 
 #binding label.mui-icon {

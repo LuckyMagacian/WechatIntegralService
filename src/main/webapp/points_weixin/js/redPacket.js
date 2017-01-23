@@ -8,10 +8,24 @@ function getRedPacketInfo(){
 	if(paramsArr.redPacketId=='' || paramsArr.redPacketId==undefined){
 		falseAlert('红包不存在','无效的红包,请关闭或返回上一页');
 	}else{
-		var uri='',
+		var uri='../redPacketInfo.do',
 			redPacketId=paramsArr.redPacketId;
 		ajaxPost(uri,{'redPacketId':redPacketId},function(jsonStr){
+			var $obj=jsonStr.obj,
+				nickName=$obj.nickName,
+				redPacketName=$obj.redPacketName,
+				img=$obj.beiy,
+				redPacketCount=$obj.redPacketCount,
+				totalIntegral=$obj.totalIntegral;
 			
+			$("#packetHeadPic").css('background-image','url('+img+')');
+			$("#packetUser").text(nickName);
+			$("#packetinfo").text(redPacketName);
+			$("#redPacketNum").text(redPacketCount);
+			$("#redPacketTotal").text(totalIntegral);
+			if(redPacketLessCount==0){
+				infoAlert('领光啦!','红包已经全部被领走了,下次早点哦');
+			}
 		});
 	}
 }
@@ -24,7 +38,7 @@ function unpackRedPacket(){
 		var uri='../unpackRedPacket.do',
 			redPacketId=paramsArr.redPacketId;
 		ajaxPost(uri,{'redPacketId':redPacketId},function(jsonStr){
-			
+			location.href='redPacketList.html?redPacketId='+paramsArr.redPacketId;
 		});
 	}
 }

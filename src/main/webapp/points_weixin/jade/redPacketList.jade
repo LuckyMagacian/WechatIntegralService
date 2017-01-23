@@ -9,28 +9,28 @@ block content
     #packetBgAdd(style="background-color: white;")
       #packetHeadPic
     p(style="padding-top: 10px;")
-      span#packetUser Mr.rice
+      span#packetUser &nbsp;
       span 的红包
     p.rice-color-777
-      span#packetinfo 积分红包,速来领取
+      span#packetinfo &nbsp;
     P
-      span#getPoints 88
+      span#getPoints &nbsp;
       span 积分
     .weui-cells__title
       span 共
-      span#packetNum 10
+      span#packetNum &nbsp;
       span 个红包,剩余
-      span#packetHave 4
+      span#packetHave &nbsp;
       span 个
-    .weui-cells
-      .weui-cell
+    .weui-cells#redPacketDetailList
+      //-.weui-cell
         .weui-cell__hd(style="position: relative;margin-right: 10px;")
           img(src="images/pic_160.png" style="width: 50px;height:50px;display: block")
         .weui-cell__bd
           p Mr.rice
           p(style="font-size: 13px;color: #888888;") 11:11:11
         .weui-cell__ft 100积分
-      .weui-cell
+      //-.weui-cell
         .weui-cell__hd(style="position: relative;margin-right: 10px;")
           img(src="images/pic_160.png" style="width: 50px;height:50px;display: block")
         .weui-cell__bd
@@ -41,4 +41,4 @@ block content
       a(href="pointsDetail.html") 查看积分明细
 block JS
   script(src="js/public.js")
-  script(src="js/pointsPacket.js")
+  script(src="js/redPacketList.js")
