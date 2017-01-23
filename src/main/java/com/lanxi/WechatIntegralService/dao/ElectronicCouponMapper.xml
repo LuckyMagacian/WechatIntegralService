@@ -62,6 +62,7 @@ from wechat_integral_service_electronic_coupon
 <if test="description != null"> and description = #{description}  </if>  
 <if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
+ORDER BY over_time
 </select>
 <resultMap id="electronicCouponMap" type="com.lanxi.WechatIntegralService.entity.ElectronicCoupon">
 <result property="id" 			column="id"></result>

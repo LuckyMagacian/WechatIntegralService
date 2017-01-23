@@ -2,7 +2,9 @@ package com.lanxi.wechat.entity.token;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
@@ -70,14 +72,19 @@ public class JSSign {
 		nonce=nonce==null?RandomUtil.getRandomChar(4):nonce;
 		url=url==null?ConfigUtil.get("webTokenTo"):url;
 		List<String> list=new ArrayList<>();
-		list.add(nonce);
-		list.add(timeStamp);
-		list.add(url);
-		list.add(ticket.getTicket());
+		Map<String , String> map=new HashMap<>();
+		list.add("nonce");
+		map.put("nonce",nonce);
+		list.add("timestamp");
+		map.put("timestamp",timeStamp);
+		list.add("url");
+		map.put("url",url);
+		list.add("jsapi_ticket");
+		map.put("jsapi_ticket",ticket.getTicket());
 		Collections.sort(list);
 		StringBuffer temp=new StringBuffer();
 		for(String each:list)
-			temp.append(each);
+			temp.append(each+"="+map.get(each));
 		setSign(ValidServerService.sign(temp.toString()));
 		return getSign();
 	}

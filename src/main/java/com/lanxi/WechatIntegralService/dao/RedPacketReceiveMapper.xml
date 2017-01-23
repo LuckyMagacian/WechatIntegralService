@@ -57,6 +57,7 @@ from wechat_integral_service_red_packet_receive
 <if test="remark != null"> and remark = #{remark}  </if>  
 <if test="beiy != null"> and beiy = #{beiy}  </if>  
 </where>
+ORDER BY receive_time
 </select>
 <resultMap id="redPacketreceiveMap" type="com.lanxi.WechatIntegralService.entity.RedPacketReceive">
 <result property="redPacketId" 			column="red_packet_id"></result>
