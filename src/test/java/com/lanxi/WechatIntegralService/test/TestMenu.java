@@ -46,16 +46,11 @@ public class TestMenu {
 		LocationSelectButton locationButton=new LocationSelectButton();
 		locationButton.setName("提莫队长前来报道");
 		locationButton.setKey("timo");
-		ViewButton viewButton=new ViewButton();
-		viewButton.setName("网页授权a");		
-		viewButton.setUrl(TokenManager.generatorWebTokenCodeUrl(null,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 		MenuManager.addButton(locationButton);
-		MenuManager.addButton(viewButton);
 		ViewButton viewButton1=new ViewButton();
-		viewButton1.setName("積分綁定");		
+		viewButton1.setName("积分服务平台");		
 		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/intoJf.do",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 		MenuManager.addButton(viewButton1);
-		System.out.println(viewButton.toJson());
 		System.out.println(viewButton1.toJson());
 		System.out.println(MenuManager.createMenu());
 	}

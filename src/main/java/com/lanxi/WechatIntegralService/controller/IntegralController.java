@@ -31,7 +31,7 @@ public class IntegralController {
             else
                 rep.sendRedirect("points_weixin/404.html");
         } catch (Exception e) {
-            throw new AppException("進入主頁異常！", e);
+            throw new AppException("进入主页异常！", e);
         }
     }
     // 	 @RequestMapping("/userInfo")

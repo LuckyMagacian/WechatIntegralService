@@ -48,6 +48,7 @@ public class TestService {
 	@Test 
 	public void testGame(){
 		Game game=dao.getGame("1002");
+		assert game==null:"游戏为空";
 		System.out.println(game.getPrize(0.0001));
 		System.out.println(game.getPrize(0.1));
 		System.out.println(game.getPrize(0.2));

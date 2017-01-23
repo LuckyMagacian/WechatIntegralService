@@ -119,6 +119,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			redPacket.setStartTime(TimeUtil.formatDate(new Date(startTime)));
 			redPacket.setOverTime(TimeUtil.formatDate(new Date(overTime)));
 			redPacket.setReceivers("");
+			redPacket.setBeiy(account.getHeadimgUrl());
 			logger.info("生成红包:"+redPacket);
 			dao.addIntegralRedPacket(redPacket);
 			returnMessage.setRetCode("0000");
@@ -208,6 +209,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			receive.setReceiveTime(TimeUtil.getDateTime());
 			receive.setRedPacketId(redPacket.getRedPacketId());
 			receive.setNickName(account.getNickName());
+			receive.setBeiy(account.getHeadimgUrl());
 			if(redPacket.getRedPacketLessCount()==redPacket.getRedPacketCount())
 				redPacket.setReceivers(account.getOpenId());
 			else
