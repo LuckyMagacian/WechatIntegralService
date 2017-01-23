@@ -1,3 +1,5 @@
+oldSelectDate = '';
+
 (function() {
 	mui.init({
 		pullRefresh: {
@@ -24,10 +26,16 @@
 function getPointsList(page) {
 	var token = getCookie('token'),
 		uri = '../integralQuery.do',
-		$json = {
-			'token': token,
-			'page': page
-		};
+		selectDate = $('#selectDate', parent.document).val();
+	selectDate = (selectDate == '全部' ? '' : selectDate);
+	if(selectDate!=oldSelectDate){//用户重新选择了日期
+		page=1;
+	}
+	$json = {
+		'token': token,
+		'page': page,
+		'selectDate':selectDate
+	};
 	ajaxPost(uri, $json, function(jsonStr) {
 		var $list = jsonStr.message,
 			totalPage = jsonStr.totalPage;
@@ -50,6 +58,9 @@ function getPointsList(page) {
 			});
 			if(page == 1) { //第一页
 				$("#pointsDetailTr").after(temp);
+				mui('#pullRefresh').pullRefresh().endPullupToRefresh();
+				mui('#pullRefresh').pullRefresh().endPulldownToRefresh();
+				oldSelectDate=selectDate;
 			} else {
 				$("#pointsDetailTable").append(temp);
 			}
@@ -58,7 +69,7 @@ function getPointsList(page) {
 			} else {
 				mui('#pullRefresh').pullRefresh().endPullupToRefresh(false);
 			}
-			$("#page").val(1+page);
+			$("#page").val(1 + page);
 		}
 	});
 }
