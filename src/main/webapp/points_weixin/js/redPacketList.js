@@ -12,7 +12,6 @@ function getPacketDetail(){
 			today=parseInt(new Date().getDate());
 		$("#getPoints").text(jsonStr.retMsg);
 		$("#redPacketDetailList").html('');
-		alert(JSON.stringify(rows));
 		$.each(rows, function(i) {
 			var row=rows[i];
 			var integral=row.integral,
@@ -25,9 +24,9 @@ function getPacketDetail(){
 			}else{
 				receiveTime=receiveTime.substr(8,2)+':'+receiveTime.substr(10,2)+':'+receiveTime.substr(12,2);
 			}
+			nickName=(nickName==undefined)?' ':nickName;
 			var temp='<div class="weui-cell"><div class="weui-cell__hd"><img src="'+img+'"/></div><div class="weui-cell__bd"><p>'+
 			nickName+'</p><p>'+receiveTime+'</p></div><div class="weui-cell__ft">'+integral+'积分</div></div>';
-			alert(temp);
 			$("#redPacketDetailList").append(temp);
 		});
 	});
@@ -49,13 +48,11 @@ function getRedPacketInfo(){
 				redPacketCount=$obj.redPacketCount,
 				redPacketLessCount=$obj.redPacketLessCount;
 			nickName=(nickName==undefined || nickName=='')?'您好友':nickName;
-			alert(JSON.stringify(jsonStr));
 			$("#packetHeadPic").css('background-image','url('+img+')');
 			$("#packetUser").text(nickName);
 			$("#packeInfo").text(redPacketName);
 			$("#packetNum").text(redPacketCount);
 			$("#packetHave").text(redPacketLessCount);
-			alert(1);
 			getPacketDetail();
 		});
 	}
