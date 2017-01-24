@@ -13,7 +13,8 @@
 
 /* 获取js签名 */
 function getJsSign() {
-	var urlLink=location.href;
+	var urlLink=location.href.split('#')[0];
+	alert(location.href.split('#')[0]);
 	console.log(urlLink);
 	ajaxPost('../getJsSign.do', {'url':urlLink}, function(jsonStr) {
 		wxApi(jsonStr);
