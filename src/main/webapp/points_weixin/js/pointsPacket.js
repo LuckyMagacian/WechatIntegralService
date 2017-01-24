@@ -64,12 +64,12 @@ function sendPacket() {
 				redPacketUrl = obj.redPacketUrl,
 				redPacketName = obj.redPacketName, //红包备注(标题)
 				nickName = (obj.nickName == undefined) ? '您的好友' : obj.nickName,
-				imgUrl = projectStr + 'img/icon-redPacket.png',
+				img = projectStr + 'img/icon-redPacket.png',
 				shareStr = {
 					title: redPacketName, // 分享标题
 					desc: nickName + '发来的积分红包', // 分享描述
 					link: redPacketUrl, // 分享链接
-					imgUrl: imgUrl, // 分享图标
+					imgUrl: img, // 分享图标
 					success: function() {
 						showSuccess('积分红包分享成功!');
 					},
@@ -77,6 +77,7 @@ function sendPacket() {
 						showInfo('未分享的红包将在24小时后退回您的账户');
 					}
 				};
+			alert(JSON.stringify(shareStr));
 			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
 			wx.onMenuShareAppMessage(shareStr); //分享给朋友
 			wx.onMenuShareQQ(shareStr);
