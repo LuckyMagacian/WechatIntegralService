@@ -50,9 +50,9 @@ function getPointsList(page) {
 					occurDate = datetimeSkyle(row.occurDate),
 					pointType = row.pointType;
 				if(pointsVal < 0) {
-					temp += '<tr><td>' + occurDate + '</td><td class="red">' + pointsVal + '</td><td>' + pointType + '</td></tr>';
+					temp += '<tr><td>' + occurDate + '</td><td class="red">' + pointsVal + '</td><td>积分扣减</td></tr>';
 				} else if(pointsVal > 0) {
-					temp += '<tr><td>' + occurDate + '</td><td class="green">' + pointsVal + '</td><td>' + pointType + '</td></tr>';
+					temp += '<tr><td>' + occurDate + '</td><td class="green">' + pointsVal + '</td><td>积分增加</td></tr>';
 				} else {
 					temp += '<tr><td>' + occurDate + '</td><td>' + pointsVal + '</td><td>' + pointType + '</td></tr>';
 				}

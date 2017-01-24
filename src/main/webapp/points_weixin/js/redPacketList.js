@@ -24,7 +24,7 @@ function getPacketDetail(){
 			}else{
 				receiveTime=receiveTime.substr(8,2)+':'+receiveTime.substr(10,2)+':'+receiveTime.substr(12,2);
 			}
-			nickName=(nickName==undefined)?' ':nickName;
+			nickName=(nickName==undefined)?'&nbsp;':nickName;
 			var temp='<div class="weui-cell"><div class="weui-cell__hd"><img src="'+img+'"/></div><div class="weui-cell__bd"><p>'+
 			nickName+'</p><p>'+receiveTime+'</p></div><div class="weui-cell__ft">'+integral+'积分</div></div>';
 			$("#redPacketDetailList").append(temp);

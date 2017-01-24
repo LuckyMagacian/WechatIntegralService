@@ -43,12 +43,6 @@ function sendPacket() {
 	var redPacketCount = $("#redPacketCount").val(),
 		redPacketIntegral = $("#redPacketIntegral").val(),
 		redPacketName = $("#redPacketName").val();
-	var $json = {
-			'redPacketCount': redPacketCount,
-			'redPacketIntegral': redPacketIntegral,
-			'redPacketName': redPacketName
-		},
-		uri = '../grantRedPacket.do';
 	if(!vailPositiveIntegral(redPacketCount)) {
 		showInfo('红包个数只能为正整数');
 		warnInfo('redPacketCount');
@@ -59,15 +53,21 @@ function sendPacket() {
 		if(redPacketName == '') {
 			redPacketName = '积分红包,速来领取';
 		}
+		var $json = {
+				'redPacketCount': redPacketCount,
+				'redPacketIntegral': redPacketIntegral,
+				'redPacketName': redPacketName
+			},
+			uri = '../grantRedPacket.do';
 		ajaxPost(uri, $json, function(jsonStr) {
 			var obj = jsonStr.obj,
 				redPacketUrl = obj.redPacketUrl,
-				redPacketName=obj.redPacketName,//红包备注(标题)
-				nickName=(obj.nickName==undefined)?'您的好友':obj.nickName,
-				imgUrl=projectStr+'img/icon-redPacket.png',
+				redPacketName = obj.redPacketName, //红包备注(标题)
+				nickName = (obj.nickName == undefined) ? '您的好友' : obj.nickName,
+				imgUrl = projectStr + 'img/icon-redPacket.png',
 				shareStr = {
 					title: redPacketName, // 分享标题
-					desc: nickName+'发来的积分红包', // 分享描述
+					desc: nickName + '发来的积分红包', // 分享描述
 					link: redPacketUrl, // 分享链接
 					imgUrl: imgUrl, // 分享图标
 					success: function() {
@@ -77,8 +77,8 @@ function sendPacket() {
 						showInfo('未分享的红包将在24小时后退回您的账户');
 					}
 				};
-			wx.onMenuShareTimeline(shareStr);//分享到朋友圈
-			wx.onMenuShareAppMessage(shareStr);//分享给朋友
+			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
+			wx.onMenuShareAppMessage(shareStr); //分享给朋友
 			wx.onMenuShareQQ(shareStr);
 			wx.onMenuShareWeibo(shareStr);
 			wx.onMenuShareQZone(shareStr);

@@ -15,6 +15,7 @@ function getRedPacketInfo(){
 				nickName=$obj.nickName,
 				redPacketName=$obj.redPacketName,
 				img=$obj.beiy,
+				redPacketLessCount=$obj.redPacketLessCount,
 				redPacketCount=$obj.redPacketCount,
 				totalIntegral=$obj.totalIntegral;
 			nickName=(nickName==undefined || nickName=='')?'您好友':nickName;
