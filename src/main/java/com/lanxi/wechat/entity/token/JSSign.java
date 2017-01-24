@@ -69,12 +69,14 @@ public class JSSign {
 	public String generatorSign(){
 		ticket=ticket==null?TokenManager.getJsTicketMetaData():ticket;
 		timeStamp=timeStamp==null?System.currentTimeMillis()+"":timeStamp;
-		nonce=nonce==null?RandomUtil.getRandomChar(4):nonce;
+		nonce=nonce==null?RandomUtil.getRandomChar(10):nonce;
 		url=url==null?ConfigUtil.get("webTokenTo"):url;
+		if(timeStamp.length()>10)
+			timeStamp=timeStamp.substring(0, 10);
 		List<String> list=new ArrayList<>();
 		Map<String , String> map=new HashMap<>();
-		list.add("nonce");
-		map.put("nonce",nonce);
+		list.add("noncestr");
+		map.put("noncestr",nonce);
 		list.add("timestamp");
 		map.put("timestamp",timeStamp);
 		list.add("url");
@@ -83,8 +85,14 @@ public class JSSign {
 		map.put("jsapi_ticket",ticket.getTicket());
 		Collections.sort(list);
 		StringBuffer temp=new StringBuffer();
-		for(String each:list)
+		boolean flag=true;
+		for(String each:list){
+			if(!flag)
+				temp.append('&');
+			flag=false;
 			temp.append(each+"="+map.get(each));
+		}
+		System.out.println(temp.toString());
 		setSign(ValidServerService.sign(temp.toString()));
 		return getSign();
 	}
