@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,7 @@ import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
 import com.lanxi.wechat.service.ValidServerService;
+import com.mysql.jdbc.log.Log;
 /**
  * 测试用-控制器类
  * @author 1
@@ -31,6 +33,8 @@ import com.lanxi.wechat.service.ValidServerService;
  */
 @Controller
 public class TestController {
+	private static Logger logger=Logger.getLogger(TestController.class);
+	
 	static{
 		try {
 			Class.forName("com.lanxi.wechat.manageer.TokenManager");
@@ -45,18 +49,15 @@ public class TestController {
 	@Resource
 	private QuartzService quartz;
 	
-	@RequestMapping("/redPacketOverTime.do")
 	public void redpacketOvertime(){
 		System.out.println("红包过期任务");
 		quartz.redPacketOverTime();
 	}
-	@RequestMapping("/couponOverTime.do")
 	public void couponOverTime(){
 		System.out.println("卡券过期任务");
 		quartz.couponOverTime();
 	}
 	
-	@RequestMapping("/validService.do")
 	@ResponseBody
 	public String validService(HttpServletRequest req,HttpServletResponse res){
 		System.out.println("request in");
@@ -114,7 +115,6 @@ public class TestController {
 		res.getOutputStream().close();
 		return "finish";
 	}
-	@RequestMapping("/codeIn.do")
 	@ResponseBody
 	public void getCode(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		System.out.println("code info ");
@@ -148,15 +148,18 @@ public class TestController {
 	@ResponseBody
 	public String getJsSign(HttpServletRequest req,HttpServletResponse res) throws Exception{
 		req.setCharacterEncoding("utf-8");
+		logger.info("前端请求jsskd签名!");
 		String nonce=req.getParameter("nonce");
 		String timestamp=req.getParameter("timestamp");
 		String url=req.getParameter("url");
+		logger.info("签名参数传入:nonce="+nonce+",timestamp="+timestamp+",url="+url);
 		JSSign sign=TokenManager.getJsSign(nonce, timestamp, url);
-		System.err.println(sign);
+		logger.info("获取的签名:"+sign);
 		ReturnMessage message=new ReturnMessage();
 		message.setRetCode("0000");
 		message.setRetMsg("6666");
 		message.setObj(sign);
+		logger.info("返回信息:"+message.toJson());
 		return message.toJson();
 	}
 }

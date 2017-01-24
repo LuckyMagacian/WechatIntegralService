@@ -92,7 +92,6 @@ public class JSSign {
 			flag=false;
 			temp.append(each+"="+map.get(each));
 		}
-		System.out.println(temp.toString());
 		setSign(ValidServerService.sign(temp.toString()));
 		return getSign();
 	}

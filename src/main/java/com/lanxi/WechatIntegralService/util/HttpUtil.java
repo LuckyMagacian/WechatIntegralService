@@ -326,7 +326,6 @@ public class HttpUtil {
 			HttpClient client = HttpClientBuilder.create().build();
 			HttpGet get = new HttpGet();
 			get.setURI(new URI(url));
-			System.out.println(url);
 			HttpResponse res = client.execute(get);
 			BufferedReader buffReader = new BufferedReader(
 					new InputStreamReader(res.getEntity().getContent(), charset));
