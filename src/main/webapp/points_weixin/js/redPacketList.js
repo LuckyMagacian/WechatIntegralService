@@ -4,7 +4,7 @@ $(function(){
 });
 
 /* 获取抢红包列表信息 */
-fucntion getPacketDetail(){
+function getPacketDetail(){
 	var uri='../redPacketDetail.do',
 		redPacketId=paramsArr.redPacketId;
 	ajaxPost(uri,{'redPacketId':redPacketId},function(jsonStr){
