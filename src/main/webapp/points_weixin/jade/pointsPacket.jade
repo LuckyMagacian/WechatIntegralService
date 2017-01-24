@@ -39,9 +39,9 @@ block content
       .weui-dialog
         .weui-dialog__hd
           strong.weui-dialog__title 红包已生成
-        .weui-dialog__bd 复制红包链接发送给好友
+        .weui-dialog__bd 可通过分享发送给好友
         .weui-dialog__ft
-          a#copyLink.weui-dialog__btn.weui-dialog__btn_primary 复制链接
+          a.weui-dialog__btn.weui-dialog__btn_primary(href="javascript:closeDialog('packet')") 确定
 block JS
   //- script(src="js/ZeroClipboard.min.js")
   script(src="js/public.js")
