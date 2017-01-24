@@ -15,6 +15,7 @@
 function getJsSign() {
 	var urlLink=location.href.split('#')[0];
 	alert(location.href.split('#')[0]);
+	urlLink=encodeURIComponent(urlLink);
 	console.log(urlLink);
 	ajaxPost('../getJsSign.do', {'url':urlLink}, function(jsonStr) {
 		wxApi(jsonStr);
