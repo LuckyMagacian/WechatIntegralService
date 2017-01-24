@@ -63,13 +63,12 @@ function sendPacket() {
 			var obj = jsonStr.obj,
 				redPacketUrl = obj.redPacketUrl,
 				redPacketName=obj.redPacketName,//红包备注(标题)
-				nickName=obj.nickName,
-				redPacketId=obj.redPacketId,
-				imgUrl=redPacketUrl+projectStr+'/img/icon-redPacket.png',
+				nickName=(obj.nickName==undefined)?'您的好友':obj.nickName,
+				imgUrl=projectStr+'img/icon-redPacket.png',
 				shareStr = {
 					title: redPacketName, // 分享标题
 					desc: nickName+'发来的积分红包', // 分享描述
-					link: redPacketUrl+projectStr+'redPacket.html?redPacketId='+redPacketId, // 分享链接
+					link: redPacketUrl, // 分享链接
 					imgUrl: imgUrl, // 分享图标
 					success: function() {
 						showSuccess('积分红包分享成功!');

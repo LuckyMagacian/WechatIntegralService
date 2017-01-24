@@ -10,14 +10,14 @@ function getRedPacketInfo(){
 	}else{
 		var uri='../redPacketInfo.do',
 			redPacketId=paramsArr.redPacketId;
-		ajaxPost(uri,{'redPacketId':redPacketId},function(jsonStr){
+		ajaxPost(uri,{'redPacketId':redPacketId,'token':paramsArr.token},function(jsonStr){
 			var $obj=jsonStr.obj,
 				nickName=$obj.nickName,
 				redPacketName=$obj.redPacketName,
 				img=$obj.beiy,
 				redPacketCount=$obj.redPacketCount,
 				totalIntegral=$obj.totalIntegral;
-			
+			nickName=(nickName==undefined || nickName=='')?'您好友':nickName;
 			$("#packetHeadPic").css('background-image','url('+img+')');
 			$("#packetUser").text(nickName);
 			$("#packetinfo").text(redPacketName);
@@ -37,7 +37,7 @@ function unpackRedPacket(){
 	}else{
 		var uri='../unpackRedPacket.do',
 			redPacketId=paramsArr.redPacketId;
-		ajaxPost(uri,{'redPacketId':redPacketId},function(jsonStr){
+		ajaxPost(uri,{'redPacketId':redPacketId,'token':paramsArr.token},function(jsonStr){
 			location.href='redPacketList.html?redPacketId='+paramsArr.redPacketId;
 		});
 	}
