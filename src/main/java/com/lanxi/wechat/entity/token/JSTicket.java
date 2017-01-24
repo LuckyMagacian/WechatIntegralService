@@ -25,6 +25,8 @@ public class JSTicket {
 		setType(JSTICKET_TYPE);
 	}
 	public String getTicket() {
+		if((Long.parseLong(overTime)-System.currentTimeMillis())<140000)
+			generatorTicket();
 		return ticket;
 	}
 	public void setTicket(String ticket) {
