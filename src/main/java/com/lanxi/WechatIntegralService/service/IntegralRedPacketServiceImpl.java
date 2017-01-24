@@ -232,7 +232,8 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			}
 			// TODO
 			if(redPacket.getReceivers().contains(userId)){
-				returnMessage.setRetCode("3306");
+				//3306
+				returnMessage.setRetCode("0000");
 				returnMessage.setRetMsg("红包已领过!");
 				returnMessage.setObj(redPacketId);
 				returnMessage.setToken(token.toToken());
