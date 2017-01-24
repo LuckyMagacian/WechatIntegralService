@@ -77,7 +77,6 @@ function sendPacket() {
 						showInfo('未分享的红包将在24小时后退回您的账户');
 					}
 				};
-			alert(JSON.stringify(shareStr));
 			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
 			wx.onMenuShareAppMessage(shareStr); //分享给朋友
 			wx.onMenuShareQQ(shareStr);
