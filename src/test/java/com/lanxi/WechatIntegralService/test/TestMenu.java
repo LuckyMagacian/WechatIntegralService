@@ -49,7 +49,7 @@ public class TestMenu {
 		MenuManager.addButton(locationButton);
 		ViewButton viewButton1=new ViewButton();
 		viewButton1.setName("积分服务平台");		
-		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/intoJf.do",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
+		viewButton1.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/intoJf.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 		MenuManager.addButton(viewButton1);
 		System.out.println(viewButton1.toJson());
 		System.out.println(MenuManager.createMenu());
@@ -60,7 +60,6 @@ public class TestMenu {
 	}
 	@Test
 	public void makeToken() throws Exception{
-		TokenManager.getAccessToken();
-		TokenManager.saveAccessToken();
+		System.out.println(TokenManager.generatorWebTokenCodeUrl(ConfigUtil.get("unpackRedPacketUrl")+"redPacketId="+110,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 	}
 }

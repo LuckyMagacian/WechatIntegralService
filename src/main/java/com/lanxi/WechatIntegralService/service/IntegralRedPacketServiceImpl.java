@@ -25,11 +25,62 @@ import com.lanxi.integral.report.ReduceResBody;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
+import com.lanxi.wechat.entity.token.WebAccessToken;
+import com.lanxi.wechat.entity.token.WebAccessTokenRequst;
+import com.lanxi.wechat.manageer.TokenManager;
 @Service("integralRedPacketService")
 public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 	@Resource
 	private DaoService dao;
 	private static Logger logger=Logger.getLogger(IntegralRedPacketServiceImpl.class);
+	
+	public ReturnMessage toUnpackRedPacket(HttpServletRequest req,HttpServletResponse res){
+			logger.info("用户尝试进入拆红包页面!");
+			ReturnMessage message=null;
+			EasyToken token=null;
+		try {
+			message=new ReturnMessage();
+			req.setCharacterEncoding("utf-8");
+			String redPacketId=req.getParameter("redPacketId");
+			String code=req.getParameter("code");
+			logger.info("请求信息code="+code+",redPacketId="+redPacketId);
+			if(code==null||code.isEmpty()){
+				message.setRetCode("3311");
+				message.setRetMsg("未收到code,无法获取网页授权!");
+				message.setObj(null);
+				logger.info("未收到code,无法获取网页授权!");
+				return message;
+			}
+			WebAccessToken webAccessToken=TokenManager.generatorWebAccessTokenMetadata(code);
+			if(webAccessToken==null){
+				message.setRetCode("3312");
+				message.setRetMsg("授权失败!");
+				message.setObj(null);
+				logger.info("授权失败!");
+				return message;
+			}
+			logger.info("请求授权成功:"+webAccessToken);
+			String openId=webAccessToken.getOpenId();
+			logger.info("用户开放微信号:"+openId);
+			token=new EasyToken();
+			token.setInfo(openId);
+			token.setValidTo(System.currentTimeMillis() + Long.parseLong(ConfigUtil.get("easyTokenExpiryTime")) * 1000);
+			message.setRetCode("0000");
+			message.setToken(token.toToken());
+			message.setRetMsg("获取微信号成功!");
+			logger.info("获取微信号成功!");
+			message.setObj(redPacketId);
+		} catch (Exception e) {
+			message.setRetCode("9999");
+			message.setRetMsg("进入拆红包页面异常!");
+			message.setObj(null);
+			message.setToken(token==null?null:token.toToken());
+			throw new AppException("进入拆红包页面异常!",e);
+		}
+		return message;
+	}
+	
+	
 	@SuppressWarnings("finally")
 	@Override
 	public String grantRedPacket(HttpServletRequest req,HttpServletResponse res) {
@@ -112,7 +163,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			redPacket.setRedPacketLessCount(redPacket.getRedPacketCount());
 			redPacket.setTotalIntegral(Integer.parseInt(integral));
 			redPacket.setLessIntegral(redPacket.getTotalIntegral());
-			redPacket.setRedPacketUrl(ConfigUtil.get("unpackRedPacketUrl")+"redPacketId="+redPacket.getRedPacketId());
+			redPacket.setRedPacketUrl(TokenManager.generatorWebTokenCodeUrl(ConfigUtil.get("unpackRedPacketUrl")+"redPacketId="+redPacket.getRedPacketId(),WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 			redPacket.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_NORML);
 			Long startTime=System.currentTimeMillis();
 			Long overTime=startTime+Long.parseLong(ConfigUtil.get("redPacketExpiryTime"))*1000;
