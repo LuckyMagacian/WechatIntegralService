@@ -280,6 +280,7 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 				receive.setIntegral((int)(redPacket.getLessIntegral()*percent));	
 				redPacket.setLessIntegral(redPacket.getLessIntegral()-receive.getIntegral());
 				redPacket.setRedPacketLessCount(redPacket.getRedPacketLessCount()-1);
+				logger.info("拆得积分:"+receive.getIntegral());
 			}
 			returnMessage=IntegralService.addIntegral(account.getIntegralAccount(), receive.getIntegral()+"");
 			logger.info("积分增加结果:"+returnMessage);
