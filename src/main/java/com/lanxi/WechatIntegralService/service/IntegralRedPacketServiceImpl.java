@@ -116,8 +116,8 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 			redPacket.setRedPacketStatus(IntegralRedPacket.RED_PACKET_STATUS_NORML);
 			Long startTime=System.currentTimeMillis();
 			Long overTime=startTime+Long.parseLong(ConfigUtil.get("redPacketExpiryTime"))*1000;
-			redPacket.setStartTime(TimeUtil.formatDate(new Date(startTime)));
-			redPacket.setOverTime(TimeUtil.formatDate(new Date(overTime)));
+			redPacket.setStartTime(TimeUtil.formatDateTime(new Date(startTime)));
+			redPacket.setOverTime(TimeUtil.formatDateTime(new Date(overTime)));
 			redPacket.setReceivers("");
 			redPacket.setBeiy(account.getHeadimgUrl());
 			logger.info("生成红包:"+redPacket);
