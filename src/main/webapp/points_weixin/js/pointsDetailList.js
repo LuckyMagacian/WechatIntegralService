@@ -58,8 +58,7 @@ function getPointsList(page) {
 				}
 			});
 			if(page == 1) { //第一页
-				$("#pointsDetailTable").html('<tr id="#pointsDetailTr"><td>时间</td><td>积分值</td><td>类型</td></tr>');
-				$("#pointsDetailTr").after(temp);
+				$("#pointsDetailTable").html('<tr id="#pointsDetailTr"><td>时间</td><td>积分值</td><td>类型</td></tr>'+temp);
 				mui('#pullRefresh').pullRefresh().endPullupToRefresh();
 				mui('#pullRefresh').pullRefresh().endPulldownToRefresh();
 				oldSelectDate=selectDate;
