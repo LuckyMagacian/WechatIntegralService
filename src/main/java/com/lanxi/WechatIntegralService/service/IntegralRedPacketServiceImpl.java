@@ -276,9 +276,13 @@ public class IntegralRedPacketServiceImpl implements IntegralRedPacketService {
 				logger.info("拆得积分:"+receive.getIntegral());
 			}else{
 				Random random=new Random();
+				int min=1;
+				int max=redPacket.getLessIntegral()*5/redPacket.getRedPacketLessCount();
 				Double percent=random.nextInt(100)/100D;
-				receive.setIntegral((int)(redPacket.getLessIntegral()*percent));	
+				receive.setIntegral((int)(max*percent));	
+				receive.setIntegral(receive.getIntegral()<min?min:receive.getIntegral());
 				redPacket.setLessIntegral(redPacket.getLessIntegral()-receive.getIntegral());
+				
 				redPacket.setRedPacketLessCount(redPacket.getRedPacketLessCount()-1);
 				logger.info("拆得积分:"+receive.getIntegral());
 			}
