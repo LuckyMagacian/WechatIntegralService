@@ -1,12 +1,12 @@
 package com.lanxi.WechatIntegralService.service;
 
-import com.lanxi.WechatIntegralService.dao.AccountBindingDao;
-import com.lanxi.WechatIntegralService.entity.AccountBinding;
+import javax.annotation.Resource;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.lanxi.WechatIntegralService.dao.AccountBindingDao;
+import com.lanxi.WechatIntegralService.entity.AccountBinding;
 
 /**
  * Created by Administrator on 2017/1/3.

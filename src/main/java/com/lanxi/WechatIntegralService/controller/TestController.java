@@ -11,21 +11,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.service.QuartzService;
+import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
+import com.lanxi.wechat.entity.automessage.TextAutoMessage;
+import com.lanxi.wechat.entity.menuevent.ClickMenuEvent;
+import com.lanxi.wechat.entity.menuevent.LocationSelectMenuEvent;
+import com.lanxi.wechat.entity.menuevent.ScanPushMenuEvent;
+import com.lanxi.wechat.entity.menuevent.ScanWaitMenuEvent;
+import com.lanxi.wechat.entity.menuevent.SystemCameraAndPhotosMenuEvent;
+import com.lanxi.wechat.entity.menuevent.SystemCameraMenuEvent;
+import com.lanxi.wechat.entity.menuevent.ViewMenuEvent;
+import com.lanxi.wechat.entity.menuevent.WechatCameraMenuEvent;
+import com.lanxi.wechat.entity.menuevent.WechatMenuEvent;
 import com.lanxi.wechat.entity.message.TextMessage;
 import com.lanxi.wechat.entity.token.JSSign;
 import com.lanxi.wechat.entity.token.WebAccessToken;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
 import com.lanxi.wechat.service.ValidServerService;
-import com.mysql.jdbc.log.Log;
 /**
  * 测试用-控制器类
  * @author 1
@@ -79,24 +92,84 @@ public class TestController {
 		if(strBuffer.toString().trim().equals(""))
 			return test.validService(req, res);
 		in.close();
-
+		try{
+		logger.info("尝试处理消息");
+		Element ele=DocumentHelper.parseText(strBuffer.toString().trim()).getRootElement();
+		if(ele.selectSingleNode("//Event")!=null&&ele.selectSingleNode("//EventKey")!=null){
+			logger.info("收到菜单事件消息!");
+			String type=ele.selectSingleNode("//Event").getText();
+			String key =ele.selectSingleNode("//EventKey").getText();
+			switch (type) {
+			case WechatMenuEvent.MENU_EVENT_CLICK:
+				logger.info("收到点击下了消息!");
+				ClickMenuEvent clickEvent=new ClickMenuEvent();
+				clickEvent.fromString(strBuffer.toString().trim());
+				switch (key) {
+				case "product":
+					NewsAutoMessage back1=new NewsAutoMessage();
+					back1.setArticleCount(1+"");
+					NewsAutoMessage.Item item=new NewsAutoMessage.Item();
+					item.setTitle("产品中心");
+					item.setPicUrl("http://www.188lanxi.com/weixinlanxi/img/cultureShow6.png");
+					item.setDescription("杭州蓝喜信息技术有限公司是一家专业从事移动互联网技术开发、便民金融服务、通讯运营商与银行业务外包的移动互联网服务运营商。");
+					item.setUrl("http://mp.weixin.qq.com/s/uwKg2uAqhZdNr0DtKBYTDg");
+					back1.setCreateTime(clickEvent.getCreateTime());
+					back1.setFromUserName(clickEvent.getToUserName());
+					back1.setToUserName(clickEvent.getFromUserName());
+					back1.addArticle(item);
+					HttpUtil.postXml(back1.toElement().asXML(), res,"utf-8");
+					break;
+				case "server":
+					logger.info("用户获取客服联系方式!");
+					TextAutoMessage back2=new TextAutoMessage();
+					back2.setFromUserName(clickEvent.getToUserName());
+					back2.setToUserName(clickEvent.getFromUserName());
+					back2.setContent("【客户服务热线：4000552797】");
+					HttpUtil.postXml(back2.toElement().asXML(), res,"utf-8");
+					break;
+				default:return null;
+				}
+				break;
+			case WechatMenuEvent.MENU_EVENT_VIEW:
+				ViewMenuEvent viewEvent=new ViewMenuEvent();
+				viewEvent.fromString(strBuffer.toString().trim());
+				break;	
+			case WechatMenuEvent.MENU_EVENT_SCANCODE_PUSH:
+				ScanPushMenuEvent scanPushEvent=new ScanPushMenuEvent();
+				scanPushEvent.fromString(strBuffer.toString().trim());
+				break;
+			case WechatMenuEvent.MENU_EVENT_SCANCODE_WAITMSG:
+				ScanWaitMenuEvent scanWaitEvent=new ScanWaitMenuEvent();
+				scanWaitEvent.fromString(strBuffer.toString().trim());
+				break;
+			case WechatMenuEvent.MENU_EVENT_PIC_SYSPHOTO:
+				SystemCameraMenuEvent systemCameraEvent=new SystemCameraMenuEvent();
+				systemCameraEvent.fromString(strBuffer.toString().trim());
+				break;
+			case WechatMenuEvent.MENU_EVENT_PIC_PHOTO_OR_ALBUM:
+				SystemCameraAndPhotosMenuEvent systemCameraAndPhotosMenuEvent=new SystemCameraAndPhotosMenuEvent();
+				systemCameraAndPhotosMenuEvent.fromString(strBuffer.toString().trim());
+				break;
+			case WechatMenuEvent.MENU_EVENT_PIC_WEIXIN:
+				WechatCameraMenuEvent wechatCameraEvent=new WechatCameraMenuEvent();
+				wechatCameraEvent.fromString(strBuffer.toString().trim());
+				break;
+			case WechatMenuEvent.MENU_EVENT_LOCATION_SELECT:
+				LocationSelectMenuEvent locationSelectEvent=new LocationSelectMenuEvent();
+				locationSelectEvent.fromString(strBuffer.toString().trim());
+				break;
+			default:return null;
+			}
+		}
+		
+		}catch (Exception e) {
+			throw new AppException("消息转dom元素异常",e);
+		}
 		
 		if(strBuffer.toString().trim().contains("百度")){
 			TextMessage textMessage=new TextMessage();
 			textMessage.fromString(strBuffer.toString().trim());
 			System.out.println(textMessage.toElement().asXML());
-			
-//			LinkMessage linkMessage=new LinkMessage();
-//			linkMessage.setCreateTime(textMessage.getCreateTime());
-//			linkMessage.setDescription("百度一下,你就知道!");
-//			linkMessage.setFromUserName(textMessage.getToUserName());
-//			linkMessage.setToUserName(textMessage.getFromUserName());
-//			linkMessage.setMsgId(textMessage.getMsgId());
-//			linkMessage.setUrl("www.baidu.com");
-//			linkMessage.setTitle("百度");
-//			System.out.println(linkMessage.toElement().asXML());
-//			
-//			System.out.println(HttpUtil.postXml(linkMessage.toElement().asXML(), res, "utf-8"));;
 			NewsAutoMessage back=new NewsAutoMessage();
 			back.setArticleCount(1+"");
 			NewsAutoMessage.Item item=new NewsAutoMessage.Item();
@@ -161,5 +234,41 @@ public class TestController {
 		message.setObj(sign);
 		logger.info("返回信息:"+message.toJson());
 		return message.toJson();
+	}
+	@RequestMapping("/getAccessToken.do")
+	@ResponseBody
+	public String getAccessToken(HttpServletRequest req,HttpServletResponse res){
+		try {
+			req.setCharacterEncoding("utf-8");
+			return TokenManager.getAccessToken();
+		} catch (Exception e) {
+			throw new AppException("外部组件请求微信授权异常",e);
+		}
+	}
+	@RequestMapping("/getWebAccessToken.do")
+	@ResponseBody
+	public String getWebAccessToken(HttpServletRequest req,HttpServletResponse res){
+		try {
+			req.setCharacterEncoding("utf-8");
+			String openId=req.getParameter("openId");
+			String code  =req.getParameter("code");
+			Object obj=TokenManager.generatorWebAccessTokenMetadata(code);
+			return JSONObject.toJSONString(obj);
+		} catch (Exception e) {
+			throw new AppException("外部组件请求微信网页授权异常",e);
+		}
+	}
+	
+	
+	@RequestMapping("/toPlane.do")
+	public void toPlaneGameInde(HttpServletRequest req,HttpServletResponse res) throws IOException{
+		logger.info("玩游戏咯!");
+		try {
+			req.setCharacterEncoding("utf-8");
+			String code =req.getParameter("code");
+			res.sendRedirect("http://162749ty99.iask.in/weixinlanxi/oauth/authorization.do?code="+code);
+		} catch (Exception e) {
+			throw new AppException("跳转游戏页面异常",e);
+		}
 	}
 }

@@ -1,10 +1,8 @@
 package com.lanxi.integral.report;
 
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 
-import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 /**
  * 积分系统通讯报文

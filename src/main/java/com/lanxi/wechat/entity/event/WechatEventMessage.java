@@ -26,9 +26,9 @@ public abstract class WechatEventMessage extends BaseMessage{
 	public static final String EVENT_VIEW="VIEW";
 	
 	/**菜单事件消息类型-点击菜单拉取消息*/
-	public static final String MENU_EVENT_CLICK="click";
+	public static final String MENU_EVENT_CLICK="CLICK";
 	/**菜单事件消息类型-点击菜单跳转链接*/
-	public static final String MENU_EVENT_VIEW="view";
+	public static final String MENU_EVENT_VIEW="VIEW";
 	/**菜单事件消息类型-扫码推事件*/
 	public static final String MENU_EVENT_SCANCODE_PUSH="scancode_push";
 	/**菜单事件消息类型-扫码推事件且弹出“消息接收中”*/

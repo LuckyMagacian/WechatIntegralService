@@ -21,7 +21,7 @@ public class UserManager {
 		String urlStr=ConfigUtil.get("userBaseInfoGetUrl");
 		urlStr=urlStr.replace("ACCESS_TOKEN",TokenManager.getAccessToken());
 		urlStr=urlStr.replace("OPENID",userId);
-		return HttpUtil.get(urlStr, "utf-8");
+		return HttpUtil.get(urlStr, "utf-8").replaceAll("\ue412","*");
 	}
 	/**
 	 * 通过用户微信号(对当前公众号)获取用户网页信息

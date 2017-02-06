@@ -12,6 +12,12 @@ import com.alibaba.fastjson.JSONObject;
  *
  */
 public class WebUserInfo {
+	/**用户信息-性别-未知*/
+	public static final String USER_INFO_SEX_UNKNOWN="0";
+	/**用户信息-性别-男*/
+	public static final String USER_INFO_SEX_MALE="1";
+	/**用户信息-性别-女*/
+	public static final String USER_INFO_SEX_FEMALE="2";
 	/**昵称*/
 	private String nickName;		
 	/**性别*/

@@ -150,6 +150,8 @@ public class AccessToken {
 	public static AccessToken loadToken(){
 		try{
 			File file=FileUtil.getFileOppositeClassPath("/properties/token.properties");
+			if(file==null||!file.exists()||file.isDirectory())
+				return null;
 			Properties properties=new Properties();
 			properties.load(new FileInputStream(file));
 			System.out.println("load token :"+properties);

@@ -1,11 +1,9 @@
 package com.lanxi.WechatIntegralService.util;
 
-import org.apache.log4j.Logger;
-import org.junit.Test;
-import org.springframework.context.support.StaticApplicationContext;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 /**
  * Created by Administrator on 2016/12/30.
@@ -13,7 +11,8 @@ import java.util.Map;
 //发送短信验证码
 public class SendMessageUtil {
     private static Logger logger=Logger.getLogger(SendMessageUtil.class);
-    public static void main(String[] args) {
+    @SuppressWarnings("static-access")
+	public static void main(String[] args) {
         SendMessageUtil sendMessageUtil=new SendMessageUtil();
         sendMessageUtil.sendMessage("6666","18368093686");
     }

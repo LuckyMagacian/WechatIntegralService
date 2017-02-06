@@ -35,7 +35,7 @@ public class TokenManager {
 	static{
 		webAccessTokenRequst=new WebAccessTokenRequst();
 		webAccessTokens=new HashMap<>();
-		loadAccessToken();
+//		loadAccessToken();
 	}
 	
 	private TokenManager(){
@@ -146,7 +146,7 @@ public class TokenManager {
 			accessToken.generatorToken();
 		}
 		if(accessToken.getOverTime().compareTo(System.currentTimeMillis()+"")<1){
-			System.out.println("token over time !");
+			System.out.println("token over time ! fresh token !");
 			accessToken=new AccessToken();
 			accessToken.generatorToken();
 			// TODO  删除保存token
@@ -170,6 +170,10 @@ public class TokenManager {
 	 */
 	public static String loadAccessToken(){
 		accessToken=AccessToken.loadToken();
+		if(accessToken==null){
+			accessToken=new AccessToken();
+			accessToken.generatorToken();
+		}
 		return accessToken.getAccessToken();
 	}
 	

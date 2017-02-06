@@ -1,10 +1,6 @@
 package com.lanxi.WechatIntegralService.service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.lanxi.WechatIntegralService.entity.IntegralTransfer;
-import com.lanxi.integral.report.ReturnMessage;
 
 public interface IntegralManagerService {
 	public void getUserInfo(HttpServletRequest req);

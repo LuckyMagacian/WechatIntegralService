@@ -8,12 +8,11 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class UserInfo extends BaseUserInfo {
 	/**用户信息-性别-未知*/
-	public static final String USER_INOF_SEX_UNKNOWN="0";
+	public static final String USER_INFO_SEX_UNKNOWN="0";
 	/**用户信息-性别-男*/
-	public static final String USER_INOF_SEX_MAN	="1";
+	public static final String USER_INFO_SEX_MAN	="1";
 	/**用户信息-性别-女*/
-	public static final String USER_INOF_SEX_WOMAN	="2";
-	
+	public static final String USER_INFO_SEX_WOMAN	="2";
 	/**用户昵称*/
 	private String nickName;	
 	/**用户性别*/
