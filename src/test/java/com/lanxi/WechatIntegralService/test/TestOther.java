@@ -115,6 +115,11 @@ public class TestOther {
 		System.out.println(IntegralService.historyIntegral("101331082199311236217",""));
 		System.err.println(IntegralService.transferIntegral("101331082199311236217","101330501199309081314", "8"));
 		System.out.println(IntegralService.historyIntegral("101331082199311236217",""));
-
+	}
+	@Test
+	public void testToken(){
+        EasyToken.setPrivateKey(ConfigUtil.get("easyTokenKey"));
+		String token="y8KcKMpmRnTstQMptik7TASEhmUSMEMsptULhoujs9dPKpIXBhHDKzOiLkrjEIZkIZKkPms6rR9kKetudBKhhyhwP3HAHelXD1nzM3ddoEP5OSbGKIA/l2/G9E83ru7N.0b6b45e2637fbf45dd0c24bfea635628";
+		System.out.println(EasyToken.flipToken(token));
 	}
 }
