@@ -45,6 +45,7 @@ function getRedPacketInfo() {
 						showInfo('积分红包未分享!');
 					}
 				};
+				alert(shareStr);
 				wx.onMenuShareTimeline(shareStr); //分享到朋友圈
 				wx.onMenuShareAppMessage(shareStr); //分享给朋友
 				wx.onMenuShareQQ(shareStr);
