@@ -303,45 +303,6 @@ function datetimeSkyle(str) {
 	return newStr;
 }
 
-/* 获取js签名 */
-function getJsSign(func) {
-	var urlLink = location.href.split('#')[0];
-	ajaxPost('../getJsSign.do', {
-		'url': urlLink
-	}, function(jsonStr) {
-		wxApi(jsonStr.obj, func);
-	});
-}
-
-function wxApi(jsonStr,func) {
-	var wxStr = {
-		debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-		appId: 'wxf235257ae41bb440', // 必填，公众号的唯一标识
-		timestamp: jsonStr.timeStamp, // 必填，生成签名的时间戳
-		nonceStr: jsonStr.nonce, // 必填，生成签名的随机串
-		signature: jsonStr.sign, // 必填，签名，见附录1
-		jsApiList: [
-				'checkJsApi',
-				'onMenuShareTimeline',
-				'onMenuShareAppMessage',
-				'onMenuShareQQ',
-				'onMenuShareWeibo',
-				'onMenuShareQZone'
-			] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
-	};
-	wx.config(wxStr);
-	wx.ready(function() {
-		console.log('config信息验证通过');
-		if(typeof(func) == "function") {
-			func();
-		}
-	});
-	wx.error(function(res) {
-		console.log(res);
-	});
-
-}
-
 function getOpenLink(redPacketId) {
 	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://yangyuanjian.imwork.net/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
 		temp2 = '&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
