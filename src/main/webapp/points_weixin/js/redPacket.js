@@ -34,7 +34,7 @@ function getRedPacketInfo() {
 				title: redPacketName, // 分享标题
 				desc: nickName + '发来的积分红包', // 分享描述
 				link: getOpenLink(redPacketId), // 分享链接
-				imgUrl: img, // 分享图标
+				imgUrl: projectStr + 'img/icon-redPacket.png', // 分享图标
 				success: function() {
 					showSuccess('积分红包分享成功!');
 				},
