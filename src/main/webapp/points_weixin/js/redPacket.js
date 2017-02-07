@@ -47,7 +47,7 @@ function getRedPacketInfo() {
 			wx.onMenuShareQQ(shareStr);
 			wx.onMenuShareWeibo(shareStr);
 			wx.onMenuShareQZone(shareStr);
-			alert(JSON.stringify(shareStr));
+			console.log(JSON.stringify(shareStr));
 		});
 	}
 }
