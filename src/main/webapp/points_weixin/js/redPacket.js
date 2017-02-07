@@ -30,28 +30,23 @@ function getRedPacketInfo() {
 			if(redPacketLessCount == 0) {
 				infoAlert('领光啦!', '红包已经全部被领走了,下次早点哦');
 			}
-			ajaxPost('../generatorRedPacketUrl.do', {
-				'redPacketId': redPacketId
-			}, function(jsonStr) {
-				var shareStr = {
-					title: redPacketName, // 分享标题
-					desc: nickName + '发来的积分红包', // 分享描述
-					link: jsonStr.obj, // 分享链接
-					imgUrl: img, // 分享图标
-					success: function() {
-						showSuccess('积分红包分享成功!');
-					},
-					cancel: function() {
-						showInfo('积分红包未分享!');
-					}
-				};
-				alert(shareStr);
-				wx.onMenuShareTimeline(shareStr); //分享到朋友圈
-				wx.onMenuShareAppMessage(shareStr); //分享给朋友
-				wx.onMenuShareQQ(shareStr);
-				wx.onMenuShareWeibo(shareStr);
-				wx.onMenuShareQZone(shareStr);
-			});
+			var shareStr = {
+				title: redPacketName, // 分享标题
+				desc: nickName + '发来的积分红包', // 分享描述
+				link: getOpenLink(redPacketId), // 分享链接
+				imgUrl: img, // 分享图标
+				success: function() {
+					showSuccess('积分红包分享成功!');
+				},
+				cancel: function() {
+					showInfo('积分红包未分享!');
+				}
+			};
+			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
+			wx.onMenuShareAppMessage(shareStr); //分享给朋友
+			wx.onMenuShareQQ(shareStr);
+			wx.onMenuShareWeibo(shareStr);
+			wx.onMenuShareQZone(shareStr);
 		});
 	}
 }

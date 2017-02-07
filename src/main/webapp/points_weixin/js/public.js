@@ -341,3 +341,9 @@ function wxApi(jsonStr) {
 	});
 
 }
+
+function getOpenLink(redPacketId){
+	var temp1='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://yangyuanjian.imwork.net/WechatIntegralService//toUnpackRedPacket.do?redPacketId=',
+		temp2='&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
+	return temp1+redPacketId+temp2;
+}

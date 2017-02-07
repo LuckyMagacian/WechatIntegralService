@@ -17,7 +17,7 @@ function getPacketDetail() {
 		$("#redPacketDetailList").html('');
 		$.each(rows, function(i) {
 			var row = rows[i];
-			integral = row.integral,
+			var integral = row.integral,
 				nickName = row.nickName,
 				img = row.beiy,
 				receiveTime = row.receiveTime;
@@ -32,29 +32,23 @@ function getPacketDetail() {
 				nickName + '</p><p>' + receiveTime + '</p></div><div class="weui-cell__ft">' + integral + '积分</div></div>';
 			$("#redPacketDetailList").append(temp);
 		});
-
-		ajaxPost('../generatorRedPacketUrl.do', {
-			'redPacketId': redPacketId
-		}, function(jsonStr) {
-			var shareStr = {
-				title: '积分红包', // 分享标题
-				desc: nickName + '发来的积分红包', // 分享描述
-				link: jsonStr.obj, // 分享链接
-				imgUrl: img, // 分享图标
-				success: function() {
-					showSuccess('积分红包分享成功!');
-				},
-				cancel: function() {
-					showInfo('积分红包未分享!');
-				}
-			};
-			alert(shareStr);
-			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
-			wx.onMenuShareAppMessage(shareStr); //分享给朋友
-			wx.onMenuShareQQ(shareStr);
-			wx.onMenuShareWeibo(shareStr);
-			wx.onMenuShareQZone(shareStr);
-		});
+		var shareStr = {
+			title: '积分红包,速来领取', // 分享标题
+			desc: nickName + '发来的积分红包', // 分享描述
+			link: getOpenLink(redPacketId), // 分享链接
+			imgUrl: img, // 分享图标
+			success: function() {
+				showSuccess('积分红包分享成功!');
+			},
+			cancel: function() {
+				showInfo('积分红包未分享!');
+			}
+		};
+		wx.onMenuShareTimeline(shareStr); //分享到朋友圈
+		wx.onMenuShareAppMessage(shareStr); //分享给朋友
+		wx.onMenuShareQQ(shareStr);
+		wx.onMenuShareWeibo(shareStr);
+		wx.onMenuShareQZone(shareStr);
 	});
 }
 
