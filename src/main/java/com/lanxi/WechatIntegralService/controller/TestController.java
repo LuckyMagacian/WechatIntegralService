@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.lanxi.WechatIntegralService.service.QuartzService;
 import com.lanxi.WechatIntegralService.util.AppException;
+import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.HttpUtil;
 import com.lanxi.integral.report.ReturnMessage;
 import com.lanxi.wechat.entity.automessage.NewsAutoMessage;
@@ -36,6 +37,7 @@ import com.lanxi.wechat.entity.menuevent.WechatMenuEvent;
 import com.lanxi.wechat.entity.message.TextMessage;
 import com.lanxi.wechat.entity.token.JSSign;
 import com.lanxi.wechat.entity.token.WebAccessToken;
+import com.lanxi.wechat.entity.token.WebAccessTokenRequst;
 import com.lanxi.wechat.manageer.TokenManager;
 import com.lanxi.wechat.manageer.UserManager;
 import com.lanxi.wechat.service.ValidServerService;
@@ -270,5 +272,27 @@ public class TestController {
 		} catch (Exception e) {
 			throw new AppException("跳转游戏页面异常",e);
 		}
+	}
+	@RequestMapping("/generatorRedPacketUrl.do")
+	@ResponseBody
+	public String generatorRedPacketUrl(HttpServletRequest req,HttpServletResponse res){
+		ReturnMessage returnMessage=new ReturnMessage();
+		try {
+			req.setCharacterEncoding("utf-8");
+			String redPacketId=req.getParameter("redPacketId");
+			logger.info("请求生成红包分享链接:redpacketId="+redPacketId);
+			String result= TokenManager.generatorWebTokenCodeUrl(ConfigUtil.get("unpackRedPacketUrl")+"redPacketId="+redPacketId,WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL);
+			returnMessage.setRetCode("0000");
+			returnMessage.setRetMsg("生成红包url成功");
+			returnMessage.setToken(null);
+			returnMessage.setObj(result);
+		} catch (Exception e) {
+			returnMessage.setRetCode("9999");
+			returnMessage.setToken(null);
+			returnMessage.setObj(null);
+			returnMessage.setRetMsg("生成红包url失败");
+			throw new AppException("生成红包分享链接异常",e);
+		}
+		return returnMessage.toJson();
 	}
 }
