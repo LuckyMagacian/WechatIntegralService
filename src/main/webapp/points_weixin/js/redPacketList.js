@@ -1,8 +1,8 @@
-$(function() {
+(function() {
 	paramsArr = getParam();
 	//getRedPacketInfo();
 	getJsSign(getRedPacketInfo);
-});
+})();
 
 /* 获取抢红包列表信息 */
 function getPacketDetail() {
@@ -71,12 +71,12 @@ function getRedPacketInfo() {
 					showInfo('积分红包未分享!');
 				}
 			};
-			alert(JSON.stringify(shareStr));
 			wx.onMenuShareTimeline(shareStr); //分享到朋友圈
 			wx.onMenuShareAppMessage(shareStr); //分享给朋友
 			wx.onMenuShareQQ(shareStr);
 			wx.onMenuShareWeibo(shareStr);
 			wx.onMenuShareQZone(shareStr);
+			alert(JSON.stringify(shareStr));
 		});
 	}
 }

@@ -1,7 +1,7 @@
-$(function() {
+(function() {
 	paramsArr = getParam();
 	getJsSign(getRedPacketInfo);
-});
+})();
 
 /* 获取红包信息 */
 function getRedPacketInfo() {
@@ -14,7 +14,7 @@ function getRedPacketInfo() {
 			'redPacketId': redPacketId,
 			'token': paramsArr.token
 		}, function(jsonStr) {
-			$obj = jsonStr.obj,
+			var $obj = jsonStr.obj,
 				nickName = $obj.nickName,
 				redPacketName = $obj.redPacketName,
 				img = $obj.beiy,
@@ -47,6 +47,7 @@ function getRedPacketInfo() {
 			wx.onMenuShareQQ(shareStr);
 			wx.onMenuShareWeibo(shareStr);
 			wx.onMenuShareQZone(shareStr);
+			alert(JSON.stringify(shareStr));
 		});
 	}
 }
