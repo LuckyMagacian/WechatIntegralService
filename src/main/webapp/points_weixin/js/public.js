@@ -1,27 +1,27 @@
 /* 配置文件 */
 msgResetTime = 10; //秒
-projectStr="http://yangyuanjian.imwork.net/WechatIntegralService/points_weixin/";
-cardInfo=new Array();
-cardInfo['肯德基']=new Array('客户可凭串码至指定门店使用（机场、高铁及部分景区门店无法使用），<strong class="red">客户直接向收银员出示串码即可</strong>；指定门店信息详见门店列表。',
-							'串码使用规则：不兑现、不找零、不拼单，不与其他优惠同时使用；','串码有效期：自客户收到串码起60天内有效；','使用电子券串码无需预约、不限时段，如遇消费高峰时段可能需要排队；',
-							'成功兑换电子礼券后，不可退货、换货，在门店使用电子礼券支付部分不开具发票。');
-cardInfo['哈根达斯']=new Array('客户可凭串码至指定门店使用（机场、高铁及部分景区门店无法使用），<strong class="red">客户直接向收银员出示串码即可</strong>；指定门店信息详见门店列表。',
-							'串码使用规则：不兑现、不找零、不拼单，不与其他优惠同时使用；','串码有效期：自客户收到串码起60天内有效；','使用电子券串码无需预约、不限时段，如遇消费高峰时段可能需要排队；',
-							'成功兑换电子礼券后，不可退货、换货，在门店使用电子礼券支付部分不开具发票。');
-cardInfo['搜狐视频']=new Array('客户可凭串码登陆搜狐视频网站或客户端使用。','使用流程：<strong class="red">登陆搜狐视频网站或客户端→点击“开通会员”→支付方式选择“兑换码”→输入兑换码“立即激活”</strong>。',
-							'串码有效期：自客户收到串码起60天内有效；一经兑换，不可退货、换货。','串码使用规则：不兑现、不找零，不与其他优惠同时使用。','成功兑换后，不可退货、换货，电子礼券支付部分不开具发票。');
+projectStr = "http://yangyuanjian.imwork.net/WechatIntegralService/points_weixin/";
+cardInfo = new Array();
+cardInfo['肯德基'] = new Array('客户可凭串码至指定门店使用（机场、高铁及部分景区门店无法使用），<strong class="red">客户直接向收银员出示串码即可</strong>；指定门店信息详见门店列表。',
+	'串码使用规则：不兑现、不找零、不拼单，不与其他优惠同时使用；', '串码有效期：自客户收到串码起60天内有效；', '使用电子券串码无需预约、不限时段，如遇消费高峰时段可能需要排队；',
+	'成功兑换电子礼券后，不可退货、换货，在门店使用电子礼券支付部分不开具发票。');
+cardInfo['哈根达斯'] = new Array('客户可凭串码至指定门店使用（机场、高铁及部分景区门店无法使用），<strong class="red">客户直接向收银员出示串码即可</strong>；指定门店信息详见门店列表。',
+	'串码使用规则：不兑现、不找零、不拼单，不与其他优惠同时使用；', '串码有效期：自客户收到串码起60天内有效；', '使用电子券串码无需预约、不限时段，如遇消费高峰时段可能需要排队；',
+	'成功兑换电子礼券后，不可退货、换货，在门店使用电子礼券支付部分不开具发票。');
+cardInfo['搜狐视频'] = new Array('客户可凭串码登陆搜狐视频网站或客户端使用。', '使用流程：<strong class="red">登陆搜狐视频网站或客户端→点击“开通会员”→支付方式选择“兑换码”→输入兑换码“立即激活”</strong>。',
+	'串码有效期：自客户收到串码起60天内有效；一经兑换，不可退货、换货。', '串码使用规则：不兑现、不找零，不与其他优惠同时使用。', '成功兑换后，不可退货、换货，电子礼券支付部分不开具发票。');
 $(function() {
 	mui.init();
 });
 
 /* 跳转 */
 function hrefTo(linkStr) {
-	if(linkStr==''){
+	if(linkStr == '') {
 		showInfo('功能开发中');
-	}else{
+	} else {
 		location.href = linkStr + '.html';
 	}
-	
+
 }
 /* 显示弹窗 */
 function showDialog(str) {
@@ -43,7 +43,7 @@ function getParam() {
 			var param = this.split('=');
 			paramsArr[param[0]] = param[1];
 		});
-		console.log('[PARAMS]:'+JSON.stringify(paramsArr));
+		console.log('[PARAMS]:' + JSON.stringify(paramsArr));
 		return paramsArr;
 	}
 }
@@ -55,7 +55,7 @@ function getParam() {
  * successFunc:成功时触发函数,带一个参数jsonStr
  * */
 function ajaxPost(url, dataJson, successFunc) {
-	if(dataJson.token=='' || dataJson.token==undefined){
+	if(dataJson.token == '' || dataJson.token == undefined) {
 		dataJson.token = getCookie('token');
 	}
 	console.log('[ajax]' + url + ',params:' + JSON.stringify(dataJson));
@@ -74,7 +74,7 @@ function ajaxPost(url, dataJson, successFunc) {
 					setCookie('token', jsonStr.token);
 				}
 				if(typeof successFunc == 'function') {
-					console.log('[AJAX res]:'+JSON.stringify(jsonStr));
+					console.log('[AJAX res]:' + JSON.stringify(jsonStr));
 					successFunc(jsonStr);
 				}
 			} else {
@@ -94,7 +94,7 @@ function ajaxPost(url, dataJson, successFunc) {
 		error: function(e) {
 			removeMsg('loadingToast');
 			falseAlert('请求错误', '发送请求失败');
-			console.log('[ERROR]:'+JSON.stringify(e));
+			console.log('[ERROR]:' + JSON.stringify(e));
 		}
 	});
 }
@@ -215,7 +215,7 @@ function countDown(time, id, func) {
 	if(time > 0) {
 		$(idStr).text("重新获取(" + time + "s)");
 		setTimeout(function() {
-			countDown(time - 1, id,func);
+			countDown(time - 1, id, func);
 		}, 1000);
 	} else {
 		if(typeof(func) == 'function')
@@ -289,15 +289,15 @@ function valiIdcard(value) {
  * 时间字符串格式化
  * 20160505->2016-05-05
  */
-function datetimeSkyle(str){
-	var length=str.length,
-		newStr=null;
-	if(length==8){//yyyymmdd
-		newStr=str.substr(0,4)+'-'+str.substr(4,2)+'-'+str.substr(6,2);
-	}else if(length==14){//yyyymmddhhmmss
-		newStr=str.substr(0,4)+'-'+str.substr(4,2)+'-'+str.substr(6,2);
-		newStr+=' '+str.substr(8,2)+':'+str.substr(10,2)+':'+str.substr(12,2);
-	}else{
+function datetimeSkyle(str) {
+	var length = str.length,
+		newStr = null;
+	if(length == 8) { //yyyymmdd
+		newStr = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2);
+	} else if(length == 14) { //yyyymmddhhmmss
+		newStr = str.substr(0, 4) + '-' + str.substr(4, 2) + '-' + str.substr(6, 2);
+		newStr += ' ' + str.substr(8, 2) + ':' + str.substr(10, 2) + ':' + str.substr(12, 2);
+	} else {
 		return str;
 	}
 	return newStr;
@@ -309,10 +309,7 @@ function getJsSign(func) {
 	ajaxPost('../getJsSign.do', {
 		'url': urlLink
 	}, function(jsonStr) {
-		wxApi(jsonStr.obj);
-		if(typeof(func)=="function"){
-			func();
-		}
+		wxApi(jsonStr.obj, func);
 	});
 }
 
@@ -335,6 +332,9 @@ function wxApi(jsonStr) {
 	wx.config(wxStr);
 	wx.ready(function() {
 		console.log('config信息验证通过');
+		if(typeof(func) == "function") {
+			func();
+		}
 	});
 	wx.error(function(res) {
 		console.log(res);
@@ -342,8 +342,8 @@ function wxApi(jsonStr) {
 
 }
 
-function getOpenLink(redPacketId){
-	var temp1='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://yangyuanjian.imwork.net/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
-		temp2='&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
-	return temp1+redPacketId+temp2;
+function getOpenLink(redPacketId) {
+	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://yangyuanjian.imwork.net/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
+		temp2 = '&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
+	return temp1 + redPacketId + temp2;
 }
