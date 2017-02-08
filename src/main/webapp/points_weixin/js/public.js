@@ -304,7 +304,7 @@ function datetimeSkyle(str) {
 }
 
 function getOpenLink(redPacketId) {
-	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://www.188lanxi.com/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
+	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc6e892670e84ab71&redirect_uri=http://www.188lanxi.com/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
 		temp2 = '&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
 	return temp1 + redPacketId + temp2;
 }
