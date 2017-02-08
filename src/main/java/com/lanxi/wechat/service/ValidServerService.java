@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.lanxi.WechatIntegralService.util.AppException;
@@ -20,6 +21,7 @@ import com.lanxi.WechatIntegralService.util.SignUtil;
  */
 @Service
 public class ValidServerService {
+	private static Logger logger=Logger.getLogger(ValidServerService.class);
 	/**
 	 * 校验服务器
 	 * @param req
@@ -33,22 +35,22 @@ public class ValidServerService {
 			String timestamp=req.getParameter("timestamp");
 			String nonce	=req.getParameter("nonce");
 			String echostr	=req.getParameter("echostr");
-			System.out.println("signature:"+signature);
-			System.out.println("timestamp:"+timestamp);
-			System.out.println("nonce	 :"+nonce);
-			System.out.println("echostr	 :"+echostr);
+			logger.info("signature:"+signature);
+			logger.info("timestamp:"+timestamp);
+			logger.info("nonce	 :"+nonce);
+			logger.info("echostr	 :"+echostr);
 			List<String> list=new ArrayList<>();
 			list.add(timestamp);
 			list.add(nonce);
 			list.add(ConfigUtil.get("firstToken"));
-			System.out.println(list);
+			logger.info(list);
 			Collections.sort(list);
-			System.out.println(list);
+			logger.info(list);
 			StringBuffer temp=new StringBuffer();
 			for(String each:list)
 				temp.append(each);
 			String sign=sign(temp.toString());
-			System.out.println("sign:"+sign);
+			logger.info("sign:"+sign);
 			if(sign!=null&&signature!=null&&sign.equals(signature))
 				return echostr;
 			return null;

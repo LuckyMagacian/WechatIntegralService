@@ -75,11 +75,11 @@ public class TestMenu {
 		ViewButton          button31=new ViewButton();
 		button31.setName("积分服务");
 //		button31.setUrl(TokenManager.generatorWebTokenCodeUrl("http://www.188lanxi.com/WechatIntegralService/intoJf.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
-		button31.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/intoJf.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
+		button31.setUrl(TokenManager.generatorWebTokenCodeUrl("http://www.188lanxi.com/WechatIntegralService/intoJf.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 		ViewButton 			button32=new ViewButton();
 		button32.setName("玩个游戏");
 //		button32.setUrl(TokenManager.generatorWebTokenCodeUrl("http://www.188lanxi.com/weixinlanxi/oauth/authorization.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
-		button32.setUrl(TokenManager.generatorWebTokenCodeUrl("http://yangyuanjian.imwork.net/WechatIntegralService/toPlane.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
+		button32.setUrl(TokenManager.generatorWebTokenCodeUrl("http://www.188lanxi.com/WechatIntegralService/toPlane.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 		sub3.addButton(button31);
 		sub3.addButton(button32);
 		MenuManager.addSubButton(sub1);
@@ -89,16 +89,8 @@ public class TestMenu {
 	}
 	@Test
 	public void testGetMenu(){
-		TokenManager.getAccessTokenMetadata().generatorToken();
-		TokenManager.saveAccessToken();
-//		AccessToken token=new AccessToken();
-//		token.setAppid("wxc6e892670e84ab71");
-//		token.setSecret("c8ef04146f4b31a2d4012dacff18b06b");
-//		token.generatorToken();
-//		String urlStr=ConfigUtil.get("menuGetUrl");
-//		urlStr=urlStr.replace("ACCESS_TOKEN",token.getAccessToken());
-//		System.out.println(HttpUtil.get(urlStr, "utf-8"));
 		System.out.println(MenuManager.getMenu());
+		
 	}
 	@Test
 	public void makeToken() throws Exception{
@@ -107,6 +99,6 @@ public class TestMenu {
 	
 	@Test
 	public void unicodeTest(){
-		System.out.println("💐🐾");
+		System.out.println(TokenManager.generatorWebTokenCodeUrl("http://www.188lanxi.com/WechatIntegralService/intoJf.do?",WebAccessTokenRequst.WEB_ACCESS_TOOKEN_SCOPE_DETAIL));
 	}
 }

@@ -81,7 +81,7 @@ public class TestController {
 	@RequestMapping("/receiveMessage.do")
 	@ResponseBody
 	public String receiveMessage(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		System.out.println("receiveMessage");
+		logger.info("receiveMessage");
 		req.setCharacterEncoding("utf-8");
 		InputStream in=req.getInputStream();
 		InputStreamReader reader=new InputStreamReader(in, "utf-8");
@@ -90,9 +90,11 @@ public class TestController {
 		StringBuffer strBuffer=new StringBuffer();
 		while((temp=buffer.readLine())!=null)
 			strBuffer.append(temp);
-		System.out.println(strBuffer.toString());
-		if(strBuffer.toString().trim().equals(""))
+		logger.info("收到的消息:"+strBuffer.toString());
+		if(strBuffer.toString().trim().equals("")){
+			logger.info("收到服务器认证消息!");
 			return test.validService(req, res);
+		}
 		in.close();
 		try{
 		logger.info("尝试处理消息");
@@ -241,6 +243,7 @@ public class TestController {
 	@ResponseBody
 	public String getAccessToken(HttpServletRequest req,HttpServletResponse res){
 		try {
+			logger.info("外部组件请求微信授权!");
 			req.setCharacterEncoding("utf-8");
 			return TokenManager.getAccessToken();
 		} catch (Exception e) {
@@ -251,6 +254,7 @@ public class TestController {
 	@ResponseBody
 	public String getWebAccessToken(HttpServletRequest req,HttpServletResponse res){
 		try {
+			logger.info("外部组件请求微信网页授权!");
 			req.setCharacterEncoding("utf-8");
 			String openId=req.getParameter("openId");
 			String code  =req.getParameter("code");
