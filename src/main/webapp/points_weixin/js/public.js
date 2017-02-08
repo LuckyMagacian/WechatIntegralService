@@ -1,6 +1,6 @@
 /* 配置文件 */
 msgResetTime = 10; //秒
-projectStr = "http://yangyuanjian.imwork.net/WechatIntegralService/points_weixin/";
+projectStr = "http://www.188lanxi.com/WechatIntegralService/points_weixin/";
 cardInfo = new Array();
 cardInfo['肯德基'] = new Array('客户可凭串码至指定门店使用（机场、高铁及部分景区门店无法使用），<strong class="red">客户直接向收银员出示串码即可</strong>；指定门店信息详见门店列表。',
 	'串码使用规则：不兑现、不找零、不拼单，不与其他优惠同时使用；', '串码有效期：自客户收到串码起60天内有效；', '使用电子券串码无需预约、不限时段，如遇消费高峰时段可能需要排队；',
@@ -304,7 +304,7 @@ function datetimeSkyle(str) {
 }
 
 function getOpenLink(redPacketId) {
-	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://yangyuanjian.imwork.net/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
+	var temp1 = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf235257ae41bb440&redirect_uri=http://www.188lanxi.com/WechatIntegralService/toUnpackRedPacket.do?redPacketId=',
 		temp2 = '&response_type=code&scope=snsapi_userinfo&state=test#wechat_redirect';
 	return temp1 + redPacketId + temp2;
 }

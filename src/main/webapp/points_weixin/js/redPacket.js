@@ -69,7 +69,7 @@ function unpackRedPacket() {
 }
 
 /* 获取js签名 */
-function getJsSign(func) {
+function getJsSign() {
 	var urlLink = location.href.split('#')[0];
 	ajaxPost('../getJsSign.do', {
 		'url': urlLink
