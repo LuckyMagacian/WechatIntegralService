@@ -164,7 +164,7 @@ public class TestController {
 				break;
 			default:return null;
 			}
-		}
+		} 
 		
 		}catch (Exception e) {
 			throw new AppException("消息转dom元素异常",e);
@@ -245,7 +245,9 @@ public class TestController {
 		try {
 			logger.info("外部组件请求微信授权!");
 			req.setCharacterEncoding("utf-8");
-			return TokenManager.getAccessToken();
+			String rs=JSONObject.toJSONString(TokenManager.getAccessTokenMetadata());
+			logger.info("请求结果:"+rs);
+			return rs;
 		} catch (Exception e) {
 			throw new AppException("外部组件请求微信授权异常",e);
 		}
@@ -258,7 +260,9 @@ public class TestController {
 			req.setCharacterEncoding("utf-8");
 			String openId=req.getParameter("openId");
 			String code  =req.getParameter("code");
+			logger.info("openId="+openId+",code="+code);
 			Object obj=TokenManager.generatorWebAccessTokenMetadata(code);
+			logger.info("请求结果:"+obj);
 			return JSONObject.toJSONString(obj);
 		} catch (Exception e) {
 			throw new AppException("外部组件请求微信网页授权异常",e);
@@ -272,7 +276,7 @@ public class TestController {
 		try {
 			req.setCharacterEncoding("utf-8");
 			String code =req.getParameter("code");
-			res.sendRedirect("http://162749ty99.iask.in/weixinlanxi/oauth/authorization.do?code="+code);
+			res.sendRedirect("http://192.168.1.61:9016/weixinlanxi/oauth/authorization.do?code="+code);
 		} catch (Exception e) {
 			throw new AppException("跳转游戏页面异常",e);
 		}

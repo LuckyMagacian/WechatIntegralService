@@ -60,4 +60,8 @@ public class TestService {
 		System.out.println(game.getPrize(0.8));
 		System.out.println(game.getPrize(0.9));
 	}
+	@Test
+	public void test1(){
+		
+	}
 }

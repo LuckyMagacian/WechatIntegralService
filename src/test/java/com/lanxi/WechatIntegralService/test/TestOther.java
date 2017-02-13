@@ -14,6 +14,9 @@ import com.lanxi.WechatIntegralService.util.AppException;
 import com.lanxi.WechatIntegralService.util.ConfigUtil;
 import com.lanxi.WechatIntegralService.util.RandomUtil;
 import com.lanxi.WechatIntegralService.util.TimeUtil;
+import com.lanxi.gift.report.BaoWen;
+import com.lanxi.gift.report.ReqHead;
+import com.lanxi.gift.report.ReqMsg;
 import com.lanxi.integral.service.IntegralService;
 import com.lanxi.token.EasyToken;
 import com.lanxi.token.SignUtil;
@@ -121,5 +124,25 @@ public class TestOther {
         EasyToken.setPrivateKey(ConfigUtil.get("easyTokenKey"));
 		String token="y8KcKMpmRnTstQMptik7TASEhmUSMEMsptULhoujs9dPKpIXBhHDKzOiLkrjEIZkIZKkPms6rR9kKetudBKhhyhwP3HAHelXD1nzM3ddoEP5OSbGKIA/l2/G9E83ru7N.0b6b45e2637fbf45dd0c24bfea635628";
 		System.out.println(EasyToken.flipToken(token));
+	}
+	
+	@Test
+	public void test1(){
+		ReqHead head=new ReqHead();
+		head.setMsgId("1001");
+		head.setWorkDate("1001");
+		head.setWorkTime("1001");
+		head.setChkDate("1001");
+		ReqMsg  reqMsg=new ReqMsg();
+		reqMsg.setPhone("15068610940");
+		reqMsg.setSkuCode("1001");
+		reqMsg.setCount("1");
+		reqMsg.setType("10");
+		BaoWen  baoWen=new BaoWen();
+		baoWen.setHead(head);
+		baoWen.setMsg(reqMsg);
+		baoWen.sign();
+		System.out.println(baoWen.getHead().getSign());
+		System.out.println(baoWen.toDocument().asXML());
 	}
 }
